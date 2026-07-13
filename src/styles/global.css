@@ -1,0 +1,77 @@
+:root {
+  /* Dark ambient palette — no pure white anywhere (wall display at night). */
+  --water: #0a1622;
+  --water-deep: #071019;
+  --land: #1c2a26;
+  --coast: #3b5450;
+  --ink: #c8d4d0;
+  --ink-dim: #7d8f8b;
+  --ink-faint: #4b5a57;
+  --accent-warm: #e8b872;
+  --accent-orca: #f0e6d2;
+  --panel: #0e1c2a;
+  --panel-edge: #1a2c3d;
+  --alert: #d9a05b;
+
+  font-family:
+    'Avenir Next', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--water-deep);
+  color: var(--ink);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.app__main {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+.app__map {
+  flex: 1;
+  position: relative;
+  min-width: 0;
+}
+
+.footer {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.45rem 1rem;
+  font-size: 0.72rem;
+  color: var(--ink-dim);
+  background: var(--water-deep);
+  border-top: 1px solid var(--panel-edge);
+  flex-wrap: wrap;
+}
+
+.footer__attribution {
+  color: var(--ink-dim);
+}
+
+.footer__disclaimer {
+  color: var(--ink-faint);
+  white-space: nowrap;
+}

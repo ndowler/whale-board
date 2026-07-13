@@ -1,0 +1,102 @@
+{
+  "type": "FeatureCollection",
+  "note": "Coarse hand-drawn Salish Sea zones for deriving region labels (the feed has no place names). Ordered specific-to-general; first hit wins. Coordinates are [lng, lat]. Precision is deliberately low — sightings carry >1km error anyway.",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "South Puget Sound", "labelAnchor": [-122.75, 47.17] },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-123.15, 46.95], [-122.33, 46.95], [-122.33, 47.33], [-123.15, 47.33], [-123.15, 46.95]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Hood Canal", "labelAnchor": [-122.95, 47.6] },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-123.35, 47.3], [-122.95, 47.3], [-122.55, 47.85], [-122.55, 48.0], [-122.8, 48.0], [-123.35, 47.5], [-123.35, 47.3]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Central Puget Sound", "labelAnchor": [-122.45, 47.6] },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-122.75, 47.33], [-122.2, 47.33], [-122.2, 47.85], [-122.75, 47.85], [-122.75, 47.33]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Admiralty Inlet", "labelAnchor": [-122.7, 48.05] },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-122.95, 47.85], [-122.5, 47.85], [-122.5, 48.28], [-122.95, 48.28], [-122.95, 47.85]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Possession Sound & Whidbey Basin", "labelAnchor": [-122.35, 48.1] },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-122.5, 47.85], [-122.15, 47.85], [-122.15, 48.42], [-122.5, 48.42], [-122.5, 47.85]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Bellingham Bay", "labelAnchor": [-122.55, 48.72] },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-122.72, 48.6], [-122.4, 48.6], [-122.4, 48.85], [-122.72, 48.85], [-122.72, 48.6]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Haro Strait", "labelAnchor": [-123.25, 48.55] },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-123.4, 48.4], [-123.13, 48.4], [-123.13, 48.83], [-123.4, 48.83], [-123.4, 48.4]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Rosario Strait", "labelAnchor": [-122.72, 48.55] },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-122.83, 48.38], [-122.6, 48.38], [-122.6, 48.8], [-122.83, 48.8], [-122.83, 48.38]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "San Juan Islands", "labelAnchor": [-122.95, 48.6] },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-123.17, 48.42], [-122.75, 48.42], [-122.75, 48.8], [-123.17, 48.8], [-123.17, 48.42]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Boundary Pass & Gulf Islands", "labelAnchor": [-123.4, 48.9] },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-123.75, 48.75], [-123.13, 48.75], [-123.13, 49.05], [-123.75, 49.05], [-123.75, 48.75]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Strait of Juan de Fuca", "labelAnchor": [-123.4, 48.25] },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-124.05, 47.95], [-122.75, 47.95], [-122.75, 48.45], [-124.05, 48.45], [-124.05, 47.95]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Strait of Georgia", "labelAnchor": [-123.2, 49.1] },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-123.9, 48.83], [-122.6, 48.83], [-122.6, 49.35], [-123.9, 49.35], [-123.9, 48.83]]]
+      }
+    }
+  ]
+}

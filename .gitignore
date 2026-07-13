@@ -1,0 +1,6 @@
+node_modules
+dist
+*.local
+.DS_Store
+# coastline pipeline scratch downloads (output TopoJSON IS committed)
+scripts/.cache/
