@@ -5,6 +5,9 @@ import { usePollingLoop, useClock } from './data/usePollingLoop';
 import { visibleSightings } from './state/selectors';
 import { MapView } from './map/MapView';
 import { MarkerLayer } from './map/MarkerLayer';
+import { GlowLayer } from './map/GlowLayer';
+import { Popover } from './map/Popover';
+import { Rail } from './ui/Rail';
 import { StatusBar } from './ui/StatusBar';
 import { AttributionFooter } from './ui/AttributionFooter';
 import { SpeciesSprite } from './assets/species/SpeciesSprite';
@@ -17,6 +20,9 @@ export function Board() {
   useClock(dispatch);
 
   const visible = visibleSightings(state);
+  const selected = state.selectedId
+    ? (state.sightings.get(state.selectedId) ?? null)
+    : null;
 
   // Arrival treatment: chime once per batch of new ids, then retire the
   // "new" flag after the animation runs its course.
@@ -37,9 +43,23 @@ export function Board() {
       <SpeciesSprite />
       <div className="app__main">
         <div className="app__map" onClick={() => dispatch({ type: 'SELECT', id: null })}>
-          <MapView>
+          <MapView
+            overlay={(frame) =>
+              selected && (
+                <Popover sighting={selected} frame={frame} nowMs={state.nowMs} />
+              )
+            }
+          >
             {(frame) => (
-              <MarkerLayer
+              <>
+                <GlowLayer
+                  sightings={visible}
+                  frame={frame}
+                  nowMs={state.nowMs}
+                  windowHours={state.windowHours}
+                  newIds={state.newIds}
+                />
+                <MarkerLayer
                 sightings={visible}
                 frame={frame}
                 nowMs={state.nowMs}
@@ -47,7 +67,8 @@ export function Board() {
                 selectedId={state.selectedId}
                 newIds={state.newIds}
                 onSelect={(id) => dispatch({ type: 'SELECT', id })}
-              />
+                />
+              </>
             )}
           </MapView>
           <StatusBar
@@ -58,6 +79,13 @@ export function Board() {
             onToggleKiosk={() => dispatch({ type: 'SET_KIOSK', on: !state.kiosk })}
           />
         </div>
+        <Rail
+          sightings={visible}
+          nowMs={state.nowMs}
+          selectedId={state.selectedId}
+          newIds={state.newIds}
+          onSelect={(id) => dispatch({ type: 'SELECT', id })}
+        />
       </div>
       <AttributionFooter />
     </div>

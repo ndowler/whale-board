@@ -161,6 +161,18 @@ body {
   color: #7d8f8b;
 }
 
+.glow {
+  transition: opacity 1.5s ease;
+}
+
+.glow__ping {
+  stroke: var(--accent-warm);
+  stroke-width: 1.5;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: glow-ping 1.8s ease-out 3 both;
+}
+
 /* ---- status bar ------------------------------------------------------- */
 
 .statusbar {
@@ -230,6 +242,180 @@ body {
 
 .statusbar__button.is-active {
   color: var(--accent-warm);
+}
+
+/* ---- rail ------------------------------------------------------------- */
+
+.rail {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  background: var(--panel);
+  border-left: 1px solid var(--panel-edge);
+  min-height: 0;
+}
+
+.rail__title {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin: 0;
+  padding: 0.9rem 1rem 0.5rem;
+}
+
+.rail__list {
+  overflow-y: auto;
+  min-height: 0;
+  padding: 0 0.5rem 0.75rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--panel-edge) transparent;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  color: var(--ink);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 0.45rem 0.5rem;
+  cursor: pointer;
+}
+
+.card:hover {
+  background: color-mix(in srgb, var(--panel-edge) 55%, transparent);
+}
+
+.card.is-selected {
+  background: var(--panel-edge);
+  border-color: color-mix(in srgb, var(--accent-warm) 35%, transparent);
+}
+
+.card.is-new {
+  animation: marker-arrive 0.9s cubic-bezier(0.34, 1.3, 0.64, 1) both;
+}
+
+.card__art {
+  width: 52px;
+  height: 31px;
+  flex: none;
+  fill: currentColor;
+  --sp-patch: var(--panel);
+}
+
+.card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.card__species {
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card__meta {
+  font-size: 0.72rem;
+  color: var(--ink-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card__time {
+  font-size: 0.7rem;
+  color: var(--ink-faint);
+}
+
+/* Narrow screens: rail becomes a bottom strip. */
+@media (max-width: 820px) {
+  .app__main {
+    flex-direction: column;
+  }
+  .rail {
+    width: 100%;
+    height: 140px;
+    border-left: none;
+    border-top: 1px solid var(--panel-edge);
+  }
+  .rail__list {
+    display: flex;
+    gap: 0.4rem;
+  }
+  .card {
+    width: 220px;
+    flex: none;
+  }
+}
+
+/* ---- popover ----------------------------------------------------------- */
+
+.popover {
+  position: absolute;
+  transform: translate(-50%, calc(-100% - 18px));
+  width: 250px;
+  background: color-mix(in srgb, var(--panel) 94%, transparent);
+  border: 1px solid var(--panel-edge);
+  border-radius: 12px;
+  padding: 0.7rem 0.85rem 0.55rem;
+  font-size: 0.78rem;
+  box-shadow: 0 8px 28px rgb(0 0 0 / 0.45);
+  pointer-events: auto;
+  z-index: 5;
+}
+
+.popover--below {
+  transform: translate(-50%, 26px);
+}
+
+.popover__species {
+  font-size: 0.92rem;
+  font-weight: 650;
+  margin-bottom: 0.25rem;
+}
+
+.popover__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.7rem;
+  color: var(--ink-dim);
+}
+
+.popover__note {
+  margin-top: 0.45rem;
+  color: var(--ink);
+  opacity: 0.85;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.popover__foot {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  margin-top: 0.5rem;
+  color: var(--ink-faint);
+  font-size: 0.72rem;
+}
+
+.popover__hint {
+  margin-top: 0.35rem;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
 }
 
 .footer {

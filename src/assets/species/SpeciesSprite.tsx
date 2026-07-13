@@ -82,10 +82,9 @@ export function SpeciesSprite() {
           <path d="M50,6 C44,14 40,24 38,36 C33,34 28,34 24,37 C29,39 34,41 38,44 C42,42 46,41 50,41.5 C54,41 58,42 62,44 C66,41 71,39 76,37 C72,34 67,34 62,36 C60,24 56,14 50,6 Z" />
           <path style={PATCH_STYLE} d="M20,50 C26,46.5 33,46.5 39,50 C33,52.5 26,52.5 20,50 Z M61,50 C67,46.5 74,46.5 80,50 C74,52.5 67,52.5 61,50 Z" />
         </symbol>
-        {/* Unknown cetacean — surfacing back and blow */}
+        {/* Unknown cetacean — surfacing back and blow, one light silhouette */}
         <symbol id="sp-unknown_cetacean" viewBox="0 0 100 60">
-          <path d="M28,46 C34,36 44,31 54,31 C64,31 72,37 76,46 Z" />
-          <path style={PATCH_STYLE} d="M49,28 C46,21 41,15 35,12 C42,13 48,17 51,23 C54,17 60,13 67,12 C61,15 56,21 53,28 C52,29.5 50,29.5 49,28 Z" />
+          <path d="M28,46 C34,36 44,31 54,31 C64,31 72,37 76,46 Z M49,28 C46,21 41,15 35,12 C42,13 48,17 51,23 C54,17 60,13 67,12 C61,15 56,21 53,28 C52,29.5 50,29.5 49,28 Z" />
         </symbol>
       </defs>
     </svg>

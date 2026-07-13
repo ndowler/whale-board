@@ -10,8 +10,10 @@ export interface MapFrame {
 }
 
 interface MapViewProps {
-  /** Layers that need the projection (glows, markers, labels). */
+  /** SVG layers that need the projection (glows, markers, labels). */
   children?: (frame: MapFrame) => ReactNode;
+  /** HTML positioned over the SVG (popovers) — same projection frame. */
+  overlay?: (frame: MapFrame) => ReactNode;
 }
 
 /**
@@ -19,7 +21,7 @@ interface MapViewProps {
  * projection, and paints the water + stylized landmass beneath whatever
  * projected layers the caller renders.
  */
-export function MapView({ children }: MapViewProps) {
+export function MapView({ children, overlay }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState<{ width: number; height: number } | null>(null);
 
@@ -62,6 +64,7 @@ export function MapView({ children }: MapViewProps) {
           {children?.(frame)}
         </svg>
       )}
+      {frame && overlay?.(frame)}
     </div>
   );
 }
