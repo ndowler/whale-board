@@ -1,15 +1,10 @@
-import { AttributionFooter } from './ui/AttributionFooter';
-import { MapView } from './map/MapView';
+import { StoreProvider } from './state/store';
+import { Board } from './Board';
 
 export default function App() {
   return (
-    <div className="app">
-      <div className="app__main">
-        <div className="app__map">
-          <MapView />
-        </div>
-      </div>
-      <AttributionFooter />
-    </div>
+    <StoreProvider>
+      <Board />
+    </StoreProvider>
   );
 }

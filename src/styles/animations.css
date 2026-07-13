@@ -1,0 +1,39 @@
+/* Arrival: gentle fade + overshoot bounce, transform/opacity only. */
+@keyframes marker-arrive {
+  0% {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(1.18);
+  }
+  75% {
+    transform: scale(0.96);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* One-shot expanding ring on the glow beneath a fresh sighting. */
+@keyframes glow-ping {
+  0% {
+    opacity: 0.9;
+    transform: scale(0.25);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.4);
+  }
+}
+
+@keyframes stale-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
