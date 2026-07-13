@@ -54,6 +54,26 @@ body {
   min-width: 0;
 }
 
+.map {
+  position: absolute;
+  inset: 0;
+}
+
+.map__svg {
+  display: block;
+}
+
+.map__water {
+  fill: var(--water);
+}
+
+.map__land {
+  fill: var(--land);
+  stroke: var(--coast);
+  stroke-width: 1;
+  stroke-linejoin: round;
+}
+
 .footer {
   display: flex;
   align-items: baseline;
