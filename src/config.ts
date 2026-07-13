@@ -7,6 +7,18 @@ export interface Bbox {
 
 export type WindowHours = 24 | 72 | 168;
 
+// Kiosk-friendly runtime overrides — tune without a rebuild:
+//   ?poll=30   poll every 30 s (min 5; e.g. with ?demo=1 to preview arrivals)
+const params =
+  typeof location !== 'undefined'
+    ? new URLSearchParams(location.search)
+    : new URLSearchParams();
+const pollOverrideS = Number(params.get('poll'));
+const pollMs =
+  Number.isFinite(pollOverrideS) && pollOverrideS >= 5
+    ? pollOverrideS * 1000
+    : 3 * 60_000;
+
 export const CONFIG = {
   apiUrl: 'https://acartia.io/api/v1/sightings/current',
 
@@ -18,7 +30,7 @@ export const CONFIG = {
   dataMode: (import.meta.env.VITE_DATA_MODE ??
     (import.meta.env.DEV ? 'fixture' : 'live')) as 'live' | 'fixture',
 
-  pollIntervalMs: 3 * 60_000,
+  pollIntervalMs: pollMs,
   fetchTimeoutMs: 15_000,
   /** Retry delays after consecutive failures; sticks at the last entry. */
   backoffMs: [30_000, 60_000, 120_000, 300_000],

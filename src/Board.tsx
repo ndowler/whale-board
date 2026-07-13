@@ -9,6 +9,8 @@ import { GlowLayer } from './map/GlowLayer';
 import { Popover } from './map/Popover';
 import { Rail } from './ui/Rail';
 import { StatusBar } from './ui/StatusBar';
+import { EmptyState } from './ui/EmptyState';
+import { useKiosk } from './kiosk/useKiosk';
 import { AttributionFooter } from './ui/AttributionFooter';
 import { SpeciesSprite } from './assets/species/SpeciesSprite';
 import { ensureAudio, playChime } from './audio/chime';
@@ -18,6 +20,7 @@ export function Board() {
   const dispatch = useAppDispatch();
   usePollingLoop(dispatch);
   useClock(dispatch);
+  const { toggle: toggleKiosk } = useKiosk(state.kiosk, dispatch);
 
   const visible = visibleSightings(state);
   const selected = state.selectedId
@@ -76,8 +79,11 @@ export function Board() {
               ensureAudio();
               dispatch({ type: 'SET_CHIME', on: !state.chimeOn });
             }}
-            onToggleKiosk={() => dispatch({ type: 'SET_KIOSK', on: !state.kiosk })}
+            onToggleKiosk={toggleKiosk}
           />
+          {visible.length === 0 && state.lastSuccessAt !== null && (
+            <EmptyState windowHours={state.windowHours} />
+          )}
         </div>
         <Rail
           sightings={visible}

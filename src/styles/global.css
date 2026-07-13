@@ -418,6 +418,73 @@ body {
   color: var(--ink-faint);
 }
 
+/* ---- empty state ------------------------------------------------------- */
+
+.empty {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+  color: var(--ink-dim);
+}
+
+.empty__waves {
+  width: 130px;
+  stroke: var(--ink-faint);
+  stroke-width: 1.6;
+  fill: none;
+  stroke-linecap: round;
+  margin-bottom: 0.6rem;
+}
+
+.empty__title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  opacity: 0.85;
+}
+
+.empty__sub {
+  margin-top: 0.3rem;
+  font-size: 0.85rem;
+}
+
+/* ---- kiosk ------------------------------------------------------------- */
+
+body.cursor-hidden,
+body.cursor-hidden * {
+  cursor: none !important;
+}
+
+.app--kiosk .statusbar__controls {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+/* Controls fade back in when the (visible) cursor moves. */
+.app--kiosk:hover .statusbar__controls {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+body.cursor-hidden .app--kiosk:hover .statusbar__controls {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.app--kiosk .rail {
+  width: 260px;
+}
+
+.app--kiosk .footer {
+  font-size: 0.66rem;
+  opacity: 0.75;
+}
+
 .footer {
   display: flex;
   align-items: baseline;
