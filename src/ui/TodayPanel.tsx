@@ -42,7 +42,7 @@ export function TodayPanel() {
               onClick={() => dispatch({ type: 'SELECT', id: g.latest.id })}
               title={`${SPECIES_LABEL[g.species]} — ${timeAgo(g.latestMs, state.nowMs)}`}
             >
-              <SpeciesArtImg species={g.species} base="chip" />
+              <SpeciesArtImg species={g.species} variant="collage" base="chip" />
               {g.count > 1 && (
                 <span className="today-panel__count">{g.count}</span>
               )}

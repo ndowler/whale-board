@@ -409,7 +409,7 @@ body {
   position: absolute;
   top: 3.2rem;
   right: 0.75rem;
-  max-width: 300px;
+  max-width: 560px;
   background: color-mix(in srgb, var(--panel) 82%, transparent);
   border: 1px solid var(--panel-edge);
   border-radius: 14px;
@@ -468,8 +468,8 @@ body {
 
 .chip__art {
   display: block;
-  width: 56px;
-  height: 34px;
+  width: 504px;
+  height: 306px;
   object-fit: contain;
   filter: drop-shadow(0 1px 4px rgb(0 0 0 / 0.5));
 }
