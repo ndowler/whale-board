@@ -73,8 +73,6 @@ export const CONFIG = {
   arrivalAnimMs: 6_000,
   /** Positions are approximate (>1 km observer error) — glow radius. */
   glowRadiusKm: 2.5,
-  /** Max cards in the recent-sightings rail. */
-  railMaxCards: 30,
 
   /**
    * Species art style: 'plate' = the AI-restyled natural-history plates

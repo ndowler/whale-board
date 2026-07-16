@@ -10,6 +10,9 @@ import { CONFIG, type WindowHours } from '../config';
 import type { AcousticDetection, Hydrophone, Sighting } from '../types';
 import { mergeSightings } from '../data/normalize';
 
+/** The two faces of the board: the map, or the seen-today collage. */
+export type BoardView = 'map' | 'today';
+
 export interface AppState {
   sightings: ReadonlyMap<string, Sighting>;
   /** Ids that arrived in the latest poll — wear the arrival treatment. */
@@ -24,6 +27,7 @@ export interface AppState {
   selectedHydroId: string | null;
   chimeOn: boolean;
   kiosk: boolean;
+  boardView: BoardView;
   /** UI clock, advanced by TICK — drives decay, time-ago, staleness. */
   nowMs: number;
 }
@@ -44,17 +48,22 @@ export type Action =
   | { type: 'SET_WINDOW'; hours: WindowHours }
   | { type: 'CLEAR_NEW' }
   | { type: 'SET_CHIME'; on: boolean }
-  | { type: 'SET_KIOSK'; on: boolean };
+  | { type: 'SET_KIOSK'; on: boolean }
+  | { type: 'SET_VIEW'; view: BoardView };
 
 const CHIME_KEY = 'whaleboard.chime';
+const VIEW_KEY = 'whaleboard.view';
 
 export function initialState(nowMs: number): AppState {
   let chimeOn = CONFIG.chimeDefaultOn;
+  let boardView: BoardView = 'map';
   try {
     const stored = localStorage.getItem(CHIME_KEY);
     if (stored !== null) chimeOn = stored === 'true';
+    const view = localStorage.getItem(VIEW_KEY);
+    if (view === 'map' || view === 'today') boardView = view;
   } catch {
-    // storage unavailable (private mode etc.) — keep the default
+    // storage unavailable (private mode etc.) — keep the defaults
   }
   return {
     sightings: new Map(),
@@ -68,6 +77,7 @@ export function initialState(nowMs: number): AppState {
     selectedHydroId: null,
     chimeOn,
     kiosk: false,
+    boardView,
     nowMs,
   };
 }
@@ -131,6 +141,15 @@ export function reducer(state: AppState, action: Action): AppState {
       return { ...state, chimeOn: action.on };
     case 'SET_KIOSK':
       return { ...state, kiosk: action.on };
+    case 'SET_VIEW':
+      // Popovers are map-anchored; a stale selection must not survive the
+      // switch (or reappear on the way back).
+      return {
+        ...state,
+        boardView: action.view,
+        selectedId: null,
+        selectedHydroId: null,
+      };
   }
 }
 
@@ -147,6 +166,14 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       // best effort
     }
   }, [state.chimeOn]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(VIEW_KEY, state.boardView);
+    } catch {
+      // best effort
+    }
+  }, [state.boardView]);
 
   return (
     <StateContext.Provider value={state}>

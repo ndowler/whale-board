@@ -14,9 +14,10 @@ import { GlowLayer } from './map/GlowLayer';
 import { HydrophoneLayer } from './map/HydrophoneLayer';
 import { Popover } from './map/Popover';
 import { HydroPopover } from './map/HydroPopover';
-import { Rail } from './ui/Rail';
 import { StatusBar } from './ui/StatusBar';
 import { EmptyState } from './ui/EmptyState';
+import { TodayPanel } from './ui/TodayPanel';
+import { TodayBoard } from './ui/TodayBoard';
 import { useKiosk } from './kiosk/useKiosk';
 import { AttributionFooter } from './ui/AttributionFooter';
 import { SpeciesSprite } from './assets/species/SpeciesSprite';
@@ -42,6 +43,24 @@ export function Board() {
     ? (state.hydrophones.find((h) => h.id === state.selectedHydroId) ?? null)
     : null;
 
+  // View switching: `v` toggles map/today, Escape returns to the map.
+  const viewRef = useRef(state.boardView);
+  viewRef.current = state.boardView;
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement) return;
+      if (e.key === 'v' || e.key === 'V')
+        dispatch({
+          type: 'SET_VIEW',
+          view: viewRef.current === 'map' ? 'today' : 'map',
+        });
+      else if (e.key === 'Escape' && viewRef.current === 'today')
+        dispatch({ type: 'SET_VIEW', view: 'map' });
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [dispatch]);
+
   // Arrival treatment: chime once per batch of new ids, then retire the
   // "new" flag after the animation runs its course.
   const chimeOnRef = useRef(state.chimeOn);
@@ -60,70 +79,82 @@ export function Board() {
     <div className={`app${state.kiosk ? ' app--kiosk' : ''}`}>
       <SpeciesSprite />
       <div className="app__main">
-        <div className="app__map" onClick={() => dispatch({ type: 'SELECT', id: null })}>
-          <MapView
-            overlay={(frame) => (
-              <>
-                {selected && (
-                  <Popover sighting={selected} frame={frame} nowMs={state.nowMs} />
-                )}
-                {selectedHydro && (
-                  <HydroPopover
-                    hydrophone={selectedHydro}
-                    status={hydroStatus.get(selectedHydro.id)}
+        {state.boardView === 'today' ? (
+          <div className="app__today" key="today">
+            <TodayBoard />
+            <StatusBar
+              onToggleChime={() => {
+                ensureAudio();
+                dispatch({ type: 'SET_CHIME', on: !state.chimeOn });
+              }}
+              onToggleKiosk={toggleKiosk}
+            />
+          </div>
+        ) : (
+          <div
+            className="app__map"
+            key="map"
+            onClick={() => dispatch({ type: 'SELECT', id: null })}
+          >
+            <MapView
+              overlay={(frame) => (
+                <>
+                  {selected && (
+                    <Popover sighting={selected} frame={frame} nowMs={state.nowMs} />
+                  )}
+                  {selectedHydro && (
+                    <HydroPopover
+                      hydrophone={selectedHydro}
+                      status={hydroStatus.get(selectedHydro.id)}
+                      frame={frame}
+                      nowMs={state.nowMs}
+                    />
+                  )}
+                </>
+              )}
+            >
+              {(frame) => (
+                <>
+                  <HydrophoneLayer
+                    hydrophones={state.hydrophones}
+                    statuses={hydroStatus}
+                    frame={frame}
+                    selectedId={state.selectedHydroId}
+                    onSelect={(id) => dispatch({ type: 'SELECT_HYDRO', id })}
+                  />
+                  <GlowLayer
+                    sightings={visible}
                     frame={frame}
                     nowMs={state.nowMs}
+                    windowHours={state.windowHours}
+                    newIds={state.newIds}
                   />
-                )}
-              </>
+                  <MarkerLayer
+                    sightings={visible}
+                    frame={frame}
+                    nowMs={state.nowMs}
+                    windowHours={state.windowHours}
+                    selectedId={state.selectedId}
+                    newIds={state.newIds}
+                    onSelect={(id) => dispatch({ type: 'SELECT', id })}
+                  />
+                </>
+              )}
+            </MapView>
+            <h1 className="wordmark">Salish Sea Whale Board</h1>
+            <StatusBar
+              onToggleChime={() => {
+                ensureAudio();
+                dispatch({ type: 'SET_CHIME', on: !state.chimeOn });
+              }}
+              onToggleKiosk={toggleKiosk}
+            />
+            <TodayPanel />
+            {visible.length === 0 && state.lastSuccessAt !== null && (
+              <EmptyState windowHours={state.windowHours} />
             )}
-          >
-            {(frame) => (
-              <>
-                <HydrophoneLayer
-                  hydrophones={state.hydrophones}
-                  statuses={hydroStatus}
-                  frame={frame}
-                  selectedId={state.selectedHydroId}
-                  onSelect={(id) => dispatch({ type: 'SELECT_HYDRO', id })}
-                />
-                <GlowLayer
-                  sightings={visible}
-                  frame={frame}
-                  nowMs={state.nowMs}
-                  windowHours={state.windowHours}
-                  newIds={state.newIds}
-                />
-                <MarkerLayer
-                sightings={visible}
-                frame={frame}
-                nowMs={state.nowMs}
-                windowHours={state.windowHours}
-                selectedId={state.selectedId}
-                newIds={state.newIds}
-                onSelect={(id) => dispatch({ type: 'SELECT', id })}
-                />
-              </>
-            )}
-          </MapView>
-          <StatusBar
-            onToggleChime={() => {
-              ensureAudio();
-              dispatch({ type: 'SET_CHIME', on: !state.chimeOn });
-            }}
-            onToggleKiosk={toggleKiosk}
-          />
-          {visible.length === 0 && state.lastSuccessAt !== null && (
-            <EmptyState windowHours={state.windowHours} />
-          )}
-        </div>
-        <Rail
-          sightings={visible}
-          nowMs={state.nowMs}
-          selectedId={state.selectedId}
-          newIds={state.newIds}
-          onSelect={(id) => dispatch({ type: 'SELECT', id })}
-        />
+          </div>
+        )}
       </div>
       <AttributionFooter />
     </div>

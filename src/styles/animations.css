@@ -28,6 +28,40 @@
   }
 }
 
+/* A slow idle breath for fresh markers — barely-there scale, long period. */
+@keyframes marker-breathe {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.04);
+  }
+}
+
+/* Crossfade + settle when the board switches faces (map ↔ seen today). */
+@keyframes view-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Popover entrance: rise into place. */
+@keyframes popover-in {
+  from {
+    opacity: 0;
+    translate: 0 4px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
 @keyframes stale-pulse {
   0%,
   100% {
@@ -54,7 +88,11 @@
    communicates arrivals through opacity/tint; only movement is removed. */
 @media (prefers-reduced-motion: reduce) {
   .marker--new .marker__scale,
-  .card.is-new {
+  .today-card.is-new,
+  .marker--breathing .marker__breathe,
+  .today-board,
+  .app__map,
+  .popover {
     animation: none;
   }
   .glow__ping,

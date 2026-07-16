@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, it, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import App from './App';
 
 vi.mock('./data/acartiaClient', () => ({
@@ -18,7 +18,9 @@ vi.mock('./data/acartiaClient', () => ({
       },
       {
         ssemmi_id: 'SMOKE 2',
-        created: new Date(Date.now() - 2 * 3_600_000).toISOString(),
+        // Minutes old, not hours — keeps the "seen today" tally deterministic
+        // even when the suite runs just after local midnight.
+        created: new Date(Date.now() - 20 * 60_000).toISOString(),
         type: 'Humpback',
         latitude: 48.249,
         longitude: -123.2988,
@@ -48,23 +50,33 @@ beforeAll(() => {
 });
 
 describe('App smoke', () => {
-  it('renders map markers, rail cards, and attribution from a poll', async () => {
+  it('renders map markers, the seen-today views, and attribution', async () => {
     render(<App />);
 
-    // Both sightings appear as rail cards…
-    expect(
-      await screen.findByText('Orca — Southern Resident'),
-    ).toBeTruthy();
-    expect(await screen.findByText('Humpback Whale')).toBeTruthy();
-
-    // …and as map markers (role=button with species aria-label).
+    // Sightings appear as map markers (role=button with species aria-label).
     const markers = await screen.findAllByRole('button', {
       name: 'Orca — Southern Resident',
     });
     expect(markers.length).toBeGreaterThanOrEqual(1);
 
-    // Region derivation flows through to the card copy.
+    // The seen-today panel tallies both species (fixtures are minutes old).
+    expect(screen.getByText('Seen today')).toBeTruthy();
+    expect(
+      screen.getByTitle(/^Orca — Southern Resident —/),
+    ).toBeTruthy();
+    expect(screen.getByTitle(/^Humpback Whale —/)).toBeTruthy();
+
+    // `v` flips to the fullscreen collage; species + region copy render.
+    fireEvent.keyDown(window, { key: 'v' });
+    expect(
+      await screen.findByText('Seen in the Salish Sea today'),
+    ).toBeTruthy();
+    expect(screen.getByText('Orca — Southern Resident')).toBeTruthy();
     expect(screen.getAllByText(/Haro Strait/).length).toBeGreaterThan(0);
+
+    // Escape returns to the map.
+    fireEvent.keyDown(window, { key: 'Escape' });
+    expect(await screen.findByText('Seen today')).toBeTruthy();
 
     // Attribution + disclaimer are always on screen.
     expect(screen.getByText(/Acartia Data Cooperative/)).toBeTruthy();

@@ -1,4 +1,4 @@
-import { useAppState } from '../state/store';
+import { useAppDispatch, useAppState } from '../state/store';
 import { clockLabel, isStale } from '../state/selectors';
 import { WindowSelector } from './WindowSelector';
 
@@ -13,7 +13,9 @@ interface StatusBarProps {
  */
 export function StatusBar({ onToggleChime, onToggleKiosk }: StatusBarProps) {
   const state = useAppState();
+  const dispatch = useAppDispatch();
   const stale = isStale(state);
+  const onToday = state.boardView === 'today';
 
   return (
     <div className="statusbar">
@@ -27,6 +29,17 @@ export function StatusBar({ onToggleChime, onToggleKiosk }: StatusBarProps) {
       )}
       <span className="statusbar__controls">
         <WindowSelector />
+        <button
+          type="button"
+          className={`statusbar__button${onToday ? ' is-active' : ''}`}
+          onClick={() =>
+            dispatch({ type: 'SET_VIEW', view: onToday ? 'map' : 'today' })
+          }
+          aria-pressed={onToday}
+          title={onToday ? 'Back to the map' : 'Sea creatures seen today'}
+        >
+          {onToday ? '⊙' : '▦'}
+        </button>
         <button
           type="button"
           className={`statusbar__button${state.chimeOn ? ' is-active' : ''}`}

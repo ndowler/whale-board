@@ -2,7 +2,7 @@ import type { Sighting } from '../types';
 import { SPECIES_LABEL } from '../data/species';
 import type { MapFrame } from './MapView';
 import { clockLabel, timeAgo } from '../state/selectors';
-import { podLine } from '../ui/SightingCard';
+import { podLine } from '../ui/podLine';
 
 interface PopoverProps {
   sighting: Sighting;

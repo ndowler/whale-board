@@ -9,9 +9,14 @@ const land = feature(
   (topology as unknown as { objects: { land: GeometryCollection } }).objects.land,
 ) as GeoPermissibleObjects;
 
-/** Single stylized landmass path; re-renders only when the path generator
- *  (i.e. the container size) changes. */
+/** Stylized landmass; a wide sheer halo stroke underneath reads as the
+ *  offshore shelf. Re-renders only when the path generator changes. */
 export const LandLayer = memo(function LandLayer({ path }: { path: GeoPath }) {
   const d = useMemo(() => path(land) ?? '', [path]);
-  return <path className="map__land" d={d} />;
+  return (
+    <>
+      <path className="map__coast-halo" d={d} />
+      <path className="map__land" d={d} />
+    </>
+  );
 });

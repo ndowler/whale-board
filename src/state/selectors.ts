@@ -1,5 +1,5 @@
 import { CONFIG } from '../config';
-import type { Sighting } from '../types';
+import type { Sighting, SpeciesId } from '../types';
 import { withinWindow } from '../data/normalize';
 import { collapseNearDupes } from '../data/dedupe';
 import type { AppState } from './store';
@@ -17,6 +17,53 @@ export function visibleSightings(state: AppState): Sighting[] {
   const collapsed = collapseNearDupes(out);
   collapsed.sort((a, b) => b.epochMs - a.epochMs);
   return collapsed;
+}
+
+/** Local midnight for the day containing nowMs. */
+export function startOfLocalDay(nowMs: number): number {
+  const d = new Date(nowMs);
+  d.setHours(0, 0, 0, 0);
+  return d.getTime();
+}
+
+export interface SpeciesToday {
+  species: SpeciesId;
+  /** Collapsed sightings today (post-dedupe). */
+  count: number;
+  /** Sum of raw reports behind those sightings. */
+  reportCount: number;
+  latestMs: number;
+  /** Newest sighting — the representative (drives region/pods, selection). */
+  latest: Sighting;
+}
+
+/**
+ * Species observed since local midnight, newest group first — the
+ * AvianVisitors-style "seen today" tally. Builds on visibleSightings so
+ * FR-8 dedupe applies; a calendar day is always a subset of the smallest
+ * freshness window (24 h), so the window filter can never hide today.
+ */
+export function seenToday(state: AppState): SpeciesToday[] {
+  const floor = startOfLocalDay(state.nowMs);
+  const groups = new Map<SpeciesId, SpeciesToday>();
+  for (const s of visibleSightings(state)) {
+    if (s.epochMs < floor) continue;
+    const g = groups.get(s.species);
+    if (!g) {
+      groups.set(s.species, {
+        species: s.species,
+        count: 1,
+        reportCount: s.reportCount,
+        latestMs: s.epochMs,
+        latest: s,
+      });
+    } else {
+      g.count += 1;
+      g.reportCount += s.reportCount;
+      // visibleSightings is newest-first, so the first hit is the latest.
+    }
+  }
+  return [...groups.values()].sort((a, b) => b.latestMs - a.latestMs);
 }
 
 export interface Decay {

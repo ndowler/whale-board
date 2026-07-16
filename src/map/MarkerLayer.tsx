@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type CSSProperties } from 'react';
 import type { Sighting, SpeciesId } from '../types';
 import type { WindowHours } from '../config';
 import type { MapFrame } from './MapView';
@@ -52,7 +52,7 @@ export function MarkerLayer({
   const fresh = new Set(newIds);
   return (
     <g className="markers">
-      {sightings.map((s) => {
+      {sightings.map((s, i) => {
         const p = frame.projection([s.lng, s.lat]);
         if (!p) return null;
         const d = decay(s, nowMs, windowHours);
@@ -62,6 +62,8 @@ export function MarkerLayer({
           `marker--${s.species}`,
           fresh.has(s.id) ? 'marker--new' : '',
           selected ? 'marker--selected' : '',
+          // Only the freshest sightings idle with a breath; old ones sit still.
+          d.age < 0.25 ? 'marker--breathing' : '',
         ]
           .filter(Boolean)
           .join(' ');
@@ -69,6 +71,7 @@ export function MarkerLayer({
           <g
             key={s.id}
             className={cls}
+            style={{ '--i': i } as CSSProperties}
             transform={`translate(${p[0]}, ${p[1]})`}
             opacity={selected ? 1 : d.markerOpacity}
             role="button"
@@ -80,8 +83,15 @@ export function MarkerLayer({
             onMouseEnter={() => onSelect(s.id)}
           >
             <g className="marker__scale" transform={`scale(${selected ? 1.15 : d.scale})`}>
-              {selected && <circle className="marker__ring" r={26} />}
-              <MarkerArt species={s.species} />
+              {selected && (
+                <>
+                  <circle className="marker__ring marker__ring--outer" r={30} />
+                  <circle className="marker__ring" r={26} />
+                </>
+              )}
+              <g className="marker__breathe">
+                <MarkerArt species={s.species} />
+              </g>
             </g>
           </g>
         );

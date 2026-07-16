@@ -11,3 +11,5 @@ workers/acartia-proxy/.dev.vars
 
 # species art: 2K raw generations stay local; keyed assets ship from public/
 art/species/raw/
+art/species/collage-raw/
+art/decor/raw/

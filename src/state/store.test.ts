@@ -3,7 +3,13 @@ import { initialState, reducer, type AppState } from './store';
 import { normalizeRecord } from '../data/normalize';
 import type { Sighting } from '../types';
 import { CONFIG } from '../config';
-import { decay, isStale, visibleSightings } from './selectors';
+import {
+  decay,
+  isStale,
+  seenToday,
+  startOfLocalDay,
+  visibleSightings,
+} from './selectors';
 
 const now = Date.UTC(2026, 6, 13, 12);
 
@@ -90,6 +96,17 @@ describe('reducer', () => {
     s = reducer(s, { type: 'CLEAR_NEW' });
     expect(s.newIds).toEqual([]);
   });
+
+  it('SET_VIEW switches the board face and clears map-anchored selection', () => {
+    let s = seeded();
+    s = reducer(s, { type: 'SELECT', id: 'A' });
+    s = reducer(s, { type: 'SET_VIEW', view: 'today' });
+    expect(s.boardView).toBe('today');
+    expect(s.selectedId).toBeNull();
+    expect(s.selectedHydroId).toBeNull();
+    s = reducer(s, { type: 'SET_VIEW', view: 'map' });
+    expect(s.boardView).toBe('map');
+  });
 });
 
 describe('selectors', () => {
@@ -134,6 +151,51 @@ describe('selectors', () => {
     expect(fresh.markerOpacity).toBeCloseTo(1);
     expect(old.markerOpacity).toBeGreaterThan(0.6);
     expect(decay(mk('C', 500), now, 72).markerOpacity).toBeCloseTo(0.65);
+  });
+
+  it('seenToday groups by species since local midnight, newest first', () => {
+    // startOfLocalDay is TZ-dependent — anchor "now" at local noon.
+    const localNoon = new Date(2026, 6, 13, 12).getTime();
+    const at = (ageHours: number, id: string, species?: Sighting['species']) => ({
+      ...mk(id, 0),
+      epochMs: localNoon - ageHours * 3_600_000,
+      ...(species ? { species } : {}),
+    });
+    let s = initialState(localNoon);
+    s = reducer(s, {
+      type: 'POLL_SUCCESS',
+      sightings: [
+        at(1, 'ORCA-NEW'), // 11:00 today
+        at(3, 'ORCA-OLD'), // 09:00 today — same species, groups
+        at(2, 'HUMP', 'humpback'), // 10:00 today
+        at(14, 'YESTERDAY'), // 22:00 yesterday — excluded
+      ],
+      at: localNoon,
+    });
+    s = { ...s, windowHours: 24, nowMs: localNoon };
+
+    expect(startOfLocalDay(localNoon)).toBe(new Date(2026, 6, 13).getTime());
+    const today = seenToday(s);
+    expect(today.map((g) => g.species)).toEqual(['orca', 'humpback']);
+    const orca = today[0];
+    expect(orca.count).toBe(2);
+    expect(orca.latest.id).toBe('ORCA-NEW');
+    expect(orca.latestMs).toBe(localNoon - 3_600_000);
+    // Yesterday's orca stays visible on the map window but not in today.
+    expect(visibleSightings(s)).toHaveLength(4);
+  });
+
+  it('seenToday is empty with no sightings today', () => {
+    const localNoon = new Date(2026, 6, 13, 12).getTime();
+    let s = initialState(localNoon);
+    expect(seenToday(s)).toEqual([]);
+    s = reducer(s, {
+      type: 'POLL_SUCCESS',
+      sightings: [{ ...mk('OLD', 0), epochMs: localNoon - 20 * 3_600_000 }],
+      at: localNoon,
+    });
+    s = { ...s, nowMs: localNoon };
+    expect(seenToday(s)).toEqual([]);
   });
 
   it('isStale trips after staleAfterMs without a successful poll', () => {

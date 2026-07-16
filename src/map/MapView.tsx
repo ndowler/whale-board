@@ -164,7 +164,25 @@ export function MapView({ children, overlay }: MapViewProps) {
           onDoubleClick={resetZoom}
           style={{ cursor: 'grab', touchAction: 'none' }}
         >
-          <rect className="map__water" width={frame.width} height={frame.height} />
+          <defs>
+            {/* Deep-center water and a corner vignette, both screen-space —
+                the zoom group scales inside them so pan/zoom stays cheap. */}
+            <radialGradient id="water-depth" cx="50%" cy="42%" r="75%">
+              <stop offset="0%" stopColor="#0d1b29" />
+              <stop offset="100%" stopColor="#071019" />
+            </radialGradient>
+            <radialGradient id="map-vignette" cx="50%" cy="50%" r="72%">
+              <stop offset="0%" stopColor="#04090e" stopOpacity="0" />
+              <stop offset="70%" stopColor="#04090e" stopOpacity="0" />
+              <stop offset="100%" stopColor="#04090e" stopOpacity="0.5" />
+            </radialGradient>
+          </defs>
+          <rect
+            className="map__water"
+            width={frame.width}
+            height={frame.height}
+            fill="url(#water-depth)"
+          />
           <g
             className={chart ? 'map__inner map__inner--chart' : 'map__inner'}
             transform={`translate(${transform.x} ${transform.y}) scale(${transform.k})`}
@@ -183,6 +201,20 @@ export function MapView({ children, overlay }: MapViewProps) {
             <LandLayer path={path} />
             {children?.(frame)}
           </g>
+          <rect
+            className="map__vignette"
+            width={frame.width}
+            height={frame.height}
+            fill="url(#map-vignette)"
+          />
+          <image
+            className="map__compass"
+            href={`${import.meta.env.BASE_URL}art/decor/compass.png`}
+            x={18}
+            y={frame.height - 108}
+            width={90}
+            height={90}
+          />
         </svg>
       )}
       {frame && overlay?.({ ...frame, transform })}

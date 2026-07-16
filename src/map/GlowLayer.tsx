@@ -51,19 +51,24 @@ export function GlowLayer({
   return (
     <g className="glows">
       <defs>
+        {/* Four stops for a softer falloff; center opacities kept low so
+            overlapping glows layer instead of blooming. */}
         <radialGradient id="glow-orca">
-          <stop offset="0%" stopColor="#f0e2c4" stopOpacity="0.5" />
-          <stop offset="60%" stopColor="#f0e2c4" stopOpacity="0.14" />
-          <stop offset="100%" stopColor="#f0e2c4" stopOpacity="0" />
+          <stop offset="0%" stopColor="#eed9ac" stopOpacity="0.45" />
+          <stop offset="35%" stopColor="#eed9ac" stopOpacity="0.22" />
+          <stop offset="70%" stopColor="#eed9ac" stopOpacity="0.08" />
+          <stop offset="100%" stopColor="#eed9ac" stopOpacity="0" />
         </radialGradient>
         <radialGradient id="glow-baleen">
-          <stop offset="0%" stopColor="#9fc3e8" stopOpacity="0.45" />
-          <stop offset="60%" stopColor="#9fc3e8" stopOpacity="0.12" />
+          <stop offset="0%" stopColor="#9fc3e8" stopOpacity="0.4" />
+          <stop offset="35%" stopColor="#9fc3e8" stopOpacity="0.18" />
+          <stop offset="70%" stopColor="#9fc3e8" stopOpacity="0.07" />
           <stop offset="100%" stopColor="#9fc3e8" stopOpacity="0" />
         </radialGradient>
         <radialGradient id="glow-neutral">
-          <stop offset="0%" stopColor="#a8c4bc" stopOpacity="0.4" />
-          <stop offset="60%" stopColor="#a8c4bc" stopOpacity="0.1" />
+          <stop offset="0%" stopColor="#a8c4bc" stopOpacity="0.36" />
+          <stop offset="35%" stopColor="#a8c4bc" stopOpacity="0.16" />
+          <stop offset="70%" stopColor="#a8c4bc" stopOpacity="0.06" />
           <stop offset="100%" stopColor="#a8c4bc" stopOpacity="0" />
         </radialGradient>
       </defs>
