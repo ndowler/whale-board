@@ -147,10 +147,10 @@ describe('selectors', () => {
     expect(old.opacity).toBeLessThan(0.3);
     expect(old.scale).toBeLessThan(0.65);
     expect(decay(mk('C', 500), now, 72).opacity).toBeCloseTo(0.25);
-    // Marker body floors much higher — plates go ghostly below ~0.6.
+    // Marker body floors much higher — plates go ghostly below ~0.8.
     expect(fresh.markerOpacity).toBeCloseTo(1);
-    expect(old.markerOpacity).toBeGreaterThan(0.6);
-    expect(decay(mk('C', 500), now, 72).markerOpacity).toBeCloseTo(0.65);
+    expect(old.markerOpacity).toBeGreaterThan(0.8);
+    expect(decay(mk('C', 500), now, 72).markerOpacity).toBeCloseTo(0.85);
   });
 
   it('seenToday groups by species since local midnight, newest first', () => {

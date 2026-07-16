@@ -68,11 +68,9 @@ describe('App smoke', () => {
 
     // `v` flips to the fullscreen collage; species + region copy render.
     fireEvent.keyDown(window, { key: 'v' });
-    expect(
-      await screen.findByText('Seen in the Salish Sea today'),
-    ).toBeTruthy();
+    expect(await screen.findByText('Seen Today')).toBeTruthy();
     expect(screen.getByText('Orca — Southern Resident')).toBeTruthy();
-    expect(screen.getAllByText(/Haro Strait/).length).toBeGreaterThan(0);
+    expect(screen.getAllByTitle(/Haro Strait/).length).toBeGreaterThan(0);
 
     // Escape returns to the map.
     fireEvent.keyDown(window, { key: 'Escape' });

@@ -70,9 +70,9 @@ export interface Decay {
   /** 1 fresh → 0.25 at the window edge — the halo/glow fade (honest age). */
   opacity: number;
   /**
-   * 1 fresh → 0.65 at the window edge — the marker body. Gentler floor:
-   * the illustrated plates go ghostly below ~0.6 over dark water, so age
-   * reads mainly through scale and the halo, not through translucency.
+   * 1 fresh → 0.85 at the window edge — the marker body. High floor:
+   * the illustrated plates go ghostly below ~0.8 over dark water, so age
+   * reads through scale and the halo, not through translucency.
    */
   markerOpacity: number;
   /** 1 fresh → 0.6 at the window edge */
@@ -86,7 +86,7 @@ export function decay(s: Sighting, nowMs: number, windowHours: number): Decay {
   const age = Math.min(1, Math.max(0, (nowMs - s.epochMs) / windowMs));
   return {
     opacity: 1 - 0.75 * age,
-    markerOpacity: 1 - 0.35 * age,
+    markerOpacity: 1 - 0.15 * age,
     scale: 1 - 0.4 * age,
     age,
   };

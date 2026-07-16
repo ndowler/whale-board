@@ -11,14 +11,14 @@ import { plateArtUrl, usePlates } from '../assets/species/art';
 function MarkerArt({ species }: { species: SpeciesId }) {
   const [failed, setFailed] = useState(false);
   if (!usePlates() || failed)
-    return <use href={markerHref(species)} x={-22} y={-13} width={44} height={26} />;
+    return <use href={markerHref(species)} x={-72} y={-42} width={144} height={84} />;
   return (
     <image
       href={plateArtUrl(species)}
-      x={-24}
-      y={-14}
-      width={48}
-      height={28}
+      x={-80}
+      y={-46}
+      width={160}
+      height={94}
       preserveAspectRatio="xMidYMid meet"
       onError={() => setFailed(true)}
     />
@@ -50,8 +50,21 @@ export function MarkerLayer({
   onSelect,
 }: MarkerLayerProps) {
   const fresh = new Set(newIds);
+  // Markers live inside the zoomed group, so left alone they'd balloon under
+  // deep zoom. Full counter-scale keeps them a constant screen size — zooming
+  // reveals more chart, not bigger art. Zoom-out (k<1) shrinks naturally.
+  const damp = 1 / Math.max(1, frame.transform.k);
   return (
     <g className="markers">
+      <defs>
+        {/* Soft dark disc behind each plate — grounds the art over both
+            water and land without per-node blur filters (kiosk-friendly). */}
+        <radialGradient id="marker-disc">
+          <stop offset="0%" stopColor="#050d15" stopOpacity="0.6" />
+          <stop offset="60%" stopColor="#050d15" stopOpacity="0.4" />
+          <stop offset="100%" stopColor="#050d15" stopOpacity="0" />
+        </radialGradient>
+      </defs>
       {sightings.map((s, i) => {
         const p = frame.projection([s.lng, s.lat]);
         if (!p) return null;
@@ -72,7 +85,7 @@ export function MarkerLayer({
             key={s.id}
             className={cls}
             style={{ '--i': i } as CSSProperties}
-            transform={`translate(${p[0]}, ${p[1]})`}
+            transform={`translate(${p[0]}, ${p[1]}) scale(${damp})`}
             opacity={selected ? 1 : d.markerOpacity}
             role="button"
             aria-label={SPECIES_LABEL[s.species]}
@@ -83,10 +96,11 @@ export function MarkerLayer({
             onMouseEnter={() => onSelect(s.id)}
           >
             <g className="marker__scale" transform={`scale(${selected ? 1.15 : d.scale})`}>
+              <ellipse className="marker__disc" rx={92} ry={52} fill="url(#marker-disc)" />
               {selected && (
                 <>
-                  <circle className="marker__ring marker__ring--outer" r={30} />
-                  <circle className="marker__ring" r={26} />
+                  <circle className="marker__ring marker__ring--outer" r={100} />
+                  <circle className="marker__ring" r={90} />
                 </>
               )}
               <g className="marker__breathe">

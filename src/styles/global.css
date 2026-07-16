@@ -92,7 +92,9 @@ body {
   stroke-linejoin: round;
 }
 
-/* Wide, sheer stroke under the land — reads as the offshore shelf. */
+/* Sheer stroke stack under the land — nested engraved shelf bands hugging
+   the shore. Widths are world units, so zooming in spreads them into wide,
+   crisp contour shading just as the raster softens. */
 .map__coast-halo {
   fill: none;
   stroke: var(--coast);
@@ -101,8 +103,37 @@ body {
   opacity: 0.12;
 }
 
+.map__coast-halo--mid {
+  stroke-width: 13;
+  opacity: 0.06;
+}
+
+.map__coast-halo--far {
+  stroke-width: 26;
+  opacity: 0.035;
+}
+
 .map__inner--chart .map__coast-halo {
-  opacity: 0.08;
+  stroke: #d8c9a0;
+  opacity: 0.1;
+}
+
+.map__inner--chart .map__coast-halo--mid {
+  opacity: 0.05;
+}
+
+.map__inner--chart .map__coast-halo--far {
+  opacity: 0.03;
+}
+
+/* 7.5-minute chart graticule — hairline at every zoom. */
+.map__graticule {
+  fill: none;
+  stroke: #d8c9a0;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.06;
+  pointer-events: none;
 }
 
 /* Screen-space corner falloff over everything in the map — painted after
@@ -120,9 +151,18 @@ body {
    on top nearly sheer so geography stays authoritative (dropped islets,
    smoothed coves in the raster get quietly corrected) while the aged-paper
    grain shows through. */
+/* Land must recede so the water reads as the stage: the dark --land fill
+   sits at high opacity over the pale chart raster (letting ~25% of its
+   texture through), and the coastline becomes the bright element — a thin
+   warm stroke, the classic nautical-chart move. */
 .map__inner--chart .map__land {
-  fill-opacity: 0.3;
-  stroke-opacity: 0.55;
+  fill-opacity: 0.75;
+  stroke: #d8c9a0;
+  stroke-opacity: 0.65;
+  /* Screen-space hairline: the coastline stays a fine inked stroke when
+     zoomed instead of fattening into a 12px band. */
+  stroke-width: 1.25;
+  vector-effect: non-scaling-stroke;
 }
 
 .species-sprite {
@@ -512,127 +552,130 @@ body {
 .today-board {
   position: absolute;
   inset: 0;
-  overflow-y: auto;
-  padding: 1.6rem 2.5rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 1.8rem 2rem 2rem;
   background:
     radial-gradient(120% 90% at 50% 0%, #0d1b29 0%, var(--water-deep) 70%);
-  scrollbar-width: thin;
-  scrollbar-color: var(--panel-edge) transparent;
   animation: view-enter 0.24s ease-out both;
 }
 
 .today-board__header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 0.4rem 1.2rem;
-  margin: 0 0 1.4rem;
-  padding-bottom: 0.7rem;
-  border-bottom: 3px double var(--panel-edge);
+  text-align: center;
+  margin: 0 0 0.4rem;
+}
+
+.today-board__kicker {
+  margin: 0 0 0.25rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--ink-dim);
 }
 
 .today-board__title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(1.35rem, 2.6vw, 2rem);
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  font-size: clamp(1.8rem, 3.6vw, 2.7rem);
+  font-weight: 550;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--accent-orca);
 }
 
-.today-board__date {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 0.9rem;
-  color: var(--ink-dim);
+/* ---- the scatter collage — AvianVisitors-style organic cluster ---------- */
+
+.today-collage {
+  position: relative;
+  flex: 1;
+  width: min(1200px, 100%);
+  margin: 0 auto;
+  min-height: 0;
 }
 
-.today-board__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1.25rem;
-}
-
-.today-card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  text-align: left;
-  font: inherit;
-  color: var(--ink);
-  background: var(--panel);
-  border: 1px solid var(--panel-edge);
-  border-radius: 14px;
-  padding: 0.7rem 0.85rem 0.8rem;
+.today-collage__item {
+  position: absolute;
+  transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
+  background: none;
+  border: none;
+  padding: 0;
   cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease;
+  transition: transform 0.25s ease;
 }
 
-.today-card:hover {
-  transform: translateY(-2px);
-  border-color: color-mix(in srgb, var(--accent-warm) 35%, transparent);
+.today-collage__item:hover,
+.today-collage__item:focus-visible {
+  transform: translate(-50%, -50%) rotate(var(--rot, 0deg)) scale(1.08);
+  /* Beats the inline stacking order so the hovered cutout surfaces. */
+  z-index: 100 !important;
 }
 
-.today-card.is-new {
+.today-collage__item:focus-visible {
+  outline: 2px solid var(--accent-warm);
+  outline-offset: 6px;
+  border-radius: 12px;
+}
+
+.today-collage-item__art {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 6px 16px rgb(0 0 0 / 0.45));
+}
+
+svg.today-collage-item__art {
+  aspect-ratio: 100 / 60;
+}
+
+/* Fresh arrival — the cutout swims in; transform lives on the art so it
+   never fights the item's centering translate. */
+.today-collage__item.is-new .today-collage-item__art {
   animation: marker-arrive 0.9s cubic-bezier(0.34, 1.3, 0.64, 1) both;
 }
 
-/* The plate window — the collage art's navy field is this same color, so
-   generated plates read as borderless vignettes; fallbacks sit on it too. */
-.today-card__frame {
-  position: relative;
-  display: block;
-  aspect-ratio: 1;
-  margin-bottom: 0.55rem;
-  background: var(--water);
-  border-radius: 9px;
-  overflow: hidden;
+.today-collage__count {
+  position: absolute;
+  right: 4%;
+  bottom: 14%;
+  min-width: 1.3rem;
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--accent-warm);
+  background: color-mix(in srgb, var(--panel) 88%, transparent);
+  border: 1px solid var(--panel-edge);
+  border-radius: 999px;
+  padding: 0.05rem 0.35rem;
 }
 
-/* The generated collage plates carry their own hand-inked double-rule
-   border; fallback art (marker plate / silhouette) gets a quiet CSS rule
-   instead so the grid never looks half-framed. */
-.today-card__frame:has(svg)::after,
-.today-card__frame:has(img[src*='/art/species/'])::after {
-  content: '';
+/* Species name — a rounded pill that fades in under the cutout on hover. */
+.today-collage__name {
   position: absolute;
-  inset: 6px;
-  border: 1px solid color-mix(in srgb, var(--accent-warm) 22%, transparent);
-  border-radius: 5px;
+  left: 50%;
+  top: calc(100% + 0.35rem);
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--panel) 85%, transparent);
+  border: 1px solid var(--panel-edge);
+  border-radius: 999px;
+  padding: 0.15rem 0.7rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
   pointer-events: none;
 }
 
-.today-card__art {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-svg.today-card__art {
-  padding: 18%;
-}
-
-.today-card__species {
-  font-family: var(--font-display);
-  font-size: 1.02rem;
-  font-weight: 550;
-}
-
-.today-card__meta {
-  font-size: 0.74rem;
-  color: var(--ink-dim);
+.today-collage__item:hover .today-collage__name,
+.today-collage__item:focus-visible .today-collage__name {
+  opacity: 1;
 }
 
 @media (max-width: 820px) {
   .today-board {
     padding: 1.1rem 1rem 1.5rem;
-  }
-  .today-board__grid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 0.8rem;
   }
 }
 

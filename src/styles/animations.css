@@ -88,7 +88,7 @@
    communicates arrivals through opacity/tint; only movement is removed. */
 @media (prefers-reduced-motion: reduce) {
   .marker--new .marker__scale,
-  .today-card.is-new,
+  .today-collage__item.is-new .today-collage-item__art,
   .marker--breathing .marker__breathe,
   .today-board,
   .app__map,

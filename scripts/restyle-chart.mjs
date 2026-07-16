@@ -21,16 +21,24 @@ if (!KEY) {
 
 const PROMPT = `Restyle this map of Puget Sound as a 19th-century hand-drawn
 nautical chart, in the same visual language as vintage natural-history
-lithographs: muted gouache and fine hand-inked linework, kept VERY quiet and
-understated. The water stays a deep dark navy almost identical to its
-current color — add only an extremely faint, sparse engraved depth-contour
-line or two hugging the coastlines, barely lighter than the water, and
-nothing at all in open water: no dots, no stippling, no marks. The land
-masses become a dark desaturated sage green with a whisper of aged-paper
-grain and very fine, short engraved hatching just inside the shorelines;
-the coastline itself is a thin, subdued hand-inked line only slightly
-lighter than the land. Everything low-contrast, dark, calm and ambient — a
-chart barely visible in a dim study at night.
+lithographs: muted gouache and fine hand-inked linework, kept quiet and
+understated but rich in FINE detail that rewards close inspection. Overall
+brightness, contrast and palette must match the input image — dark, muted,
+ambient. The water stays a deep dark navy identical to its current color —
+along every coastline add two or three engraved depth-contour lines
+following the shore at slightly increasing offsets like shelving on an old
+Admiralty chart; each contour is a true hairline (about one pixel wide),
+dim, only one shade lighter than the water, NEVER white or bright. Open
+water beyond those contours stays completely clean: no dots, no stippling,
+no marks. The land masses stay a dark desaturated sage green with a subtle
+aged-paper grain and gouache wash texture; just inside the shorelines add
+very fine, VERY SHORT engraved hatching ticks — eyelash-length, perpendicular
+to the shore, fading out within a tiny distance inland — sharp and
+individually distinguishable like a copperplate engraving, never long
+feathery fronds. The coastline itself is a single thin, precise hand-inked
+line only slightly lighter than the land, hairline weight, never a wide or
+glowing band. Everything low-contrast, dark, calm — a chart in a dim study
+at night, drawn with the finest nib.
 
 CRITICAL: preserve the exact shapes, positions, sizes and scale of every
 landmass, island and waterway from the input image pixel-for-pixel — do NOT
@@ -82,7 +90,10 @@ for (let tryN = 1; tryN <= 3; tryN++) {
   // zoom) — geo anchoring only needs the aspect to match the base frame.
   await sharp(raw)
     .resize(meta.width * 2, meta.height * 2, { fit: 'fill' })
-    .webp({ quality: 82 })
+    // Mild sharpen recovers engraved linework the resample softens — that
+    // detail is what survives on screen under deep zoom.
+    .sharpen({ sigma: 0.8, m1: 0.6, m2: 0.4 })
+    .webp({ quality: 86 })
     .toFile('public/art/map-chart.webp');
   console.log(`public/art/map-chart.webp ${meta.width * 2}x${meta.height * 2}`);
   process.exit(0);

@@ -9,7 +9,7 @@ import {
 } from 'react';
 import type { GeoProjection } from 'd3-geo';
 import { CONFIG } from '../config';
-import { chartPlacement, makePath, makeProjection } from './projection';
+import { chartPlacement, graticulePathD, makePath, makeProjection } from './projection';
 import { LandLayer } from './LandLayer';
 
 export interface MapFrame {
@@ -33,7 +33,9 @@ interface MapViewProps {
  * projection, and paints the water + stylized landmass beneath whatever
  * projected layers the caller renders.
  */
-const MIN_ZOOM = 1;
+// The default frame now crops the Sound (cover-blend fit) — allow zooming
+// out below 1 so the whole channel is still reachable.
+const MIN_ZOOM = 0.5;
 const MAX_ZOOM = 12;
 
 interface Transform {
@@ -127,24 +129,34 @@ export function MapView({ children, overlay }: MapViewProps) {
     return () => ro.disconnect();
   }, []);
 
-  // Children render inside the scaled <g>, so their frame carries IDENTITY —
-  // they project into the group's own coordinate space. Only the HTML overlay
-  // (rendered outside the SVG) needs the live transform to track markers.
-  const frame = useMemo<MapFrame | null>(() => {
+  // Children render inside the scaled <g> and project into the group's own
+  // coordinate space, but their frame still carries the live transform so
+  // size-in-screen-pixels ornaments (markers, hydrophones) can counter-scale
+  // under zoom. The HTML overlay uses it to track markers from outside the SVG.
+  const base = useMemo(() => {
     if (!size) return null;
-    return {
-      projection: makeProjection(size.width, size.height),
-      ...size,
-      transform: IDENTITY,
-    };
+    return { projection: makeProjection(size.width, size.height), ...size };
   }, [size]);
 
-  const path = useMemo(() => (frame ? makePath(frame.projection) : null), [frame]);
+  const frame = useMemo<MapFrame | null>(
+    () => (base ? { ...base, transform } : null),
+    [base, transform],
+  );
+
+  const path = useMemo(() => (base ? makePath(base.projection) : null), [base]);
   const chart = useMemo(
     () =>
-      frame && CONFIG.mapArt === 'chart' ? chartPlacement(frame.projection) : null,
-    [frame],
+      base && CONFIG.mapArt === 'chart' ? chartPlacement(base.projection) : null,
+    [base],
   );
+  const graticule = useMemo(
+    () => (path && chart ? graticulePathD(path) : null),
+    [path, chart],
+  );
+
+  // The raster's texture pixels turn to mush under deep zoom — ease it back
+  // and let the crisp vector coastline/contours/graticule carry the view.
+  const chartOpacity = Math.max(0.45, Math.min(1, 1 - (transform.k - 1.6) * 0.12));
 
   return (
     <div ref={containerRef} className="map">
@@ -173,8 +185,8 @@ export function MapView({ children, overlay }: MapViewProps) {
             </radialGradient>
             <radialGradient id="map-vignette" cx="50%" cy="50%" r="72%">
               <stop offset="0%" stopColor="#04090e" stopOpacity="0" />
-              <stop offset="70%" stopColor="#04090e" stopOpacity="0" />
-              <stop offset="100%" stopColor="#04090e" stopOpacity="0.5" />
+              <stop offset="62%" stopColor="#04090e" stopOpacity="0" />
+              <stop offset="100%" stopColor="#04090e" stopOpacity="0.62" />
             </radialGradient>
           </defs>
           <rect
@@ -196,8 +208,10 @@ export function MapView({ children, overlay }: MapViewProps) {
                 width={chart.width}
                 height={chart.height}
                 preserveAspectRatio="none"
+                opacity={chartOpacity}
               />
             )}
+            {graticule && <path className="map__graticule" d={graticule} />}
             <LandLayer path={path} />
             {children?.(frame)}
           </g>

@@ -24,6 +24,9 @@ export function HydrophoneLayer({
   selectedId,
   onSelect,
 }: HydrophoneLayerProps) {
+  // Same zoom damping as sighting markers — quiet furniture shouldn't
+  // balloon into the foreground when the map is zoomed in.
+  const damp = 1 / Math.max(1, frame.transform.k);
   return (
     <g className="hydros">
       {hydrophones.map((h) => {
@@ -41,7 +44,7 @@ export function HydrophoneLayer({
           <g
             key={h.id}
             className={cls}
-            transform={`translate(${p[0]}, ${p[1]})`}
+            transform={`translate(${p[0]}, ${p[1]}) scale(${damp})`}
             role="button"
             tabIndex={0}
             aria-label={`Hydrophone: ${h.name}`}
