@@ -62,6 +62,25 @@ describe('reducer', () => {
     expect(s.consecutiveFailures).toBe(0);
   });
 
+  it('BACKFILL_SUCCESS merges history without touching poll bookkeeping', () => {
+    let s = seeded();
+    s = reducer(s, { type: 'POLL_ERROR', at: now + 30_000 });
+    const before = {
+      lastSuccessAt: s.lastSuccessAt,
+      failures: s.consecutiveFailures,
+      newIds: s.newIds,
+    };
+    s = reducer(s, {
+      type: 'BACKFILL_SUCCESS',
+      sightings: [mk('A', 1), mk('OLD-1', 90)],
+      at: now + 60_000,
+    });
+    expect(s.sightings.size).toBe(2); // exact-id overlap with the poll: one A
+    expect(s.lastSuccessAt).toBe(before.lastSuccessAt);
+    expect(s.consecutiveFailures).toBe(before.failures);
+    expect(s.newIds).toBe(before.newIds);
+  });
+
   it('window changes and selection round-trip', () => {
     let s = seeded();
     s = reducer(s, { type: 'SET_WINDOW', hours: 24 });
@@ -90,6 +109,19 @@ describe('selectors', () => {
     expect(visibleSightings(s).map((x) => x.id)).toEqual(['NEW']);
   });
 
+  it('visibleSightings collapses near-dupes at display time (FR-8)', () => {
+    let s = initialState(now);
+    // Same spot, 5 minutes apart → one animal, two witnesses.
+    const a = { ...mk('A', 1), trusted: 2 };
+    const b = { ...mk('B', 1), epochMs: a.epochMs - 5 * 60_000 };
+    s = reducer(s, { type: 'POLL_SUCCESS', sightings: [a, b], at: now });
+    const visible = visibleSightings(s);
+    expect(s.sightings.size).toBe(2); // store keeps every raw report
+    expect(visible).toHaveLength(1);
+    expect(visible[0].id).toBe('A');
+    expect(visible[0].reportCount).toBe(2);
+  });
+
   it('decay fades and shrinks with age', () => {
     const fresh = decay(mk('A', 0), now, 72);
     const old = decay(mk('B', 71), now, 72);
@@ -98,6 +130,10 @@ describe('selectors', () => {
     expect(old.opacity).toBeLessThan(0.3);
     expect(old.scale).toBeLessThan(0.65);
     expect(decay(mk('C', 500), now, 72).opacity).toBeCloseTo(0.25);
+    // Marker body floors much higher — plates go ghostly below ~0.6.
+    expect(fresh.markerOpacity).toBeCloseTo(1);
+    expect(old.markerOpacity).toBeGreaterThan(0.6);
+    expect(decay(mk('C', 500), now, 72).markerOpacity).toBeCloseTo(0.65);
   });
 
   it('isStale trips after staleAfterMs without a successful poll', () => {

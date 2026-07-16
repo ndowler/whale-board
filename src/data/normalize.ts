@@ -131,6 +131,8 @@ export function normalizeRecord(
     sourceEntity:
       typeof raw.data_source_entity === 'string' ? raw.data_source_entity : '',
     region: regionFor(lat, lng),
+    mergedIds: [],
+    reportCount: 1,
   };
 }
 

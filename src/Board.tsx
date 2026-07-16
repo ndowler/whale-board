@@ -1,12 +1,19 @@
 import { useEffect, useRef } from 'react';
 import { CONFIG } from './config';
 import { useAppDispatch, useAppState } from './state/store';
-import { usePollingLoop, useClock } from './data/usePollingLoop';
-import { visibleSightings } from './state/selectors';
+import {
+  usePollingLoop,
+  useBackfill,
+  useAcousticLoop,
+  useClock,
+} from './data/usePollingLoop';
+import { visibleSightings, hydroStatuses } from './state/selectors';
 import { MapView } from './map/MapView';
 import { MarkerLayer } from './map/MarkerLayer';
 import { GlowLayer } from './map/GlowLayer';
+import { HydrophoneLayer } from './map/HydrophoneLayer';
 import { Popover } from './map/Popover';
+import { HydroPopover } from './map/HydroPopover';
 import { Rail } from './ui/Rail';
 import { StatusBar } from './ui/StatusBar';
 import { EmptyState } from './ui/EmptyState';
@@ -19,12 +26,20 @@ export function Board() {
   const state = useAppState();
   const dispatch = useAppDispatch();
   usePollingLoop(dispatch);
+  useBackfill(dispatch);
+  useAcousticLoop(dispatch);
   useClock(dispatch);
   const { toggle: toggleKiosk } = useKiosk(state.kiosk, dispatch);
 
   const visible = visibleSightings(state);
+  // Look up in the collapsed view, not the raw store — the rendered winner
+  // carries the merged pods/reportCount, and an absorbed id simply closes.
   const selected = state.selectedId
-    ? (state.sightings.get(state.selectedId) ?? null)
+    ? (visible.find((s) => s.id === state.selectedId) ?? null)
+    : null;
+  const hydroStatus = hydroStatuses(state);
+  const selectedHydro = state.selectedHydroId
+    ? (state.hydrophones.find((h) => h.id === state.selectedHydroId) ?? null)
     : null;
 
   // Arrival treatment: chime once per batch of new ids, then retire the
@@ -47,14 +62,31 @@ export function Board() {
       <div className="app__main">
         <div className="app__map" onClick={() => dispatch({ type: 'SELECT', id: null })}>
           <MapView
-            overlay={(frame) =>
-              selected && (
-                <Popover sighting={selected} frame={frame} nowMs={state.nowMs} />
-              )
-            }
+            overlay={(frame) => (
+              <>
+                {selected && (
+                  <Popover sighting={selected} frame={frame} nowMs={state.nowMs} />
+                )}
+                {selectedHydro && (
+                  <HydroPopover
+                    hydrophone={selectedHydro}
+                    status={hydroStatus.get(selectedHydro.id)}
+                    frame={frame}
+                    nowMs={state.nowMs}
+                  />
+                )}
+              </>
+            )}
           >
             {(frame) => (
               <>
+                <HydrophoneLayer
+                  hydrophones={state.hydrophones}
+                  statuses={hydroStatus}
+                  frame={frame}
+                  selectedId={state.selectedHydroId}
+                  onSelect={(id) => dispatch({ type: 'SELECT_HYDRO', id })}
+                />
                 <GlowLayer
                   sightings={visible}
                   frame={frame}

@@ -18,8 +18,14 @@ export function Popover({ sighting: s, frame, nowMs }: PopoverProps) {
   const p = frame.projection([s.lng, s.lat]);
   if (!p) return null;
 
-  const flipY = p[1] < 190;
-  const x = Math.min(Math.max(p[0], 140), frame.width - 140);
+  // Marker lives inside the zoomed/panned SVG group; mirror that transform so
+  // the popover stays pinned to it. IDENTITY when the map isn't zoomed.
+  const { k, x: tx, y: ty } = frame.transform;
+  const sx = tx + p[0] * k;
+  const sy = ty + p[1] * k;
+
+  const flipY = sy < 190;
+  const x = Math.min(Math.max(sx, 140), frame.width - 140);
 
   const pods = podLine(s);
   const comment = s.comment.replace(/^\s*(\[[^\]]*\]\s*)+/, '').trim();
@@ -27,7 +33,7 @@ export function Popover({ sighting: s, frame, nowMs }: PopoverProps) {
   return (
     <div
       className={`popover${flipY ? ' popover--below' : ''}`}
-      style={{ left: x, top: p[1] }}
+      style={{ left: x, top: sy }}
       role="dialog"
       aria-label={`Sighting details: ${SPECIES_LABEL[s.species]}`}
       onClick={(e) => e.stopPropagation()}
@@ -41,6 +47,7 @@ export function Popover({ sighting: s, frame, nowMs }: PopoverProps) {
           </span>
         )}
         <span>{s.region ?? 'Salish Sea'}</span>
+        {s.reportCount > 1 && <span>{s.reportCount} reports</span>}
       </div>
       {comment && <div className="popover__note">{comment}</div>}
       <div className="popover__foot">

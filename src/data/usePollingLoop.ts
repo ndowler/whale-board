@@ -1,7 +1,8 @@
 import { useEffect, type Dispatch } from 'react';
 import { CONFIG } from '../config';
 import type { Action } from '../state/store';
-import { fetchSightings } from './acartiaClient';
+import { fetchBackfill, fetchSightings } from './acartiaClient';
+import { fetchAcoustic } from './orcasoundClient';
 import { normalizeBatch } from './normalize';
 
 /**
@@ -72,6 +73,95 @@ export function usePollingLoop(dispatch: Dispatch<Action>) {
       ctrl?.abort();
       document.removeEventListener('visibilitychange', catchUp);
       window.removeEventListener('online', onOnline);
+    };
+  }, [dispatch]);
+}
+
+/**
+ * History backfill from the token-gated full feed (via the proxy Worker).
+ * Disabled when CONFIG.proxyUrl is empty. One fetch on mount — plus a slow
+ * chained-setTimeout refresh when backfillRefreshMs is set. Strictly
+ * best-effort: any failure is a console warning and nothing more, because
+ * the board is fully functional on /current alone (FR-2 spirit).
+ */
+export function useBackfill(dispatch: Dispatch<Action>) {
+  useEffect(() => {
+    if (!CONFIG.proxyUrl) return;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    let ctrl: AbortController | null = null;
+    let disposed = false;
+
+    const attempt = async () => {
+      ctrl = new AbortController();
+      const killer = setTimeout(() => ctrl?.abort(), CONFIG.backfillTimeoutMs);
+      try {
+        const payload = await fetchBackfill(ctrl.signal);
+        if (disposed) return;
+        const sightings = normalizeBatch(payload, (m) =>
+          console.warn(`[whale-board] ${m}`),
+        );
+        dispatch({ type: 'BACKFILL_SUCCESS', sightings, at: Date.now() });
+      } catch (err) {
+        if (!disposed)
+          console.warn(`[whale-board] backfill unavailable: ${String(err)}`);
+      } finally {
+        clearTimeout(killer);
+        if (!disposed && CONFIG.backfillRefreshMs !== null) {
+          clearTimeout(timer);
+          timer = setTimeout(attempt, CONFIG.backfillRefreshMs);
+        }
+      }
+    };
+
+    void attempt();
+    return () => {
+      disposed = true;
+      clearTimeout(timer);
+      ctrl?.abort();
+    };
+  }, [dispatch]);
+}
+
+/**
+ * Acoustic side-channel: same chained-setTimeout discipline, deliberately
+ * simpler — the layer is decorative, so failures retry on the next interval
+ * without a backoff ladder and never surface an error state.
+ */
+export function useAcousticLoop(dispatch: Dispatch<Action>) {
+  useEffect(() => {
+    if (!CONFIG.acoustic.enabled) return;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    let ctrl: AbortController | null = null;
+    let disposed = false;
+
+    const attempt = async () => {
+      ctrl = new AbortController();
+      const killer = setTimeout(() => ctrl?.abort(), CONFIG.fetchTimeoutMs);
+      try {
+        const { hydrophones, detections } = await fetchAcoustic(ctrl.signal);
+        if (disposed) return;
+        dispatch({
+          type: 'ACOUSTIC_SUCCESS',
+          hydrophones,
+          detections,
+          at: Date.now(),
+        });
+      } catch {
+        // silent — last-good hydrophone state simply ages out
+      } finally {
+        clearTimeout(killer);
+        if (!disposed) {
+          clearTimeout(timer);
+          timer = setTimeout(attempt, CONFIG.pollIntervalMs);
+        }
+      }
+    };
+
+    void attempt();
+    return () => {
+      disposed = true;
+      clearTimeout(timer);
+      ctrl?.abort();
     };
   }, [dispatch]);
 }

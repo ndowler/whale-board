@@ -1,9 +1,29 @@
-import type { Sighting } from '../types';
+import { useState } from 'react';
+import type { Sighting, SpeciesId } from '../types';
 import type { WindowHours } from '../config';
 import type { MapFrame } from './MapView';
 import { decay } from '../state/selectors';
 import { SPECIES_LABEL } from '../data/species';
 import { markerHref } from '../assets/species/SpeciesSprite';
+import { plateArtUrl, usePlates } from '../assets/species/art';
+
+/** Plate-art marker body; falls back to the silhouette if the PNG fails. */
+function MarkerArt({ species }: { species: SpeciesId }) {
+  const [failed, setFailed] = useState(false);
+  if (!usePlates() || failed)
+    return <use href={markerHref(species)} x={-22} y={-13} width={44} height={26} />;
+  return (
+    <image
+      href={plateArtUrl(species)}
+      x={-24}
+      y={-14}
+      width={48}
+      height={28}
+      preserveAspectRatio="xMidYMid meet"
+      onError={() => setFailed(true)}
+    />
+  );
+}
 
 interface MarkerLayerProps {
   sightings: Sighting[];
@@ -50,7 +70,7 @@ export function MarkerLayer({
             key={s.id}
             className={cls}
             transform={`translate(${p[0]}, ${p[1]})`}
-            opacity={selected ? 1 : d.opacity}
+            opacity={selected ? 1 : d.markerOpacity}
             role="button"
             aria-label={SPECIES_LABEL[s.species]}
             onClick={(e) => {
@@ -61,7 +81,7 @@ export function MarkerLayer({
           >
             <g className="marker__scale" transform={`scale(${selected ? 1.15 : d.scale})`}>
               {selected && <circle className="marker__ring" r={26} />}
-              <use href={markerHref(s.species)} x={-22} y={-13} width={44} height={26} />
+              <MarkerArt species={s.species} />
             </g>
           </g>
         );

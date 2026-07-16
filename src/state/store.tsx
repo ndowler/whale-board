@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from 'react';
 import { CONFIG, type WindowHours } from '../config';
-import type { Sighting } from '../types';
+import type { AcousticDetection, Hydrophone, Sighting } from '../types';
 import { mergeSightings } from '../data/normalize';
 
 export interface AppState {
@@ -16,8 +16,12 @@ export interface AppState {
   newIds: readonly string[];
   lastSuccessAt: number | null;
   consecutiveFailures: number;
+  /** Acoustic bridge: hydrophone nodes + recent whale detections. */
+  hydrophones: readonly Hydrophone[];
+  detections: readonly AcousticDetection[];
   windowHours: WindowHours;
   selectedId: string | null;
+  selectedHydroId: string | null;
   chimeOn: boolean;
   kiosk: boolean;
   /** UI clock, advanced by TICK — drives decay, time-ago, staleness. */
@@ -26,9 +30,17 @@ export interface AppState {
 
 export type Action =
   | { type: 'POLL_SUCCESS'; sightings: Sighting[]; at: number }
+  | { type: 'BACKFILL_SUCCESS'; sightings: Sighting[]; at: number }
   | { type: 'POLL_ERROR'; at: number }
+  | {
+      type: 'ACOUSTIC_SUCCESS';
+      hydrophones: Hydrophone[];
+      detections: AcousticDetection[];
+      at: number;
+    }
   | { type: 'TICK'; now: number }
   | { type: 'SELECT'; id: string | null }
+  | { type: 'SELECT_HYDRO'; id: string | null }
   | { type: 'SET_WINDOW'; hours: WindowHours }
   | { type: 'CLEAR_NEW' }
   | { type: 'SET_CHIME'; on: boolean }
@@ -49,8 +61,11 @@ export function initialState(nowMs: number): AppState {
     newIds: [],
     lastSuccessAt: null,
     consecutiveFailures: 0,
+    hydrophones: [],
+    detections: [],
     windowHours: CONFIG.defaultWindowHours,
     selectedId: null,
+    selectedHydroId: null,
     chimeOn,
     kiosk: false,
     nowMs,
@@ -77,6 +92,14 @@ export function reducer(state: AppState, action: Action): AppState {
         nowMs: action.at,
       };
     }
+    case 'BACKFILL_SUCCESS': {
+      // History from the token-gated full feed (via the proxy Worker).
+      // It is not an arrival and not a poll: newIds, lastSuccessAt, and
+      // consecutiveFailures stay untouched so it can never animate arrivals
+      // or mask /current staleness.
+      const { next } = mergeSightings(state.sightings, action.sightings, action.at);
+      return { ...state, sightings: next };
+    }
     case 'POLL_ERROR':
       // Last-good data is never cleared on failure.
       return {
@@ -84,10 +107,22 @@ export function reducer(state: AppState, action: Action): AppState {
         consecutiveFailures: state.consecutiveFailures + 1,
         nowMs: action.at,
       };
+    case 'ACOUSTIC_SUCCESS': {
+      // Acoustic data is decorative — failures are silent and detections
+      // simply age out; only rows still inside the heard window are kept.
+      const floor = action.at - CONFIG.acoustic.heardWindowMs;
+      return {
+        ...state,
+        hydrophones: action.hydrophones,
+        detections: action.detections.filter((d) => d.epochMs >= floor),
+      };
+    }
     case 'TICK':
       return { ...state, nowMs: action.now };
     case 'SELECT':
-      return { ...state, selectedId: action.id };
+      return { ...state, selectedId: action.id, selectedHydroId: null };
+    case 'SELECT_HYDRO':
+      return { ...state, selectedHydroId: action.id, selectedId: null };
     case 'SET_WINDOW':
       return { ...state, windowHours: action.hours };
     case 'CLEAR_NEW':

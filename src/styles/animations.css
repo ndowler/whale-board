@@ -37,3 +37,32 @@
     opacity: 1;
   }
 }
+
+/* Looping sonar ring on a hydrophone that heard whales in the last half hour. */
+@keyframes hydro-sonar {
+  0% {
+    opacity: 0.8;
+    transform: scale(0.4);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(3);
+  }
+}
+
+/* Ambient motion off for vestibular-sensitive viewers — the board still
+   communicates arrivals through opacity/tint; only movement is removed. */
+@media (prefers-reduced-motion: reduce) {
+  .marker--new .marker__scale,
+  .card.is-new {
+    animation: none;
+  }
+  .glow__ping,
+  .hydro__ring {
+    display: none;
+  }
+  .statusbar__pulse {
+    animation: none;
+    opacity: 1;
+  }
+}

@@ -46,6 +46,57 @@ export function makePath(projection: GeoProjection) {
 }
 
 /**
+ * The vintage-chart raster's reference frame. MUST stay in lockstep with
+ * scripts/render-base-chart.mjs, which rasterized the coastline with this
+ * exact projection — same parallels/rotate/frame/extent. Because fitExtent
+ * only ever applies a uniform scale + translate on top of fixed conic
+ * parameters, mapping the raster into any live projection reduces to
+ * anchoring its two pixel corners.
+ */
+const CHART_FRAME: GeoJSON.Feature = {
+  type: 'Feature',
+  properties: {},
+  geometry: {
+    type: 'Polygon',
+    coordinates: [
+      [
+        [-124.0, 46.9],
+        [-124.0, 49.3],
+        [-122.0, 49.3],
+        [-122.0, 46.9],
+        [-124.0, 46.9],
+      ],
+    ],
+  },
+};
+const CHART_W = 1664;
+const CHART_H = 2048;
+
+const chartRef = geoConicConformal()
+  .parallels([47.5, 48.7])
+  .rotate([122.7, 0])
+  .fitExtent(
+    [
+      [0, 0],
+      [CHART_W, CHART_H],
+    ],
+    CHART_FRAME,
+  );
+
+/** Where the chart raster's corners land in a live projection's pixels. */
+export function chartPlacement(
+  projection: GeoProjection,
+): { x: number; y: number; width: number; height: number } | null {
+  const g0 = chartRef.invert?.([0, 0]);
+  const g1 = chartRef.invert?.([CHART_W, CHART_H]);
+  if (!g0 || !g1) return null;
+  const p0 = projection(g0);
+  const p1 = projection(g1);
+  if (!p0 || !p1) return null;
+  return { x: p0[0], y: p0[1], width: p1[0] - p0[0], height: p1[1] - p0[1] };
+}
+
+/**
  * Pixel radius of `km` kilometers at the map's center latitude — used to
  * render honest "approximate position" glows instead of pinpoints.
  */

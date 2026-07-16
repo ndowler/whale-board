@@ -74,6 +74,15 @@ body {
   stroke-linejoin: round;
 }
 
+/* Chart mode: the vintage raster carries the texture; the vector land sits
+   on top nearly sheer so geography stays authoritative (dropped islets,
+   smoothed coves in the raster get quietly corrected) while the aged-paper
+   grain shows through. */
+.map__inner--chart .map__land {
+  fill-opacity: 0.3;
+  stroke-opacity: 0.55;
+}
+
 .species-sprite {
   position: absolute;
   width: 0;
@@ -171,6 +180,70 @@ body {
   transform-box: fill-box;
   transform-origin: center;
   animation: glow-ping 1.8s ease-out 3 both;
+}
+
+/* ---- hydrophones ------------------------------------------------------- */
+
+.hydro {
+  cursor: pointer;
+  outline: none;
+}
+
+.hydro__hit {
+  fill: transparent;
+}
+
+.hydro__dot {
+  fill: currentColor;
+}
+
+.hydro__arc {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.1;
+  stroke-linecap: round;
+}
+
+/* Idle: quiet map furniture. Heard: lit amber. Hot: bright + sonar rings. */
+.hydro--idle {
+  color: var(--ink-faint);
+}
+
+.hydro--heard {
+  color: var(--accent-warm);
+}
+
+.hydro--hot {
+  color: var(--accent-warm);
+}
+
+.hydro.is-selected .hydro__dot,
+.hydro:focus-visible .hydro__dot {
+  stroke: var(--ink);
+  stroke-width: 1;
+}
+
+.hydro__ring {
+  fill: none;
+  stroke: var(--accent-warm);
+  stroke-width: 1.2;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hydro-sonar 3.2s ease-out infinite;
+}
+
+.hydro__ring--b {
+  animation-delay: 1.6s;
+}
+
+.popover__listen {
+  color: var(--accent-warm);
+  text-decoration: none;
+  margin-top: 0.15rem;
+}
+
+.popover__listen:hover {
+  text-decoration: underline;
 }
 
 /* ---- status bar ------------------------------------------------------- */
@@ -307,6 +380,12 @@ body {
   flex: none;
   fill: currentColor;
   --sp-patch: var(--panel);
+}
+
+.card__art--plate {
+  object-fit: contain;
+  /* lift the plate off the panel the way the map's glow lifts markers */
+  filter: drop-shadow(0 1px 4px rgb(0 0 0 / 0.5));
 }
 
 .card__text {

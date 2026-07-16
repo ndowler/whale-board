@@ -1,0 +1,2252 @@
+[
+ {
+  "ssemmi_id": "SPOTTER 252311",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252311,
+  "created": "2026-07-07 00:02:00",
+  "photo_url": "",
+  "no_sighted": 3,
+  "latitude": 47.95515,
+  "longitude": -122.30369,
+  "type": "Orca",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Orcas milling, surface active (Brad Dufour)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "d7d614f8-07fd-4a83-b3f7-f3ca70a4a858",
+  "ssemmi_date_added": "Tue Jul 07 2026 00:05:27 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "94ba9cde781736ddc4da59838875a748098caa6af82da34d0216fb9b3a75c60c",
+   "s": "a19436e5894483b6191365f57b20cef61736487b0249dc554c0d11b9083fe2f0"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252318",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252318,
+  "created": "2026-07-07 02:03:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.29672,
+  "longitude": -122.46854,
+  "type": "Humpback",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Humpback about here, northwestbound (Persephone Lillie)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "b14b11dd-d154-434f-aac5-6a59ce32d604",
+  "ssemmi_date_added": "Tue Jul 07 2026 02:12:37 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "94a70653554706060ba3c41741d6f8ad56a96c214e1cf67ede28a28b19d4a67a",
+   "s": "1c0c3f3dab8c059b903462ef9f2a5cfa40de0297df63a14ffe1fa559e3d52f36"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252319",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252319,
+  "created": "2026-07-07 02:22:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.30314,
+  "longitude": -122.48857,
+  "type": "Humpback",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Humpback about here, northwestbound (Persephone Lillie)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "33598112-096c-4b2f-8c12-59f7e8f0b777",
+  "ssemmi_date_added": "Tue Jul 07 2026 02:26:49 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "63bc96e0719c9dd569db25e266ab81726a48580e5a939c3135d94f772d47985c",
+   "s": "773b019aa445a04055f37d9f1040cdbf1617594cf98d75488cc3757fbe2cd48"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252348",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252348,
+  "created": "2026-07-07 13:26:00",
+  "photo_url": "",
+  "no_sighted": "1",
+  "latitude": "47.31814",
+  "longitude": "-122.51254",
+  "type": "Harbor Porpoise",
+  "data_source_witness": "whaleAndroid",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "e4daa576-795d-41d9-a7a1-a54c966b6aab",
+  "ssemmi_date_added": "Tue Jul 07 2026 14:38:46 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "b1b0442be31dbe6e3e3275b9b3336082356351e72107aba2c2f6b4f54d5a2828",
+   "s": "1415fd18b28112790ab0321453f1d91f82d8fb42b2a51bb50e3e3cecd4a6faa4"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252323",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252323,
+  "created": "2026-07-07 03:31:00",
+  "photo_url": "",
+  "no_sighted": "1",
+  "latitude": "47.39587",
+  "longitude": "-122.3562",
+  "type": "Humpback",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "Several tail flukes shown and many blows.",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "e521fd9f-1c96-47d6-b79d-1b0126652bbb",
+  "ssemmi_date_added": "Tue Jul 07 2026 14:40:41 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "1a0d1810f71dd6f3d165f998f6006f72265519a51739abed9bee523615f1b0bc",
+   "s": "d892167230db890fdfeaa667eccd3de3b74d0cf21310a989662101c69abdf722"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252361",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252361,
+  "created": "2026-07-07 15:23:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.48949,
+  "longitude": -122.38013,
+  "type": "Humpback",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Humpback southbound (Kathleen Fife)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "5b3ea1f6-5d21-474a-a881-ebdcf3eff611",
+  "ssemmi_date_added": "Tue Jul 07 2026 15:27:20 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "7d10fde4eb1efd9a2736ddcb97909096529f8e03d06b95d01bf1c6856c0cf24f",
+   "s": "f55dcb0a22c833b32e5b29384d7a0e6a08e37c673ca77b5db8bfd01ba0a572dc"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252363",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252363,
+  "created": "2026-07-07 15:37:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.61433,
+  "longitude": -122.36348,
+  "type": "Humpback",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Humpback northbound (Robyn Riley)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "5afea768-8c55-4c75-96a5-c9db97cd1553",
+  "ssemmi_date_added": "Tue Jul 07 2026 15:41:56 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "f87570402d43b291daa801f26bde77be976a0f60fd0675ac4ca35b473375fc59",
+   "s": "e687acaea7a11d9a8cca07b12d61a7de1d42d07280fc7ff6cd5a94fb9212e8b8"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252374",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252374,
+  "created": "2026-07-07 16:45:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.64336,
+  "longitude": -122.43841,
+  "type": "Humpback",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Humpback southbound (Kyra Gilchrist)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "03ef0852-cf6a-4d64-9541-c305e4f6851d",
+  "ssemmi_date_added": "Tue Jul 07 2026 16:49:28 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "1f63104be29019d4035ae3a28e8f22e0850866ca88b3b48c7242b14bffe4293b",
+   "s": "430ee89efb68fbc496576bcdd004c54d2d368d5e39e969f827a262856fb4c34"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252411",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252411,
+  "created": "2026-07-07 20:50:00",
+  "photo_url": "",
+  "no_sighted": 6,
+  "latitude": 48.1233,
+  "longitude": -122.64094,
+  "type": "Orca",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Biggs T34s and T37s northbound slowly (Sarah Geist)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "31253c09-58b1-42b8-af5f-558617e8c0b6",
+  "ssemmi_date_added": "Tue Jul 07 2026 21:00:08 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "5cc12c98e3e005238c6980f32a4b1d6a1b3878e4ad17c0da03cc386f2e918f42",
+   "s": "abfb9ead4c4d3995a76718f6d8e71e4ba848cdb5e9930c4a6a7e0020a1489926"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252417",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252417,
+  "created": "2026-07-07 21:24:00",
+  "photo_url": "",
+  "no_sighted": 6,
+  "latitude": 48.13914,
+  "longitude": -122.67689,
+  "type": "Orca",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Biggs T34s and T37s northbound (Rachel Haight)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "e363500c-b088-41d3-83f2-2f3d5c774f3a",
+  "ssemmi_date_added": "Tue Jul 07 2026 21:24:57 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "c0866bdf52df772892876b6db83c4cf7a281dd79d019dac1a0bdbb814bf37c82",
+   "s": "90650f65a8f829cd494bc4c9efd9b06157b9548ba37aceac82d0eb0a2e0c3b48"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252436",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252436,
+  "created": "2026-07-07 23:02:57",
+  "photo_url": "",
+  "no_sighted": "1",
+  "latitude": "47.60694",
+  "longitude": "-122.4654",
+  "type": "Harbor Porpoise",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "baace6c0-2c94-41bd-b4b8-5a5b26340d04",
+  "ssemmi_date_added": "Wed Jul 08 2026 00:41:52 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "f7e0002443926112f2a3726aa4c38f516c1a0a4264d7e4ff529fdae74c1ae8f9",
+   "s": "c6b0d9752536c3d4678e783d6c3e94819d6c83bd7bc1c456f19b3e9b9630c1d0"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252355",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252355,
+  "created": "2026-07-07 14:42:00",
+  "photo_url": "",
+  "no_sighted": "1",
+  "latitude": "47.52122",
+  "longitude": "-122.40302",
+  "type": "Unspecified",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "8ffe763f-92aa-40c7-8ba4-8bff06ff97df",
+  "ssemmi_date_added": "Wed Jul 08 2026 00:43:01 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "785bca00df5fd6e292df3d1ee04c7d4c3ebb38ca61e332903d72f4a3a24f33ef",
+   "s": "db018162ffc3d462bb9f062ede43d9d04549cf11caf6b94c8bd7aa312ce24a52"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252354",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252354,
+  "created": "2026-07-07 14:28:00",
+  "photo_url": "",
+  "no_sighted": "1",
+  "latitude": "47.53716",
+  "longitude": "-122.40876",
+  "type": "Unspecified",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": " Edit by Alisa LB, Reported as orcas, but no other reports of orcas,  thinking possibly this was the humpback who was moving southbound at this time in this location.",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "27d73ba7-0870-4252-8aa7-44c9f01c45c9",
+  "ssemmi_date_added": "Wed Jul 08 2026 00:45:04 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "1c663e08577b2464122c139b9225ba44cd9eab01f174f432f0be71c88acd6c30",
+   "s": "fbab81c617fa40def12751e1db20aa18c81ad3e1f3c4437b35850178ca20fe9a"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252314",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252314,
+  "created": "2026-07-07 01:07:40",
+  "photo_url": "",
+  "no_sighted": "1",
+  "latitude": "47.56566",
+  "longitude": "-122.6155",
+  "type": "Gray Whale",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "aa5f5a30-c37f-410d-bfe1-5847b17fe576",
+  "ssemmi_date_added": "Wed Jul 08 2026 00:45:32 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "8490e7c11f7fcfb07980ecd5191c9c77ce16717da0543ed1122a5e1d95863eb6",
+   "s": "62ea947c994cfe79ec5d8e7e8bbbfd1a7d80526b11872a3ea770028b5c93d75b"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252431",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252431,
+  "created": "2026-07-07 10:14:00",
+  "photo_url": "",
+  "no_sighted": "2",
+  "latitude": "47.20197",
+  "longitude": "-122.89",
+  "type": "Harbor Porpoise",
+  "data_source_witness": "whaleAndroid",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "92a48674-7853-4149-9cb6-56777898718f",
+  "ssemmi_date_added": "Wed Jul 08 2026 00:46:22 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "7ffedfe187bff24b7c1264a4364867df85533752ab1428cfedff596cf4936e9e",
+   "s": "c634c8ce877cc34488be6a423dfbac4c5d401c8d2152ccd81938ec9b4128c9eb"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252377",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252377,
+  "created": "2026-07-07 17:28:18",
+  "photo_url": "",
+  "no_sighted": "4",
+  "latitude": "47.97271",
+  "longitude": "-122.57052",
+  "type": "Orca",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "0e0e6d6c-e661-48af-9b3f-fe1e36dd8458",
+  "ssemmi_date_added": "Wed Jul 08 2026 00:46:36 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "72151ce1a04d41e970e9642dfdda01fc1a369cc47ce8ffa5ac6635a5fbd11a97",
+   "s": "8fa36ba5ca837b5ac5bf63ceb8aa3ceb3fb58edb8dd5713697122c17b86b621f"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252385",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252385,
+  "created": "2026-07-07 18:31:00",
+  "photo_url": "",
+  "no_sighted": "1",
+  "latitude": "48.48292",
+  "longitude": "-122.81172",
+  "type": "Gray Whale",
+  "data_source_witness": "whaleAndroid",
+  "trusted": 1,
+  "data_source_comments": "Gray Whale",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "cc233899-ec34-4caa-a701-b47eac2a370b",
+  "ssemmi_date_added": "Wed Jul 08 2026 00:47:09 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "42438715ca9c1c12ec5a043abaa446cce62322d24e6ea368e90c9004fd76907e",
+   "s": "1dbf3a3bfeb70706633746ab306b201b2b58185e000c8202ae0dbba59a4d1ecf"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252567",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252567,
+  "created": "2026-07-08 21:51:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.30783,
+  "longitude": -122.47714,
+  "type": "Humpback",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Humpback facing northeast (Amy Carey)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "eb64d2ff-d25f-47c0-95ec-a5c184912057",
+  "ssemmi_date_added": "Wed Jul 08 2026 22:00:35 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "2dfd37ac47270bc10a00404750992c0d4115bc5b250e2e3ebf4e29caf53a5ad7",
+   "s": "3b5be2b261d6103a2702daee639354d76513328a7b576130c7c9daef50ee35a"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252577",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252577,
+  "created": "2026-07-08 23:23:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.32736,
+  "longitude": -122.46651,
+  "type": "Humpback",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Humpback facing west (Cherie StOurs)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "51bf25b9-181c-49f0-8612-b524d586947f",
+  "ssemmi_date_added": "Wed Jul 08 2026 23:32:33 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "9f2df4360bb7d31c9c682334d596532d355becf25b07554f1fbc212562d34478",
+   "s": "b9c154e849a8e7cffe795adb8f5ba5bcc1c902d587e93d547ca390a2a700658b"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252590",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252590,
+  "created": "2026-07-08 15:50:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.58185,
+  "longitude": -122.64376,
+  "type": "Gray Whale",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[PSWS] milling around. (Adam)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "7bd49f2a-c4d0-4602-9a4e-05e32e873687",
+  "ssemmi_date_added": "Thu Jul 09 2026 01:17:55 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "1c4e7b5b6df7e683dda60ff13ef0245646c3524892123a6af0ab2e754fe06c00",
+   "s": "fd6127b33ec269ff02c46293a3d9f6c19f48b3ec9402285086c2fbcf3a5ff08c"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252578",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252578,
+  "created": "2026-07-08 23:38:30",
+  "photo_url": "",
+  "no_sighted": "1",
+  "latitude": "47.33433",
+  "longitude": "-122.44017",
+  "type": "Humpback",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "aefd49b0-428b-4e15-a2cc-37a3130e38d9",
+  "ssemmi_date_added": "Thu Jul 09 2026 01:18:32 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "a8ca2682ae8e2757c95e818b17c204c260edd8f5f5d2110958a6a15174689594",
+   "s": "4cf64437c8c1e515a51c20242e7e6a9da78c1c0feda93dbb625b8abf2faf8aef"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252582",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252582,
+  "created": "2026-07-09 00:08:00",
+  "photo_url": "https://spotter-production.s3.amazonaws.com/sightings_photos/94343b51-5d48-4159-82d3-065e057f92d8.JPG",
+  "no_sighted": "1",
+  "latitude": "47.3098",
+  "longitude": "-122.44787",
+  "type": "Humpback",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "Seen from my house in browns point! Looked like it was headed into the bay towards the port.",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "58379f32-5b9c-44d4-b335-4974fc68afdc",
+  "ssemmi_date_added": "Thu Jul 09 2026 01:20:39 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "2e3acacebbab76e10a2e7e3ef1acb439b2a73784da96256504a517b0e84a5f9e",
+   "s": "c8211dbcd161a22e4f11eba33b66bcb5a49d2f20ae61d7f449c40dbb171ea351"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252472",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252472,
+  "created": "2026-07-08 02:06:00",
+  "photo_url": "",
+  "no_sighted": "2",
+  "latitude": "47.39437",
+  "longitude": "-122.3311",
+  "type": "Unspecified",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "Harbor porpoise",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "57666b19-75fc-4224-b5a7-88fee0e5a0f7",
+  "ssemmi_date_added": "Thu Jul 09 2026 01:21:29 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "a79100c4ba5e766d021940049a4473772366ac77e12f7dcde11aa68834c9c074",
+   "s": "508757bcd736433a0221f657044a068c8d2c628966ef51f1d6265f72f396a31c"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252598",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252598,
+  "created": "2026-07-08 20:45:00",
+  "photo_url": "https://spotter-production.s3.amazonaws.com/sightings_photos/3163d064-9c67-46b3-85e5-76caa9c81977.png",
+  "no_sighted": 1,
+  "latitude": 47.91542,
+  "longitude": -122.68547,
+  "type": "Orca",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[PSWS] Biggs T65A5 Indy, close pass off the dock as he was heading westbound along the shore in the bay. Per videos shared, attaching a frame grab. (Eric Plantenberg) (ID Amy Fowler)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "58c7ac5b-731e-4765-8511-7f8f5c5f4ff2",
+  "ssemmi_date_added": "Thu Jul 09 2026 03:50:28 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "df5dfd8819e2960df2fc7573e2468eabb6c7cc3ce156a2ed419df3dd46f3332c",
+   "s": "9b356d75a0d0efa5b1396a6983d6617d1180a722dae7a4a37dd8e868fb338b88"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252631",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252631,
+  "created": "2026-07-09 16:00:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.63754,
+  "longitude": -122.48306,
+  "type": "Humpback",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Humpback 50 yards offshore, no direction of travel given (Jane Rein)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "d4af7e5b-f626-453a-a386-8d23bad86257",
+  "ssemmi_date_added": "Thu Jul 09 2026 16:06:19 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "4c82fd2e4772e6879ddb10301706422335494607a1225381253e14048e04b0f5",
+   "s": "5a5da39cdd160ea4838a25497ab34b260ca3498036f6d90731eaa8cecd9ed237"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252640",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252640,
+  "created": "2026-07-09 17:03:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.57882,
+  "longitude": -122.47933,
+  "type": "Humpback",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] BCX2077 Graphite currently SB just S of Restoration Point (Alli Montgomery)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "b0e5de73-785d-462e-aef3-74ce3868ba49",
+  "ssemmi_date_added": "Thu Jul 09 2026 17:09:41 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "70d1064c3a1c6e394c6bf4b206ca35a0f1f2036267ca189e5d3725c966bb935d",
+   "s": "202b45582c2fa4710d86960da940867575698a5692606ff42bb505988c68bad1"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252649",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252649,
+  "created": "2026-07-09 18:13:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.83756,
+  "longitude": -122.45221,
+  "type": "Humpback",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Humpback whale northbound N of Kingston ferry lanes (Alli Montgomery)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "df79e798-8ef0-4264-9af3-864f1752876a",
+  "ssemmi_date_added": "Thu Jul 09 2026 18:21:15 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "8dedf6d3f79ee6353614e3f012dc1e3ba2b2cdf168c9ad37f9dfa46f740410a",
+   "s": "97e1a29ee1d79c62df184f5fe3c846d7c0549040b4442c23ea2e021ad39f5e4f"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252655",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252655,
+  "created": "2026-07-09 20:20:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.4245,
+  "longitude": -122.42295,
+  "type": "Humpback",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network]Humpback fluke just north of KVI beach, very much island side of channel. Likely the whale was headed north but unsure. (Ellen Weir)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "d92f4b0d-21b4-4338-aa27-9872623faa9f",
+  "ssemmi_date_added": "Thu Jul 09 2026 20:28:01 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "d9a89078442b84eb8438b77cfff4e4293a588d55042fa666bd5a4d0cb69ca6cd",
+   "s": "30d0301e4caaba0eb798be13767c3a7326e4212172457dc09fc480fa35b0416b"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252559",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252559,
+  "created": "2026-07-08 20:32:59",
+  "photo_url": "",
+  "no_sighted": "1",
+  "latitude": "47.91683",
+  "longitude": "-122.685",
+  "type": "Orca",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "226451f8-b1b5-492a-8ed3-e819ad665753",
+  "ssemmi_date_added": "Thu Jul 09 2026 22:28:26 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "14636adf9f7f7f0c41c160311cb053c6ac53f5804c7c806c47e204ecfd9aef59",
+   "s": "b861aba4eaefb421a92750fd3f348251af864b9cc1fe0f7ac78beeee677449ee"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252560",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252560,
+  "created": "2026-07-08 20:40:00",
+  "photo_url": "",
+  "no_sighted": "1",
+  "latitude": "47.91866",
+  "longitude": "-122.682",
+  "type": "Orca",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "Looks to be alone and in distress. Not active. Just floating up on the surface for awhile then back down.\nEdit by Alisa LB to add,  video received elsewhere confirms this as Indy T65A5 behaving normally. \n",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "ec43b925-f7fc-48cb-9442-348a90a0b7cd",
+  "ssemmi_date_added": "Thu Jul 09 2026 22:30:03 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "5153abdc38ac8bc1c22fa4d9e661e6f833cc4c11f2a5b6c37cd2cd7171c80887",
+   "s": "81e9d88b9587313e5eab17957f3d06a7b0db49ee6e74580b6b3e69739cc18d7d"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252641",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252641,
+  "created": "2026-07-09 17:11:06",
+  "photo_url": "",
+  "no_sighted": "1",
+  "latitude": "47.58049",
+  "longitude": "-122.44024",
+  "type": "Unspecified",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "e81d770c-927e-4b6a-ab79-0415d88ca6ba",
+  "ssemmi_date_added": "Thu Jul 09 2026 22:31:15 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "edc762a9e40e46466de1fd01afaefcc666eceb11bdc41fd6791071682ac3ab99",
+   "s": "df514592b7d461dc243d7731684c443005a1ec6e068da9a6defcaf53bad6fbb1"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252669",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252669,
+  "created": "2026-07-09 22:20:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.35605,
+  "longitude": -122.38381,
+  "type": "Humpback",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Humpback mid channel from Dumas bay sanctuary closer to federal way side seemed to be pointing towards Vashon (Rachel Foster Teodoro)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "cd2371fd-0813-4640-be51-2d5a78e1b05a",
+  "ssemmi_date_added": "Thu Jul 09 2026 22:38:53 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "bc27e61dda3672ea747077aabdf72d21e90b6c9aedf5e494318fd8d95a4c8ab",
+   "s": "fc994f7bb15006709a88d5e73618972b3f2f14713b5761690a93580f93ae1ec0"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252676",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252676,
+  "created": "2026-07-09 23:24:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.32757,
+  "longitude": -122.47177,
+  "type": "Humpback",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Humpback here, had been westbound (Oscar Brown)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "a1623574-b20a-46c0-bf7d-7edf0220b1bd",
+  "ssemmi_date_added": "Thu Jul 09 2026 23:32:05 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "5247762a224f3ba4923d50ce4e208ace9f2485cbdc332fd606ee4fdefa44ebbd",
+   "s": "3e11510bc14d6bf3786b33a40849b3ed8494c707fbbac77f9098d830f6f2fffc"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252680",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252680,
+  "created": "2026-07-09 23:49:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.32431,
+  "longitude": -122.49357,
+  "type": "Humpback",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Humpback westbound (Jason Cook)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "d046494b-2480-4941-b95c-4fdadd6ce63c",
+  "ssemmi_date_added": "Thu Jul 09 2026 23:55:04 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "304af963c2088b00f240618c3cd14b3591dc9be5eea02947c13739fcb81715e5",
+   "s": "f41de862902ae288fe1a58275261a071ad402305b6e560d2b37c15179b26714e"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252694",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252694,
+  "created": "2026-07-10 02:13:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.3099,
+  "longitude": -122.45346,
+  "type": "Humpback",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Humpback southeastbound (David Bennett)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "58d32da4-f9c6-4d26-bbfe-64d04171f0cb",
+  "ssemmi_date_added": "Fri Jul 10 2026 02:21:44 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "4d6fe1154744bf98cb693a69305500b84ac6906fed78963d4804187e86b0a065",
+   "s": "8ee71c0ce2187b99e29c67a17989d740a2f1596e1c0446a90163e00c02f8a610"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252751",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252751,
+  "created": "2026-07-10 13:50:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.30206,
+  "longitude": -122.50007,
+  "type": "Humpback",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[PSWS] Humpback is milling around just off of Point Ruston this morning.  Last saw 0650 just out from Wildfin/Silver Cloud area (Brian Steinbach) ",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "b861acb5-2fed-4541-ba58-262463317c4d",
+  "ssemmi_date_added": "Fri Jul 10 2026 15:59:31 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "79c8c99e4b65753e191a9c08191b081e4648c77580fdea4c25d0afd06e9d8661",
+   "s": "c510dfe7ac205211842a0e7b3d9f8118baa8ce190aacd2409f34f339a2c7db52"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252765",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252765,
+  "created": "2026-07-10 04:30:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.57943,
+  "longitude": -122.63414,
+  "type": "Unspecified",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[PSWS]  Whale in Bremerton at 2130 just west of the Warren Ave bridge headed east. Assuming either a grey or humpback. (Bobbi Jo) ",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "129f275b-e075-4145-9f84-9d1a4edef133",
+  "ssemmi_date_added": "Fri Jul 10 2026 16:28:58 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "e00fa3222dd723cfb6efc3e0eb16c4f5f6c9d0a88d174f350385276983620765",
+   "s": "f7e321e1e1545237c5e132a0236cca11d84f95760d59d0bae062885bb0ffc887"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252767",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252767,
+  "created": "2026-07-10 00:06:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.89759,
+  "longitude": -122.36635,
+  "type": "Orca",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[PSWS] Biggs T65A5 Indy milling around trending south. (Beriah SoOrio) ",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "a935dd89-f8c9-4221-a4d8-187239feded4",
+  "ssemmi_date_added": "Fri Jul 10 2026 16:31:17 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "432249702b3019f71cf90e72e570b1567f91db759430546eedf6eb314a39f96b",
+   "s": "a58686c1c4337d17cf6390dc873fd675b6d403a7b7e4a82f5c72571cdf9444c"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252689",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252689,
+  "created": "2026-07-10 01:01:00",
+  "photo_url": "",
+  "no_sighted": "1",
+  "latitude": "47.3151",
+  "longitude": "-122.49554",
+  "type": "Humpback",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "Edit by Alisa LB, reported as 3 but only one has been confirmed. ",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "d143aa90-e5c2-4982-914f-5f501754c89e",
+  "ssemmi_date_added": "Fri Jul 10 2026 16:36:03 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "cb7c505d800ecaf3f23f97917e7a35a23fd68e46ae4a24bba239bc25ba2dadb7",
+   "s": "219601a955dbdf33aac84f100ab3f98fd39abe461f33a709596d7ed4c2c1165c"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252700",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252700,
+  "created": "2026-07-10 03:47:56",
+  "photo_url": "https://spotter-production.s3.amazonaws.com/sightings_photos/1ae8c075-3f31-4304-8261-2512f871e89f.JPG",
+  "no_sighted": "2",
+  "latitude": "47.438",
+  "longitude": "-122.52534",
+  "type": "Harbor Porpoise",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "e375ac5b-238a-418c-b4cb-d0035b229a20",
+  "ssemmi_date_added": "Fri Jul 10 2026 16:37:13 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "df7be43d9b2c032d5cc786cff0f654e60386485c1f1bca5b3bddfdf21c7b63b4",
+   "s": "196b8ad37f5e59bccc6d183bafc2662cecd749436d6cbb58620f2851d68486fe"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252663",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252663,
+  "created": "2026-07-09 21:55:44",
+  "photo_url": "",
+  "no_sighted": "1",
+  "latitude": "47.94208",
+  "longitude": "-122.34323",
+  "type": "Orca",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "d0b8af85-a909-429e-b0f8-4619ccc51310",
+  "ssemmi_date_added": "Fri Jul 10 2026 16:37:30 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "c0e946736f9696c66247b82f0bc58d69b15fe006e41e366faadb2770e2c59468",
+   "s": "d009f9b346a2feb3c4332bf6455ba04b616e7fa5bf494af62110a38d17d8cf35"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252654",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252654,
+  "created": "2026-07-09 20:10:00",
+  "photo_url": "",
+  "no_sighted": "1",
+  "latitude": "48.28",
+  "longitude": "-123.79783",
+  "type": "Orca",
+  "data_source_witness": "whaleAndroid",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "a102b430-0d95-4a51-87c5-93025049f20e",
+  "ssemmi_date_added": "Fri Jul 10 2026 16:37:42 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "b4ece037a7ad30400cf4667d640de9b82a6b981acaddc6b5d70f4b45131940e9",
+   "s": "31cbadc5eba63541a85c10f432baa27fb3c76f4beacd9d0bef09780c45dcbb36"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252788",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252788,
+  "created": "2026-07-10 17:31:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.32986,
+  "longitude": -122.44765,
+  "type": "Humpback",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Milling (Cheri StOurs)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "8d7e846d-68a6-4c66-8380-f29bda8d0ca3",
+  "ssemmi_date_added": "Fri Jul 10 2026 17:35:10 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "83a533bf869bb0a0063d8c97505cb7eaa03044a7b24b362ee0d4c8ea567c2efa",
+   "s": "cda6e5d0d6c6df885fcc3621831c80d1a9d4361bdd6dd2fc08ada22ae2d1b950"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252799",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252799,
+  "created": "2026-07-10 18:40:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.30935,
+  "longitude": -122.50473,
+  "type": "Humpback",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] westbound (Rick Lauricella)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "dc59c7d0-db72-4d7f-9bf8-bc410cc146ed",
+  "ssemmi_date_added": "Fri Jul 10 2026 18:49:24 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "6152d0df326de7e25442519322fd1f8f3b486e05cba6208a8556fecf8607bb37",
+   "s": "ba8bd917cb4935903da92647cdf5b1c9b6109ee609d1259980588afac1d41fd6"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252807",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252807,
+  "created": "2026-07-10 19:17:00",
+  "photo_url": "",
+  "no_sighted": "1",
+  "latitude": "47.31237",
+  "longitude": "-122.51716",
+  "type": "Humpback",
+  "data_source_witness": "whaleAndroid",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "70467183-9793-40db-a5f3-69d5dcf5c022",
+  "ssemmi_date_added": "Fri Jul 10 2026 19:45:11 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "10fd3b1885270c545526e53df3fe6f3e2c054d73c45382a5868ed2b9a7297f80",
+   "s": "e80fd242748b89b40bf4081bc1d827be18857c658bd2ea4529455cb872142b0e"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252795",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252795,
+  "created": "2026-07-10 18:33:00",
+  "photo_url": "",
+  "no_sighted": "1",
+  "latitude": "47.3111",
+  "longitude": "-122.50204",
+  "type": "Unspecified",
+  "data_source_witness": "whaleAndroid",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "8db26f69-5945-4c6e-8e6c-3f8e61513a68",
+  "ssemmi_date_added": "Fri Jul 10 2026 19:46:25 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "dee968c51376e8decf6c62cd39bf4ceb0d9d8947568502206a8a4dbcb6d1f738",
+   "s": "4fd65520b5c71e89eeced7a5bcd7a56c5da5d6a7efe89af62ef9cdb3e8139bb1"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252809",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252809,
+  "created": "2026-07-10 19:53:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.56263,
+  "longitude": -122.48011,
+  "type": "Orca",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Biggs orca T65A5 Indy feeding between Blake Island and Restoration Point (Alli Montgomery)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "df009ec2-0703-4eaa-b3dd-6be4027c766c",
+  "ssemmi_date_added": "Fri Jul 10 2026 20:04:41 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "4a999ff7f8ea128b3996db53d158989a5bb624871b7a77530acf0bb6c3d2e9b6",
+   "s": "89173f4774d30c7d849564ae4fc86f4ea95ce4aeb0cb61a3b89ef2d40745906c"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252814",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252814,
+  "created": "2026-07-10 20:32:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.31753,
+  "longitude": -122.51908,
+  "type": "Humpback",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Humpback fluked off Owen Beach heading east toward ferry dock. Viewing from Vashon ferry dock. (T.L. Stokes)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "022e25f0-3653-4282-bac3-f487e317f055",
+  "ssemmi_date_added": "Fri Jul 10 2026 20:38:20 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "d46d977ab0303905c0719756d26258ac6dbf29abeb0ed17ad198fde3e3843025",
+   "s": "c2adcc092b57f5e403dc087d140fb642d23461dd5ae2c6d0321a0a4371c16b3c"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252847",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252847,
+  "created": "2026-07-10 22:31:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.32596,
+  "longitude": -122.53876,
+  "type": "Humpback",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Humpback  resurfaced between Dune and Gig Harbor mid-channel heading to Owen (Da Is)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "56971982-45fa-444c-b10d-505babb08ba3",
+  "ssemmi_date_added": "Fri Jul 10 2026 22:37:04 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "ea6b3aecce2f3b9cd70cfd3a6de0f3785ac512a242ea1eafdc357299986863a9",
+   "s": "d80b81d3f953ea3acde194b8dd38dc0399396ee435b4e2ba3cd525ea481e3c8b"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252848",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252848,
+  "created": "2026-07-10 22:45:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.63519,
+  "longitude": -122.44932,
+  "type": "Orca",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Biggs likely T65A5 NB and surface active midchannel between Yeomalt Pt and Magnolia (Brent Cullimore)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "3f075b11-d107-47e6-b76a-a68ee2de3702",
+  "ssemmi_date_added": "Fri Jul 10 2026 22:47:42 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "128399bd514dbd412079eb44cf81de38fe62fc276f9ee7ca71764b7703dbc7de",
+   "s": "e388278a98b4393558cbc58020594744be8ec55fb2fd0db469d504df022b3d8d"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252938",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252938,
+  "created": "2026-07-11 13:47:00",
+  "photo_url": "",
+  "no_sighted": "1",
+  "latitude": "47.60617",
+  "longitude": "-122.49421",
+  "type": "Orca",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "9190d052-b335-4b0f-b587-a6b667bfadcf",
+  "ssemmi_date_added": "Sat Jul 11 2026 16:12:56 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "6dedb749ef2230a30e74e48aacdebcc4bda41bd2fb15bad36e6fbbaa9fc4c7fc",
+   "s": "687c1daab127aec58fdc28d44fd95f0e85dc4aef18da3e746442d5c400fd2f85"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252833",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252833,
+  "created": "2026-07-10 21:47:00",
+  "photo_url": "",
+  "no_sighted": "1",
+  "latitude": "47.61962",
+  "longitude": "-122.45809",
+  "type": "Orca",
+  "data_source_witness": "whaleAndroid",
+  "trusted": 2,
+  "data_source_comments": "Spotted one while on the ferry to bainbridge.",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "d61df949-63bb-492e-a5d9-7f7436e9f31c",
+  "ssemmi_date_added": "Sat Jul 11 2026 16:20:07 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "d9d04f5587a6ec57f8cc1bda90f31e972e8e26ec8937e83da8ef16c0b8339f05",
+   "s": "605c63980c15e002227a51b4aae0b60e756137015f57ecd9efd98cb62a15b21"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252770",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252770,
+  "created": "2026-07-10 16:03:00",
+  "photo_url": "https://spotter-production.s3.amazonaws.com/sightings_photos/a2ae684f-171b-44b6-8cc9-30dcbd4ed7ae.jpg",
+  "no_sighted": "1",
+  "latitude": "47.56914",
+  "longitude": "-122.6204",
+  "type": "Gray Whale",
+  "data_source_witness": "whaleAndroid",
+  "trusted": 1,
+  "data_source_comments": "Slow moving heading NW towards Tracyton Dyes Inlet",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "c9482119-3269-4e7c-a43e-b1ee24af0b27",
+  "ssemmi_date_added": "Sat Jul 11 2026 16:21:17 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "b7a113b3136b3e5507a7f25cba6c76952187cb7319fb1d13a7c51d5243e3cc48",
+   "s": "3d858db792450d69cda897d6d7243a8fade49a7af3fb74e8a60193dfd18067f9"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252830",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252830,
+  "created": "2026-07-10 21:08:00",
+  "photo_url": "https://spotter-production.s3.amazonaws.com/sightings_photos/ee20808e-e0c4-4605-840d-9faf4df327f5.jpg",
+  "no_sighted": "1",
+  "latitude": "47.31215",
+  "longitude": "-122.50522",
+  "type": "Humpback",
+  "data_source_witness": "whaleAndroid",
+  "trusted": 1,
+  "data_source_comments": "Looks like Graphite humpback. He has been coming up for 4-6 breaths then drives down (with fin popping out of water)for a few mins, then comes back up. This is the same humpback that has been circling this point since 630 this morning.",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "5fa26ec8-a2e3-4da5-8b03-20f7847cf004",
+  "ssemmi_date_added": "Sat Jul 11 2026 16:23:06 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "2e1a59cc4a958463ef70d3a4fc85e523858a8a6d2741b4f06c006392a61e65b0",
+   "s": "9007764d47331218bd36461c44dba9ba29cbab150cbcdb765409f8ed0f3c6854"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252933",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252933,
+  "created": "2026-07-10 23:45:00",
+  "photo_url": "https://spotter-production.s3.amazonaws.com/sightings_photos/dd7b1458-8620-4504-bc2c-48806c4f7b7e.JPG",
+  "no_sighted": "1",
+  "latitude": "47.32516",
+  "longitude": "-122.49084",
+  "type": "Humpback",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "Blows and tail flukes. Northbound. Whale boats following. Likely humpback.",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "6c70d949-5f1c-46ec-b59a-5b4c669c9172",
+  "ssemmi_date_added": "Sat Jul 11 2026 16:24:14 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "7ab5b38f832ef58b93e7296b3ecd1fccbf284e9db9704c8e19ad1ce2352a5b64",
+   "s": "836eddf006e32f76d612730e922cf80bf5b51138389d9fbc666b1540a5b37554"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252972",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252972,
+  "created": "2026-07-11 16:28:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.53966,
+  "longitude": -122.51573,
+  "type": "Orca",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Reported as two orcas, but likely just Indy (Kristin Wilder-Hunter)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "fa5fa573-7dc2-4a52-8b31-ed3949d83c3d",
+  "ssemmi_date_added": "Sat Jul 11 2026 16:31:01 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "fa934158fa8f70c3b0af0c8076ffeca8b1014c0e4101897096a06fa0c3923c7d",
+   "s": "4c1c09438a89161b0ee782b012cf4887fc7fedd2ddae11c1b842cb3f2dc870fe"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252979",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252979,
+  "created": "2026-07-11 16:50:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.5305,
+  "longitude": -122.51546,
+  "type": "Orca",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Orca southbound (Julie Stephenson)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "6ce00633-9651-4c0f-b84f-49231380171b",
+  "ssemmi_date_added": "Sat Jul 11 2026 16:57:56 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "722b8178d130f2a43313c4c135ed73559a7b38a81150df9a1a909c1085ba0e58",
+   "s": "8b25ba54dcf7a95e73b0bde917520506c342f3a3e57fd30581d54c6e50246d2b"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252991",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252991,
+  "created": "2026-07-11 17:23:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.45627,
+  "longitude": -122.39753,
+  "type": "Humpback",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Humpback here, no direction of travel given (Carrie Cairnie)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "d41317fd-2614-4829-8cf5-99a70c06bb5a",
+  "ssemmi_date_added": "Sat Jul 11 2026 17:34:47 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "9f015181585b2362165f82e9b2a552db86781b55a076da24d649460ff13e13ee",
+   "s": "3b776420e4a7ee402eba03c0cc980222625fb7f200fe3233255450596b85f108"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253014",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253014,
+  "created": "2026-07-11 19:30:11",
+  "photo_url": "https://spotter-production.s3.amazonaws.com/sightings_photos/c7f85fd1-4563-4034-9e50-092dd5dc2621.JPG",
+  "no_sighted": "1",
+  "latitude": "48.48016",
+  "longitude": "-122.81457",
+  "type": "Gray Whale",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "3cb1b424-3a61-4208-9148-b55d26ecc349",
+  "ssemmi_date_added": "Sat Jul 11 2026 20:14:34 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "7410cac5d64ddf05c1ef5bb1cce11b41f546e185921b1d0e4d0bbd7b3beec983",
+   "s": "edcb3adcba0272488b3bac7062f47846f1b0ba397c5fe16aa6171339792d5af8"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253018",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253018,
+  "created": "2026-07-11 20:09:00",
+  "photo_url": "",
+  "no_sighted": "1",
+  "latitude": "47.47105",
+  "longitude": "-122.51748",
+  "type": "Orca",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "Edit by Alisa LB to include ID  Biggs T65A5 Indy. ",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "de078130-4b54-4931-9f6a-00490e031131",
+  "ssemmi_date_added": "Sat Jul 11 2026 20:21:54 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "bcb51a8a986655fde593e8c191b5d8eb2bbe5846653f281d0db27864e70f1756",
+   "s": "e0d80665443a5dc46607c5945343a0ab301fafc1429ba314ce871a5bd5e510fe"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253029",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253029,
+  "created": "2026-07-11 21:11:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.34172,
+  "longitude": -122.53943,
+  "type": "Orca",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Biggs T65A5 southbound towards Point Defiance (Justin Bolin)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "353d2a50-5e68-4941-8458-ce695b132865",
+  "ssemmi_date_added": "Sat Jul 11 2026 21:16:10 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "c4b74c99e96159717a4dfa678552e8349e9b3e07f3ccfd9f0020b2720e8bb702",
+   "s": "7d043898a1c73519520e7ed7baea53e37c4e4d2f389cf25b23eef8b9bfaeaace"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253033",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253033,
+  "created": "2026-07-11 21:21:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.31616,
+  "longitude": -122.55151,
+  "type": "Orca",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Biggs T65A5 close to Point Defiance, southbound towards Narrows Bridge (Justin Bolin)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "5fe5303a-b14d-4e86-b8fd-fe62c0d216ea",
+  "ssemmi_date_added": "Sat Jul 11 2026 21:30:24 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "1aec076eaadbe52227e6959e0b147a62d818fb1bb49be1c83c0e8efa70948d89",
+   "s": "9d2090bc48e6bc7ea6d86c76ff8e388881bdece6d196b45932417c217cd7e99e"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253034",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253034,
+  "created": "2026-07-11 21:30:41",
+  "photo_url": "https://spotter-production.s3.amazonaws.com/sightings_photos/fa08f690-3a42-4cdc-ab69-1d0ba4fa7bb5.JPG",
+  "no_sighted": "1",
+  "latitude": "48.043",
+  "longitude": "-122.3945",
+  "type": "Orca",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "11e38af9-0f94-48b9-8dee-1c276e7a56da",
+  "ssemmi_date_added": "Sat Jul 11 2026 21:42:18 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "6879ff75a36b7b3287cb452033d9a8fc2cdee3fd5ebc9e52b703688526e2d836",
+   "s": "dd55c7d2bc660a98c93c0b63f2b0932aa963ca79a21b233bfb29b34fc8a2b290"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253020",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253020,
+  "created": "2026-07-11 20:31:00",
+  "photo_url": "",
+  "no_sighted": "1",
+  "latitude": "48.09911",
+  "longitude": "-122.49794",
+  "type": "Orca",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "Edit by Alisa LB  to included ID as Biggs T137A Jack per photo from another  WA app report. \n\n",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "7e90471d-c561-46f8-bbdd-1213013024d4",
+  "ssemmi_date_added": "Sat Jul 11 2026 21:43:25 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "df3adaadf1ed903e9f6add3a3cae5d5a0046c0b4375bd65af59b886b2edf3e9d",
+   "s": "7f946248c8ffafd34755f03beb88f21bebd491de580bdf2b41fa0ad44fb439bc"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253044",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253044,
+  "created": "2026-07-11 21:43:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.31942,
+  "longitude": -122.53494,
+  "type": "Orca",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Biggs T65A5 W of Owen Beach, eastbound (Chris Alcantar)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "80fc0cfe-7e5b-43df-b807-b7beafce1b1c",
+  "ssemmi_date_added": "Sat Jul 11 2026 21:54:41 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "f98b55724ec5723554195a1a652973f372f49a9ba1542c8c1d31e53e1fb17916",
+   "s": "15d36bbb70d1f7d7c77f0c5cf7072ab127d790b8300596aa2569c0c4cb6cd451"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253043",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253043,
+  "created": "2026-07-11 21:44:00",
+  "photo_url": "",
+  "no_sighted": "1",
+  "latitude": "47.32269",
+  "longitude": "-122.542",
+  "type": "Orca",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "1586bb6f-5cc4-4b05-a39e-a39363d458e5",
+  "ssemmi_date_added": "Sat Jul 11 2026 22:00:37 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "169e71ad82259cf585870889b15b439a838b3b25ec5e05f923276b5cdeee6118",
+   "s": "977176905bd7187ffe58cad6119270b0b82b575fa08d6dc0e698a0920f7e842"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252829",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252829,
+  "created": "2026-07-10 21:02:00",
+  "photo_url": "https://spotter-production.s3.amazonaws.com/sightings_photos/069460b9-268c-408e-94eb-eef20802a6ed.JPG",
+  "no_sighted": "1",
+  "latitude": "47.31107",
+  "longitude": "-122.51357",
+  "type": "Humpback",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "5e431ba0-7a6f-40c9-a2cb-7947735d3005",
+  "ssemmi_date_added": "Sat Jul 11 2026 22:07:27 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "1dcfed996dd1b60c0cdd86123668702c1bd99a148693f77bd4f6c8ee336c4a58",
+   "s": "df66d1c0b256671d12382d33f8c8aff0e840ace1591a37c376f736d1bf863644"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252985",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252985,
+  "created": "2026-07-11 16:42:01",
+  "photo_url": "https://spotter-production.s3.amazonaws.com/sightings_photos/2514debc-02ce-4022-9e86-888798669527.JPG",
+  "no_sighted": "1",
+  "latitude": "47.44766",
+  "longitude": "-122.40667",
+  "type": "Humpback",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "Northbound. Many blows and tail flukes.",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "e824a1af-ce92-4934-8fba-d16384ce85b7",
+  "ssemmi_date_added": "Sat Jul 11 2026 22:11:48 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "695b3cc8b728f89b8d34152bb4ff3c678da15033a346d6b2a445ea2fa0e49ed5",
+   "s": "36c25eb1ab97734585572c0ab5e6f8e632a1d679e548d32ddedeecf9d3ac6b0f"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 252595",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 252595,
+  "created": "2026-07-09 02:46:12",
+  "photo_url": "",
+  "no_sighted": "3",
+  "latitude": "47.39566",
+  "longitude": "-122.32608",
+  "type": "Harbor Porpoise",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "cbe52a49-484e-4bd3-bb13-8f5e5b421c77",
+  "ssemmi_date_added": "Sat Jul 11 2026 22:11:55 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "d92186c01d96be7b262c5aedcdb99ff04278e72511df494ef35a26de6cf182cb",
+   "s": "25dba527168c0fe63f0eb9248d5f9818ca97fa5847d2a0762186d7359dc661fd"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253051",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253051,
+  "created": "2026-07-11 22:33:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.98949,
+  "longitude": -122.34526,
+  "type": "Orca",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Biggs T137A southbound toward Clinton/Mukilteo ferries (Kat Little-Pope)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "bfd5a02d-6739-44d0-afa5-e602e98f7803",
+  "ssemmi_date_added": "Sat Jul 11 2026 22:34:37 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "d8e3ac9ecbfa7d97bb43dee804ecc5a4a06497bc904480bc706f80d13710ab78",
+   "s": "1c8c22d1096f3dc09f77c69c5919d627db7a64041bf957ffda4a7b96122eb22e"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253052",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253052,
+  "created": "2026-07-11 22:40:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.33978,
+  "longitude": -122.45066,
+  "type": "Orca",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Biggs T65A5 milling near SE tip of Maury Island (Chiara Morresi)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "75d25d73-bb77-491c-ae29-f98a8297e58c",
+  "ssemmi_date_added": "Sat Jul 11 2026 22:44:53 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "f097846fa8064860b8a5334a47d4ccf4f30f7e4383016fe019c9edd4685e14b1",
+   "s": "f7c10815a2a38297167464811905af94a38f768d28894eeb9562958ae4c2dd8b"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253059",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253059,
+  "created": "2026-07-12 01:10:55",
+  "photo_url": "",
+  "no_sighted": "1",
+  "latitude": "47.36996",
+  "longitude": "-122.41075",
+  "type": "Orca",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "e13283ee-49db-47a2-9111-561c65f5e3d3",
+  "ssemmi_date_added": "Sun Jul 12 2026 01:34:36 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "5cd711f2b2d9788ed102bd1a3e3b99cdcb964400f240902a5560f5a076401eaa",
+   "s": "f585d5151f4acb458f578d2f5cac0f14e7d86fac6029211dd8ba6f3d84023fbd"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253054",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253054,
+  "created": "2026-07-11 22:54:00",
+  "photo_url": "",
+  "no_sighted": "1",
+  "latitude": "47.33781",
+  "longitude": "-122.45264",
+  "type": "Orca",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "Milling SE corner of Maury",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "2219ef8b-85e6-4458-a905-d843417577f0",
+  "ssemmi_date_added": "Sun Jul 12 2026 01:35:21 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "eab7b96bf08a901a612a4b653ff1763da6b08a565ac8d86dc6cc6b858d229cd3",
+   "s": "ac6b97ebb24d24d183396fd91376d09a5742b90c4f1f3ca8b7a4f3bb6eafc696"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253053",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253053,
+  "created": "2026-07-11 21:17:00",
+  "photo_url": "https://spotter-production.s3.amazonaws.com/sightings_photos/7aee059a-e1a4-4618-9871-e43c7fc21733.JPG",
+  "no_sighted": "1",
+  "latitude": "48.04389",
+  "longitude": "-122.40553",
+  "type": "Orca",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "Edit by Alisa LB to add ID as Biggs T137 Jack. ",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "327adeba-c361-400d-a5fa-adca4d386dd4",
+  "ssemmi_date_added": "Sun Jul 12 2026 01:41:44 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "7d0daeee812d492b012daf4e8cef331f7fe00aecb25e1859008a50f509dcea13",
+   "s": "d195d8e303ef77dbfeaf947cf2634ad51a5dc8535585c215fef0d7eb26af8403"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253074",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253074,
+  "created": "2026-07-12 03:08:14",
+  "photo_url": "",
+  "no_sighted": "5",
+  "latitude": "48.76413",
+  "longitude": "-122.90644",
+  "type": "Orca",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "f5b1453f-a399-46c3-b070-0def8b32a814",
+  "ssemmi_date_added": "Sun Jul 12 2026 14:31:38 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "c33d9e390ab6199821ad00a5524a48ee9d022843bafc0c1a6ec2e45dfc814e01",
+   "s": "390b78b1cac5fe7d704caf53da02eee76b0db96e841a6b9377c4586411e941a9"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253058",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253058,
+  "created": "2026-07-12 00:49:42",
+  "photo_url": "",
+  "no_sighted": "3",
+  "latitude": "48.7845",
+  "longitude": "-122.919",
+  "type": "Orca",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "d6bdbd28-05aa-4e89-afb1-7908f5808447",
+  "ssemmi_date_added": "Sun Jul 12 2026 14:31:49 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "3bb4ea5896705eec835b68141fed83a8f1acc4c2c89312dee0bfd1013b0698ef",
+   "s": "2896cf0c9766a6a572dd5e495cb54940bdc6ae643afe9da1c3aaead536b98d03"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253075",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253075,
+  "created": "2026-07-12 03:10:59",
+  "photo_url": "",
+  "no_sighted": "1",
+  "latitude": "48.3055",
+  "longitude": "-123.39614",
+  "type": "Humpback",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "6c565b18-55d8-4860-a0f4-ac5740b0a78f",
+  "ssemmi_date_added": "Sun Jul 12 2026 14:31:57 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "680117461c436aa098e7a57c7764dc3d9d686a32aa85a8865813cc37cf64caaf",
+   "s": "aefdb7002d9cf36db2f5f141c4cb80ecbde02feccef64ba3515682df9be2a3d7"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253056",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253056,
+  "created": "2026-07-12 00:12:00",
+  "photo_url": "",
+  "no_sighted": "3",
+  "latitude": "48.15133",
+  "longitude": "-122.79684",
+  "type": "Orca",
+  "data_source_witness": "whalealertoa",
+  "trusted": 2,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "881ce351-6c01-4663-b517-11b9002cb120",
+  "ssemmi_date_added": "Sun Jul 12 2026 14:51:14 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "f01f3b300e7ec1e1c3aa4159e28e9c4ab70e288551dbe725a913eb64cedb26d7",
+   "s": "ac2f177f4a6dd2c4a8298461bff017e85cc11a601e4f8678b24261227be4405e"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253111",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253111,
+  "created": "2026-07-12 02:45:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.62316,
+  "longitude": -122.48363,
+  "type": "Orca",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[PSWS] Biggs T137A Jack off Wing Point traveling southeast. (Savannah Kelly) (ID Alisa Lemire Brooks from earlier WA report) ",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "648dc359-a354-48a9-acf9-e0a4bb290dfc",
+  "ssemmi_date_added": "Sun Jul 12 2026 14:58:29 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "854db4826f2126a04d0ae0ed2ccae2629ad138eec4e92bc062fadea8d75245b9",
+   "s": "12181408a9611be8a1fc60954f02b47d58e1a0098d0f5578abe805f13037e4e9"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253112",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253112,
+  "created": "2026-07-12 00:54:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.77418,
+  "longitude": -122.4697,
+  "type": "Orca",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[PSWS] Biggs T137A Jack southbound (Beriah SoOrio) ",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "900e3f08-386d-4377-8354-e1c846e43b13",
+  "ssemmi_date_added": "Sun Jul 12 2026 15:03:18 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "8a5b06a1ac695a0f866028feab8448f6b9707883bdf057a4ca6f7f82fc6c992e",
+   "s": "fc1b6d2eb0f8b7630cca61d12e9b82319105b75aa322c87fbacedb000ef35a25"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253114",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253114,
+  "created": "2026-07-11 23:48:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.35175,
+  "longitude": -122.44163,
+  "type": "Orca",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[SSCH] Biggs T65A5 Indy northbound,  in front of Shore Acres heading towards Gold Beach. (jron) ",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "37fc946a-1566-4c8d-a1c2-6d15cf62e424",
+  "ssemmi_date_added": "Sun Jul 12 2026 15:11:44 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "55cdb51ec42193b9b169e6c9dd90b6e155f26745c69f6ee2d4eaa38aa4accd2f",
+   "s": "cb0826a0a1199f754e6936d6303b8b109ceb1b227431b24e1519fac64b26d0f8"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253115",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253115,
+  "created": "2026-07-12 00:15:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.35338,
+  "longitude": -122.41279,
+  "type": "Orca",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[SSCH] Biggs T65A5 Indy moved offshore, now mid-channel, currently moving fast northbound.  (jron)  ",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "5aa064c5-53b3-42c2-a9dd-8d5e1a8dbce8",
+  "ssemmi_date_added": "Sun Jul 12 2026 15:15:20 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "25f41a63522f6ac5b6666f8d8c2f804e3c508db3331b11369df247ef895eb47d",
+   "s": "59aefdec0bf8e2fcdfbf66e301d44cbb95bd08f5871c5adf88f71b213e54fd0"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253121",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253121,
+  "created": "2026-07-12 16:00:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 48.0541,
+  "longitude": -122.39094,
+  "type": "Gray Whale",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[PSWS] westbound (Marilyn Armbruster) ",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "2f6d5359-a8b9-4df8-9de6-1371b49adb34",
+  "ssemmi_date_added": "Sun Jul 12 2026 16:15:35 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "b934ba041032dd008929635aad85636823d09ae1d7beab3d271b139f15c09258",
+   "s": "f86abc707dc6fbb004ab4e5e07312c428fd7600b1105b514a37dcd0de31c6954"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253135",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253135,
+  "created": "2026-07-12 17:27:00",
+  "photo_url": "",
+  "no_sighted": 1,
+  "latitude": 47.80058,
+  "longitude": -122.46684,
+  "type": "Humpback",
+  "data_source_witness": "cascadiaWebMap",
+  "trusted": 1,
+  "data_source_comments": "[Orca Network] Humpback Graphite milling (Xack Fischer)",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "29a94d6c-d0d1-4729-8159-eacb6caeb771",
+  "ssemmi_date_added": "Sun Jul 12 2026 17:42:12 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "94410a39350844eeef87d188cefc02bde3256509417402101b1b2a6bc056d87",
+   "s": "33c54e2860105a2ec6007785890967225d82706de468ac154b07e2bf70926bcd"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253194",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253194,
+  "created": "2026-07-12 22:13:00",
+  "photo_url": "",
+  "no_sighted": "3",
+  "latitude": "47.79258",
+  "longitude": "-122.48419",
+  "type": "Orca",
+  "data_source_witness": "whaleAndroid",
+  "trusted": 2,
+  "data_source_comments": "headed north",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "14b09a81-c366-4fba-bed5-03b9f20a3fba",
+  "ssemmi_date_added": "Mon Jul 13 2026 00:26:46 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "e9dcfb591f23fa97c38f85f6426652f6c7e49ae533aac3c326421155d529a70d",
+   "s": "aacff19afba1119ab45a9dd2709ff0dc791380a957f94e04948994aaf66febb7"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253154",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253154,
+  "created": "2026-07-12 19:35:18",
+  "photo_url": "",
+  "no_sighted": "3",
+  "latitude": "47.95238",
+  "longitude": "-122.59534",
+  "type": "Orca",
+  "data_source_witness": "whalealertoa",
+  "trusted": 2,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "d59d8106-4604-4b4f-a093-f120fe05576e",
+  "ssemmi_date_added": "Mon Jul 13 2026 00:26:52 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "afa2377898aa40c09eb311dfa121a53b909cc98c31c19b516c9ba6491d15d588",
+   "s": "39faa44ea67fa36a2eff587dae4a98cab1593b3bbbe8c11296bdae2a01e99985"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253131",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253131,
+  "created": "2026-07-12 17:22:00",
+  "photo_url": "",
+  "no_sighted": "3",
+  "latitude": "48.1197",
+  "longitude": "-122.49948",
+  "type": "Orca",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "52df909e-b8da-4fa3-b6b9-8c7de6763375",
+  "ssemmi_date_added": "Mon Jul 13 2026 00:27:50 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "5a0792e51721aea18d1edb5cc12b11b1278f054238a46add4c18a9f4c06bab59",
+   "s": "3fcc6b654d2cce4a6d12e6eb82e5d5915d01356fd812170c4d9a47af778be98b"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253139",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253139,
+  "created": "2026-07-12 18:29:00",
+  "photo_url": "",
+  "no_sighted": "1",
+  "latitude": "48.19344",
+  "longitude": "-122.58744",
+  "type": "Orca",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "295f5678-9759-4657-ba5b-06a7d047b4de",
+  "ssemmi_date_added": "Mon Jul 13 2026 00:28:15 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "b2844f6a1e7c352fc390bac21d0828ce325619d9e6eaeea19ac343009642bdc0",
+   "s": "b826291b814270ec87f70b62361b472427cb6774aedef4d6c70c6d185175e280"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253191",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253191,
+  "created": "2026-07-12 20:21:00",
+  "photo_url": "",
+  "no_sighted": "2",
+  "latitude": "48.26198",
+  "longitude": "-122.64203",
+  "type": "Orca",
+  "data_source_witness": "newandriodwa",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "407499e1-d5e3-44d2-822c-ef98972785bf",
+  "ssemmi_date_added": "Mon Jul 13 2026 00:28:24 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "dab97d44fd1f45a06daf47dec748be7a9b9aa92de83855dd9aa7965ee743df6f",
+   "s": "3e1666579ff34475d97fa72dcac99ba9a72bbcd2aea90c99dffff964dfc103de"
+  }
+ },
+ {
+  "ssemmi_id": "SPOTTER 253140",
+  "data_source_name": "Spotter-API",
+  "data_source_entity": "Conserve.io",
+  "data_source_id": 253140,
+  "created": "2026-07-12 18:55:00",
+  "photo_url": "",
+  "no_sighted": "1",
+  "latitude": "48.10285",
+  "longitude": "-122.49925",
+  "type": "Gray Whale",
+  "data_source_witness": "whalealertoa",
+  "trusted": 1,
+  "data_source_comments": "",
+  "profile": {
+   "name": "spotter"
+  },
+  "entry_id": "04eebf9f-84b1-4e75-8509-fa6918ee3fc8",
+  "ssemmi_date_added": "Mon Jul 13 2026 00:35:17 GMT+0000 (Coordinated Universal Time)",
+  "submitter_did": "did:ethr:0x20fd1096eaafb242a88272e20d7a77b552fa6cd8",
+  "signature": {
+   "r": "1ae0962ec4db776c9388ec6e1065c602cc69f21dc20a5bf33bc65e2fd286a47b",
+   "s": "a17cb59d5937bd4797ec443df7a40061d91162e9ca05a0b9f114a8f186a62c8b"
+  }
+ }
+]

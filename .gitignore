@@ -5,3 +5,9 @@ dist
 # coastline pipeline scratch downloads (output TopoJSON IS committed)
 scripts/.cache/
 tsconfig.tsbuildinfo
+# worker proxy: local token + wrangler state (token lives ONLY here / in secrets)
+workers/acartia-proxy/.dev.vars
+.wrangler/
+
+# species art: 2K raw generations stay local; keyed assets ship from public/
+art/species/raw/

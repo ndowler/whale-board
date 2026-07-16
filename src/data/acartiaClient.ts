@@ -21,6 +21,47 @@ export async function fetchSightings(signal: AbortSignal): Promise<unknown> {
   return res.json();
 }
 
+/**
+ * One-shot history pull from the token-gated full feed, via the proxy Worker
+ * (workers/acartia-proxy) that holds the Bearer token. Callers guard on
+ * CONFIG.proxyUrl being set; failures here must stay a console warning —
+ * the board is fully functional on /current alone.
+ */
+export async function fetchBackfill(signal: AbortSignal): Promise<unknown> {
+  if (CONFIG.dataMode === 'fixture') {
+    const { default: fixture } = await import('./fixtures/acartia-full.json');
+    if (signal.aborted) throw new DOMException('aborted', 'AbortError');
+    return shiftToRecent(fixture as RawSighting[]);
+  }
+  const res = await fetch(CONFIG.proxyUrl, {
+    signal,
+    headers: { accept: 'application/json' },
+  });
+  if (!res.ok) throw new Error(`acartia-proxy responded HTTP ${res.status}`);
+  return res.json();
+}
+
+/**
+ * Shift a captured fixture so its newest record is ~`newestAgeMs` old,
+ * keeping the dev board alive regardless of the calendar.
+ */
+function shiftToRecent(
+  records: RawSighting[],
+  newestAgeMs = 20 * 60_000,
+): RawSighting[] {
+  const out = records.map((r) => ({ ...r }));
+  const epochs = out
+    .map((r) => parseCreatedUtc(r.created))
+    .filter((e): e is number => e !== null);
+  if (epochs.length === 0) return out;
+  const shift = Date.now() - newestAgeMs - Math.max(...epochs);
+  for (const r of out) {
+    const e = parseCreatedUtc(r.created);
+    if (e !== null) r.created = new Date(e + shift).toISOString();
+  }
+  return out;
+}
+
 let demoCounter = 0;
 
 const DEMO_SPOTS: Array<[number, number, string]> = [
@@ -45,16 +86,7 @@ async function fetchFixture(signal: AbortSignal): Promise<unknown> {
   await new Promise((r) => setTimeout(r, 300));
   if (signal.aborted) throw new DOMException('aborted', 'AbortError');
 
-  const records = (fixture as RawSighting[]).map((r) => ({ ...r }));
-  const epochs = records
-    .map((r) => parseCreatedUtc(r.created))
-    .filter((e): e is number => e !== null);
-  const newest = Math.max(...epochs);
-  const shift = Date.now() - 20 * 60_000 - newest;
-  for (const r of records) {
-    const e = parseCreatedUtc(r.created);
-    if (e !== null) r.created = new Date(e + shift).toISOString();
-  }
+  const records = shiftToRecent(fixture as RawSighting[]);
 
   if (new URLSearchParams(location.search).get('demo') === '1') {
     if (demoCounter > 0) {

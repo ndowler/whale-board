@@ -7,8 +7,12 @@ import type { SpeciesId } from '../types';
 const SPECIES_TABLE: Record<string, SpeciesId> = {
   orca: 'orca',
   'killer whale': 'orca',
+  'killer whale (ecotype unknown)': 'orca',
   'southern resident': 'orca_srkw',
   'southern resident killer whale': 'orca_srkw',
+  'southern resident orca': 'orca_srkw',
+  'killer whale(southern resident)': 'orca_srkw',
+  "killer whale(bigg's (transient))": 'orca_biggs',
   "bigg's": 'orca_biggs',
   biggs: 'orca_biggs',
   transient: 'orca_biggs',
@@ -22,6 +26,7 @@ const SPECIES_TABLE: Record<string, SpeciesId> = {
   'blue whale': 'blue_whale',
   fin: 'fin_whale',
   'fin whale': 'fin_whale',
+  'finback whale': 'fin_whale',
   minke: 'minke',
   'minke whale': 'minke',
   'harbor porpoise': 'harbor_porpoise',
@@ -33,12 +38,21 @@ const SPECIES_TABLE: Record<string, SpeciesId> = {
   lags: 'pacific_white_sided_dolphin',
   unspecified: 'unspecified',
   other: 'unspecified',
+  'other (specify in comments)': 'unspecified',
+  unknown: 'unspecified',
+  'no especificado': 'unspecified',
+  'non spécifié': 'unspecified',
+  'baleine grise': 'gray_whale',
   '': 'unspecified',
 };
 
 /** Substring fallbacks, checked in order after the exact table misses. */
 const SUBSTRING_FALLBACKS: Array<[string, SpeciesId]> = [
   ['humpback', 'humpback'],
+  // Ecotyped variants must win before the generic orca needles.
+  ['southern resident', 'orca_srkw'],
+  ['bigg', 'orca_biggs'],
+  ['transient', 'orca_biggs'],
   ['orca', 'orca'],
   ['killer whale', 'orca'],
   ['gray whale', 'gray_whale'],

@@ -1,11 +1,12 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
-import { usePollingLoop } from './usePollingLoop';
+import { usePollingLoop, useBackfill } from './usePollingLoop';
 import { CONFIG } from '../config';
 import type { Action } from '../state/store';
 
 const fetchSightings = vi.hoisted(() => vi.fn());
-vi.mock('./acartiaClient', () => ({ fetchSightings }));
+const fetchBackfill = vi.hoisted(() => vi.fn());
+vi.mock('./acartiaClient', () => ({ fetchSightings, fetchBackfill }));
 
 describe('usePollingLoop', () => {
   beforeEach(() => {
@@ -82,5 +83,65 @@ describe('usePollingLoop', () => {
 
     await act(() => vi.advanceTimersByTimeAsync(CONFIG.pollIntervalMs * 3));
     expect(fetchSightings).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('useBackfill', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+    fetchBackfill.mockReset();
+  });
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it('does nothing when proxyUrl is empty', async () => {
+    const orig = CONFIG.proxyUrl;
+    (CONFIG as { proxyUrl: string }).proxyUrl = '';
+    try {
+      const dispatch = vi.fn();
+      renderHook(() => useBackfill(dispatch));
+      await act(() => vi.advanceTimersByTimeAsync(100));
+      expect(fetchBackfill).not.toHaveBeenCalled();
+      expect(dispatch).not.toHaveBeenCalled();
+    } finally {
+      (CONFIG as { proxyUrl: string }).proxyUrl = orig;
+    }
+  });
+
+  it('dispatches BACKFILL_SUCCESS on a good pull', async () => {
+    const orig = CONFIG.proxyUrl;
+    (CONFIG as { proxyUrl: string }).proxyUrl = 'http://localhost:8787/sightings';
+    try {
+      fetchBackfill.mockResolvedValue([]);
+      const dispatch = vi.fn();
+      renderHook(() => useBackfill(dispatch));
+      await act(() => vi.advanceTimersByTimeAsync(10));
+      expect(fetchBackfill).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenCalledWith(
+        expect.objectContaining({ type: 'BACKFILL_SUCCESS' }),
+      );
+    } finally {
+      (CONFIG as { proxyUrl: string }).proxyUrl = orig;
+    }
+  });
+
+  it('a failed pull warns and dispatches nothing — the board is unaffected', async () => {
+    const orig = CONFIG.proxyUrl;
+    (CONFIG as { proxyUrl: string }).proxyUrl = 'http://localhost:8787/sightings';
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    try {
+      fetchBackfill.mockRejectedValue(new Error('proxy down'));
+      const dispatch = vi.fn();
+      renderHook(() => useBackfill(dispatch));
+      await act(() => vi.advanceTimersByTimeAsync(10));
+      expect(dispatch).not.toHaveBeenCalled();
+      expect(warn).toHaveBeenCalledWith(
+        expect.stringContaining('backfill unavailable'),
+      );
+    } finally {
+      warn.mockRestore();
+      (CONFIG as { proxyUrl: string }).proxyUrl = orig;
+    }
   });
 });

@@ -1,0 +1,9 @@
+name = "acartia-proxy"
+main = "src/index.ts"
+compatibility_date = "2026-07-01"
+
+# Secrets (never in this file):
+#   wrangler secret put ACARTIA_TOKEN      — the Acartia Bearer token
+# Vars (set for production; unset = localhost dev origins only):
+#   [vars]
+#   ALLOWED_ORIGINS = "https://your-board.example"

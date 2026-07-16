@@ -94,6 +94,8 @@ describe('normalizeRecord', () => {
     expect(s.count).toBe(3);
     expect(s.species).toBe('orca');
     expect(s.epochMs).toBe(Date.UTC(2026, 6, 13, 8));
+    expect(s.mergedIds).toEqual([]);
+    expect(s.reportCount).toBe(1);
   });
 
   it('drops records that cannot be displayed', () => {

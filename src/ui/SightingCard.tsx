@@ -1,7 +1,33 @@
-import type { Sighting } from '../types';
+import { useState } from 'react';
+import type { Sighting, SpeciesId } from '../types';
 import { SPECIES_LABEL } from '../data/species';
 import { markerHref } from '../assets/species/SpeciesSprite';
+import { plateArtUrl, usePlates } from '../assets/species/art';
 import { timeAgo } from '../state/selectors';
+
+/** Card art: the M4 plate illustration, silhouette as fallback. */
+function CardArt({ species }: { species: SpeciesId }) {
+  const [failed, setFailed] = useState(false);
+  if (!usePlates() || failed)
+    return (
+      <svg
+        className={`card__art card__art--${species}`}
+        viewBox="0 0 100 60"
+        aria-hidden="true"
+      >
+        <use href={markerHref(species)} />
+      </svg>
+    );
+  return (
+    <img
+      className="card__art card__art--plate"
+      src={plateArtUrl(species)}
+      alt=""
+      loading="lazy"
+      onError={() => setFailed(true)}
+    />
+  );
+}
 
 interface SightingCardProps {
   sighting: Sighting;
@@ -34,19 +60,14 @@ export function SightingCard({
       onClick={() => onSelect(selected ? null : s.id)}
       data-sighting-id={s.id}
     >
-      <svg
-        className={`card__art card__art--${s.species}`}
-        viewBox="0 0 100 60"
-        aria-hidden="true"
-      >
-        <use href={markerHref(s.species)} />
-      </svg>
+      <CardArt species={s.species} />
       <span className="card__text">
         <span className="card__species">{SPECIES_LABEL[s.species]}</span>
         <span className="card__meta">
           {pods && <span className="card__pods">{pods} · </span>}
           {s.count !== null && s.count > 1 && `${s.count} · `}
           {s.region ?? 'Salish Sea'}
+          {s.reportCount > 1 && ` · ${s.reportCount} reports`}
         </span>
         <span className="card__time">{timeAgo(s.epochMs, nowMs)}</span>
       </span>
