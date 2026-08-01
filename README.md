@@ -47,6 +47,32 @@ The ⛶ button enters fullscreen: controls fade away, the cursor hides after
 blips (backoff ladder, catch-up poll on reconnect) and the last-good view is
 never torn down — a small "reconnecting" badge appears instead.
 
+## Deploying (Cloudflare Pages)
+
+The board is a static SPA — Cloudflare Pages hosts it as-is:
+
+| Setting | Value |
+| --- | --- |
+| Build command | `npm run build` |
+| Build output directory | `dist` |
+| Node version | pinned via `.node-version` (22) |
+
+```sh
+# one-off deploy from the CLI (or connect the repo in the Pages dashboard)
+npm run build
+npx wrangler pages deploy dist --project-name whale-board
+```
+
+- No environment variables are required: production builds default to live
+  mode and poll the keyless `/current` endpoint directly from the browser.
+- **Optional backfill proxy**: deploy `workers/acartia-proxy` (holds the
+  Acartia token, see its README), set its `ALLOWED_ORIGINS` to the Pages
+  origin (e.g. `https://whale-board.pages.dev`), then set
+  `VITE_PROXY_URL=https://acartia-proxy.<account>.workers.dev/sightings` as a
+  Pages build environment variable and redeploy.
+- Cache headers ship via `public/_headers` (immutable hashed assets, always
+  revalidated shell). No `_redirects` needed — single route, no client router.
+
 ## How it works
 
 ```

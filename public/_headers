@@ -1,0 +1,17 @@
+# Cloudflare Pages headers (copied into dist/ by Vite)
+
+# Hashed bundles — safe to cache forever
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Fonts and art are versioned by content changes rarely; long cache, revalidate daily
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+/art/*
+  Cache-Control: public, max-age=86400
+
+# The shell must always revalidate so kiosks pick up new deploys on their 4am reload
+/
+  Cache-Control: no-cache
+/index.html
+  Cache-Control: no-cache
