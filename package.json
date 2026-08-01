@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "coastline": "node scripts/build-coastline.mjs"
+    "coastline": "node scripts/build-coastline.mjs",
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
     "d3-geo": "^3.1.1",
@@ -32,6 +33,7 @@
     "sharp": "^0.35.3",
     "typescript": "~5.6.3",
     "vite": "^6.0.3",
-    "vitest": "^3.2.7"
+    "vitest": "^3.2.7",
+    "wrangler": "^4.118.0"
   }
 }

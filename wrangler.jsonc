@@ -1,0 +1,13 @@
+{
+  // Static-assets-only Worker: the board is a pure SPA with no server code,
+  // so there is no `main` entrypoint — Cloudflare serves `dist/` directly.
+  // The token-holding backfill proxy is a separate Worker (workers/acartia-proxy).
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "whale-board",
+  "compatibility_date": "2026-07-01",
+  "assets": {
+    "directory": "./dist",
+    // Single route, no client-side router — unmatched paths are genuine 404s.
+    "not_found_handling": "404-page"
+  }
+}

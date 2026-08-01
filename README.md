@@ -47,34 +47,38 @@ The ⛶ button enters fullscreen: controls fade away, the cursor hides after
 blips (backoff ladder, catch-up poll on reconnect) and the last-good view is
 never torn down — a small "reconnecting" badge appears instead.
 
-## Deploying (Cloudflare Pages)
+## Deploying (Cloudflare)
 
-The board is a static SPA — Cloudflare Pages hosts it as-is:
+The board is a static SPA. `wrangler.jsonc` in the repo root declares a
+static-assets Worker — no `main` entrypoint, no server code in the request
+path — so Cloudflare serves `dist/` straight from the edge:
 
 | Setting | Value |
 | --- | --- |
 | Build command | `npm run build` |
-| Build output directory | `dist` |
+| Deploy command | `npx wrangler deploy` |
+| Assets directory | `dist` (from `wrangler.jsonc`) |
 | Node version | pinned via `.node-version` (22) |
 
 ```sh
-# one-off deploy from the CLI (or connect the repo in the Pages dashboard)
-npm run build
-npx wrangler pages deploy dist --project-name whale-board
+# one-off deploy from the CLI (or import the repo in the Cloudflare dashboard)
+npm run deploy
 ```
 
 - No environment variables are required: production builds default to live
   mode and poll the keyless `/current` endpoint directly from the browser.
 - **Optional backfill proxy**: deploy `workers/acartia-proxy` (holds the
-  Acartia token, see its README), set its `ALLOWED_ORIGINS` to the Pages
-  origin (e.g. `https://whale-board.pages.dev`), then set
+  Acartia token, see its README), set its `ALLOWED_ORIGINS` to the board's
+  origin, then set
   `VITE_PROXY_URL=https://acartia-proxy.<account>.workers.dev/sightings` as a
-  Pages build environment variable and redeploy.
+  *build* environment variable and redeploy.
 - Cache headers ship via `public/_headers` (immutable hashed assets, always
   revalidated shell). No `_redirects` needed — single route, no client router.
+- Cloudflare Pages works too, with build output directory `dist`.
 
-Full step-by-step walkthrough, including the optional proxy, custom domains,
-and troubleshooting: [`docs/DEPLOY.md`](docs/DEPLOY.md).
+Full step-by-step walkthrough — Workers Builds, CLI, and Pages, plus the
+optional proxy, custom domains, and troubleshooting:
+[`docs/DEPLOY.md`](docs/DEPLOY.md).
 
 ## How it works
 
