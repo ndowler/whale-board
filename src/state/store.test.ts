@@ -6,9 +6,9 @@ import { CONFIG } from '../config';
 import {
   decay,
   isStale,
-  seenToday,
-  startOfLocalDay,
+  seenInWindow,
   visibleSightings,
+  windowTitle,
 } from './selectors';
 
 const now = Date.UTC(2026, 6, 13, 12);
@@ -107,6 +107,26 @@ describe('reducer', () => {
     s = reducer(s, { type: 'SET_VIEW', view: 'map' });
     expect(s.boardView).toBe('map');
   });
+
+  it('FOCUS_SPECIES fits the group: pings ids, clears selection, bumps mapFocus', () => {
+    let s = seeded();
+    s = reducer(s, { type: 'SELECT', id: 'A' });
+    s = reducer(s, {
+      type: 'FOCUS_SPECIES',
+      ids: ['A', 'B'],
+      points: [
+        [-122.4, 47.6],
+        [-122.5, 47.7],
+      ],
+    });
+    expect(s.selectedId).toBeNull();
+    expect(s.highlightIds).toEqual(['A', 'B']);
+    expect(s.mapFocus?.seq).toBe(1);
+    expect(s.mapFocus?.points).toHaveLength(2);
+    s = reducer(s, { type: 'CLEAR_HIGHLIGHT' });
+    expect(s.highlightIds).toEqual([]);
+    expect(s.mapFocus?.seq).toBe(1); // camera cue stays; only rings clear
+  });
 });
 
 describe('selectors', () => {
@@ -153,8 +173,7 @@ describe('selectors', () => {
     expect(decay(mk('C', 500), now, 72).markerOpacity).toBeCloseTo(0.85);
   });
 
-  it('seenToday groups by species since local midnight, newest first', () => {
-    // startOfLocalDay is TZ-dependent — anchor "now" at local noon.
+  it('seenInWindow groups by species in the active window, newest first', () => {
     const localNoon = new Date(2026, 6, 13, 12).getTime();
     const at = (ageHours: number, id: string, species?: Sighting['species']) => ({
       ...mk(id, 0),
@@ -165,37 +184,42 @@ describe('selectors', () => {
     s = reducer(s, {
       type: 'POLL_SUCCESS',
       sightings: [
-        at(1, 'ORCA-NEW'), // 11:00 today
-        at(3, 'ORCA-OLD'), // 09:00 today — same species, groups
-        at(2, 'HUMP', 'humpback'), // 10:00 today
-        at(14, 'YESTERDAY'), // 22:00 yesterday — excluded
+        at(1, 'ORCA-NEW'),
+        at(3, 'ORCA-OLD'),
+        at(2, 'HUMP', 'humpback'),
+        at(30, 'OLDER'), // outside 24h, inside 72h
       ],
       at: localNoon,
     });
     s = { ...s, windowHours: 24, nowMs: localNoon };
 
-    expect(startOfLocalDay(localNoon)).toBe(new Date(2026, 6, 13).getTime());
-    const today = seenToday(s);
-    expect(today.map((g) => g.species)).toEqual(['orca', 'humpback']);
-    const orca = today[0];
-    expect(orca.count).toBe(2);
-    expect(orca.latest.id).toBe('ORCA-NEW');
-    expect(orca.latestMs).toBe(localNoon - 3_600_000);
-    // Yesterday's orca stays visible on the map window but not in today.
+    const in24 = seenInWindow(s);
+    expect(in24.map((g) => g.species)).toEqual(['orca', 'humpback']);
+    expect(in24[0].count).toBe(2);
+    expect(in24[0].latest.id).toBe('ORCA-NEW');
+    expect(visibleSightings(s)).toHaveLength(3);
+
+    s = { ...s, windowHours: 72 };
+    const in72 = seenInWindow(s);
+    expect(in72.map((g) => g.species)).toEqual(['orca', 'humpback']);
+    expect(in72.find((g) => g.species === 'orca')!.count).toBe(3);
     expect(visibleSightings(s)).toHaveLength(4);
+    expect(windowTitle(72)).toBe('Past 3 Days');
+    expect(windowTitle(24)).toBe('Past 24 Hours');
+    expect(windowTitle(168)).toBe('Past 7 Days');
   });
 
-  it('seenToday is empty with no sightings today', () => {
+  it('seenInWindow is empty when the window has no sightings', () => {
     const localNoon = new Date(2026, 6, 13, 12).getTime();
     let s = initialState(localNoon);
-    expect(seenToday(s)).toEqual([]);
+    expect(seenInWindow(s)).toEqual([]);
     s = reducer(s, {
       type: 'POLL_SUCCESS',
-      sightings: [{ ...mk('OLD', 0), epochMs: localNoon - 20 * 3_600_000 }],
+      sightings: [{ ...mk('OLD', 0), epochMs: localNoon - 100 * 3_600_000 }],
       at: localNoon,
     });
-    s = { ...s, nowMs: localNoon };
-    expect(seenToday(s)).toEqual([]);
+    s = { ...s, windowHours: 72, nowMs: localNoon };
+    expect(seenInWindow(s)).toEqual([]);
   });
 
   it('isStale trips after staleAfterMs without a successful poll', () => {

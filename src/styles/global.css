@@ -47,12 +47,13 @@ body,
 #root {
   height: 100%;
   margin: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 body {
   background: var(--water-deep);
   color: var(--ink);
-  overflow: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -60,6 +61,8 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
+  max-height: 100dvh;
+  overflow: hidden;
 }
 
 .app__main {
@@ -82,6 +85,81 @@ body {
 
 .map__svg {
   display: block;
+}
+
+.map:focus {
+  outline: none;
+}
+
+.map:focus-visible {
+  outline: 2px solid var(--accent-warm);
+  outline-offset: -2px;
+}
+
+/* Touch-friendly zoom controls — pinch has an equivalent path. */
+.map__zoom {
+  position: absolute;
+  left: 0.75rem;
+  bottom: 8.75rem;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.map__zoom-btn {
+  width: 2.75rem;
+  height: 2.75rem;
+  display: grid;
+  place-items: center;
+  font: inherit;
+  font-size: 1.35rem;
+  line-height: 1;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--panel) 88%, transparent);
+  border: 1px solid var(--panel-edge);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.map__zoom-btn:hover:not(:disabled) {
+  color: var(--accent-warm);
+  border-color: color-mix(in srgb, var(--accent-warm) 45%, var(--panel-edge));
+}
+
+.map__zoom-btn:focus-visible {
+  outline: 2px solid var(--accent-warm);
+  outline-offset: 2px;
+}
+
+.map__zoom-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.map__zoom-btn--reset {
+  font-size: 1.1rem;
+  margin-top: 0.15rem;
+}
+
+@media (max-width: 640px) {
+  .map__zoom {
+    /* Corner-chip footer sits bottom-right; left side only clears the compass. */
+    bottom: 7.5rem;
+  }
+
+  .map__zoom-btn {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+/* Only programmatic species-focus fits ease; wheel/pan stay instant. */
+.map__inner.is-animating {
+  transition: transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 
@@ -181,6 +259,15 @@ body {
      class colors its silhouette by setting `color`. */
   fill: currentColor;
   --sp-patch: var(--water);
+}
+
+.marker:focus {
+  outline: none;
+}
+
+.marker:focus-visible .marker__disc {
+  stroke: var(--accent-warm);
+  stroke-width: 3;
 }
 
 .marker image,
@@ -378,10 +465,37 @@ body {
   position: absolute;
   top: 0.75rem;
   right: 0.75rem;
+  z-index: 5;
   display: flex;
   align-items: center;
   gap: 0.75rem;
   font-size: 0.78rem;
+}
+
+.statusbar__roll {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  font-size: 1.15rem;
+  line-height: 1;
+  color: var(--ink-dim);
+  background: color-mix(in srgb, var(--panel) 82%, transparent);
+  border: 1px solid var(--panel-edge);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.statusbar__roll:hover {
+  color: var(--ink);
+}
+
+.statusbar.is-rolled-out .statusbar__roll {
+  color: var(--ink);
 }
 
 .statusbar__controls {
@@ -443,21 +557,116 @@ body {
   color: var(--accent-warm);
 }
 
-/* ---- seen today panel --------------------------------------------------- */
+/* ---- seen today drawer -------------------------------------------------- */
 
 .today-panel {
+  --today-drawer-width: min(300px, 78vw);
   position: absolute;
-  top: 3.2rem;
-  right: 0.75rem;
-  max-width: 560px;
-  background: color-mix(in srgb, var(--panel) 82%, transparent);
+  top: 0.85rem;
+  right: 0;
+  bottom: 0.5rem;
+  z-index: 4;
+  width: var(--today-drawer-width);
+  display: flex;
+  flex-direction: column;
+  /* Keep overflow visible so the tab (right: 100%) isn't clipped when closed. */
+  background: color-mix(in srgb, var(--panel) 88%, transparent);
   border: 1px solid var(--panel-edge);
-  border-radius: 14px;
-  padding: 0.45rem 0.6rem 0.6rem;
+  border-right: none;
+  border-radius: 14px 0 0 14px;
   backdrop-filter: blur(10px);
+  transform: translateX(100%);
+  transition: transform 0.28s ease;
+  pointer-events: none;
+}
+
+.today-panel.is-open {
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.today-panel__tab {
+  position: absolute;
+  right: 100%;
+  top: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0.5rem;
+  padding-right: 1rem;
+  font: inherit;
+  color: var(--ink-dim);
+  background: color-mix(in srgb, var(--panel) 88%, transparent);
+  border: 1px solid var(--panel-edge);
+  border-right: none;
+  border-radius: 10px 0 0 10px;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.today-panel__tab:hover {
+  color: var(--ink);
+}
+
+.today-panel.is-open .today-panel__tab {
+  color: var(--ink);
+  padding-right: 0.5rem;
+}
+
+/* Hero number — upright, warm fill, leads the tab. */
+.today-panel__tab-count {
+  min-width: 1.75rem;
+  min-height: 1.75rem;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 550;
+  line-height: 1;
+  color: var(--water-deep);
+  background: var(--accent-warm);
+  border-radius: 9px;
+  padding: 0.12rem 0.32rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.today-panel__tab-label {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 550;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.today-panel__tab:hover .today-panel__tab-label,
+.today-panel.is-open .today-panel__tab-label {
+  color: var(--ink);
+}
+
+.today-panel__body {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+  padding: 0.45rem 0.6rem 0.65rem;
+  overflow: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .today-panel__header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.35rem;
+}
+
+.today-panel__heading {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -467,11 +676,11 @@ body {
   color: var(--ink-dim);
   background: none;
   border: none;
-  padding: 0.15rem 0.1rem 0.3rem;
+  padding: 0.15rem 0.1rem 0;
   cursor: pointer;
 }
 
-.today-panel__header:hover {
+.today-panel__heading:hover {
   color: var(--ink);
 }
 
@@ -484,6 +693,21 @@ body {
 
 .today-panel__expand {
   font-size: 0.85rem;
+}
+
+/* Stretch the shared window pills across the drawer width. */
+.today-panel__header .window-selector {
+  width: 100%;
+  background: color-mix(in srgb, var(--panel-edge) 40%, transparent);
+  border-radius: 999px;
+  padding: 0.1rem;
+}
+
+.today-panel__header .window-selector__option {
+  flex: 1;
+  padding: 0.3rem 0.35rem;
+  font-size: 0.72rem;
+  text-align: center;
 }
 
 .today-panel__chips {
@@ -508,8 +732,7 @@ body {
 
 .chip__art {
   display: block;
-  width: 504px;
-  height: 306px;
+  width: 120px;
   object-fit: contain;
   filter: drop-shadow(0 1px 4px rgb(0 0 0 / 0.5));
 }
@@ -533,12 +756,6 @@ body {
   padding: 0 0.1rem 0.1rem;
   font-size: 0.72rem;
   color: var(--ink-faint);
-}
-
-@media (max-width: 820px) {
-  .today-panel {
-    display: none;
-  }
 }
 
 /* ---- seen today board ---------------------------------------------------- */
@@ -702,26 +919,92 @@ svg.today-collage-item__art {
   transform: translate(-50%, 26px);
 }
 
+/* Header: identity on the left, freshness badge pinned right — the two
+   things a viewer scans first ("what" and "still around?"). */
+.popover__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.popover__title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+  min-width: 0;
+}
+
 .popover__species {
   font-family: var(--font-display);
   font-size: 1rem;
   font-weight: 550;
-  margin-bottom: 0.25rem;
+  line-height: 1.15;
 }
 
+.popover__id {
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  color: var(--accent-warm);
+}
+
+.popover__age {
+  flex-shrink: 0;
+  font-size: 0.68rem;
+  white-space: nowrap;
+  color: var(--accent-warm);
+  background: color-mix(in srgb, var(--accent-warm) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent-warm) 32%, transparent);
+  border-radius: 999px;
+  padding: 0.12rem 0.45rem;
+}
+
+/* Meta as labeled columns — count/area/reports read at a glance instead of
+   an ambiguous inline run. Kept a single wrapping row to stay compact. */
+.popover__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.9rem;
+  margin: 0;
+}
+
+.popover__fact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.04rem;
+  min-width: 0;
+}
+
+.popover__fact dt {
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.popover__fact dd {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--ink);
+}
+
+/* Shared with HydroPopover, which still uses the simple inline meta run. */
 .popover__meta {
   display: flex;
   flex-wrap: wrap;
   gap: 0.25rem 0.7rem;
-  color: var(--ink-dim);
+  margin-top: 0.3rem;
+  color: var(--ink);
 }
 
 .popover__note {
-  margin-top: 0.45rem;
+  margin: 0.55rem 0 0;
   color: var(--ink);
   opacity: 0.85;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -730,17 +1013,9 @@ svg.today-collage-item__art {
   display: flex;
   flex-direction: column;
   gap: 0.1rem;
-  margin-top: 0.5rem;
-  color: var(--ink-faint);
+  margin-top: 0.55rem;
+  color: var(--ink-dim);
   font-size: 0.72rem;
-}
-
-.popover__hint {
-  margin-top: 0.35rem;
-  font-size: 0.66rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
 }
 
 /* ---- empty state ------------------------------------------------------- */
@@ -808,16 +1083,23 @@ body.cursor-hidden .app--kiosk:hover .statusbar__controls {
 }
 
 .footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.45rem 1rem;
+  padding: 0.4rem 1rem;
   font-size: 0.72rem;
   color: var(--ink-dim);
-  background: var(--water-deep);
+  background: color-mix(in srgb, var(--water-deep) 82%, transparent);
+  backdrop-filter: blur(8px);
   border-top: 1px solid var(--panel-edge);
   flex-wrap: wrap;
+  pointer-events: none;
 }
 
 .footer__attribution {
@@ -827,4 +1109,12 @@ body.cursor-hidden .app--kiosk:hover .statusbar__controls {
 .footer__disclaimer {
   color: var(--ink-faint);
   white-space: nowrap;
+}
+
+.footer__full {
+  display: contents;
+}
+
+.footer__compact {
+  display: none;
 }

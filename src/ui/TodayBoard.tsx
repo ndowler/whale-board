@@ -1,6 +1,12 @@
 import type { CSSProperties } from 'react';
 import { useAppDispatch, useAppState } from '../state/store';
-import { seenToday, timeAgo } from '../state/selectors';
+import {
+  seenInWindow,
+  speciesFocusAction,
+  timeAgo,
+  windowEmptyLabel,
+  windowTitle,
+} from '../state/selectors';
 import { SPECIES_LABEL } from '../data/species';
 import type { SpeciesId } from '../types';
 import { SpeciesArtImg } from './SpeciesArtImg';
@@ -90,17 +96,17 @@ function collagePlacements(species: SpeciesId[]): Placement[] {
 }
 
 /**
- * The fullscreen seen-today collage — the AvianVisitors nod made whole:
- * transparent cutout plates scattered in an organic cluster, one per
- * species observed since local midnight. Clicking a cutout returns to the
- * map with that species' latest sighting selected ("show me where").
+ * The fullscreen species collage — transparent cutout plates scattered in
+ * an organic cluster, one per species inside the active freshness window.
+ * Clicking a cutout returns to the map and pings every icon of that species.
  */
 export function TodayBoard() {
   const state = useAppState();
   const dispatch = useAppDispatch();
-  const today = seenToday(state);
+  const groups = seenInWindow(state);
+  const title = windowTitle(state.windowHours);
   const fresh = new Set(state.newIds);
-  const placements = collagePlacements(today.map((g) => g.species));
+  const placements = collagePlacements(groups.map((g) => g.species));
 
   return (
     <div className="today-board">
@@ -108,20 +114,20 @@ export function TodayBoard() {
         <p className="today-board__kicker">
           the salish sea · {dateLabel(state.nowMs)}
         </p>
-        <h1 className="today-board__title">Seen Today</h1>
+        <h1 className="today-board__title">{title}</h1>
       </header>
-      {today.length === 0 ? (
+      {groups.length === 0 ? (
         <div className="empty" role="status">
           <svg className="empty__waves" viewBox="0 0 120 24" aria-hidden="true">
             <path d="M4,14 Q16,6 28,14 T52,14" />
             <path d="M64,16 Q76,8 88,16 T112,16" />
           </svg>
           <div className="empty__title">The sea is quiet</div>
-          <div className="empty__sub">No sightings yet today</div>
+          <div className="empty__sub">{windowEmptyLabel(state.windowHours)}</div>
         </div>
       ) : (
         <div className="today-collage">
-          {today.map((g, i) => {
+          {groups.map((g, i) => {
             const p = placements[i];
             const isNew = g.latest.mergedIds
               .concat(g.latest.id)
@@ -144,7 +150,7 @@ export function TodayBoard() {
                 }
                 onClick={() => {
                   dispatch({ type: 'SET_VIEW', view: 'map' });
-                  dispatch({ type: 'SELECT', id: g.latest.id });
+                  dispatch(speciesFocusAction(state, g.species));
                 }}
                 aria-label={`${SPECIES_LABEL[g.species]}, ${sightings}, ${timeAgo(g.latestMs, state.nowMs)} — show on the map`}
                 title={`${SPECIES_LABEL[g.species]} · ${sightings} · ${

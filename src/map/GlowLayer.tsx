@@ -12,6 +12,9 @@ interface GlowLayerProps {
   nowMs: number;
   windowHours: WindowHours;
   newIds: readonly string[];
+  /** Manual focus pings (seen-today chip); remount via highlightSeq. */
+  highlightIds?: readonly string[];
+  highlightSeq?: number;
 }
 
 /**
@@ -41,12 +44,15 @@ export function GlowLayer({
   nowMs,
   windowHours,
   newIds,
+  highlightIds = [],
+  highlightSeq = 0,
 }: GlowLayerProps) {
   const r = useMemo(
     () => Math.max(8, kmToPx(frame.projection, CONFIG.glowRadiusKm)),
     [frame.projection],
   );
   const fresh = new Set(newIds);
+  const highlighted = new Set(highlightIds);
 
   return (
     <g className="glows">
@@ -76,6 +82,7 @@ export function GlowLayer({
         const p = frame.projection([s.lng, s.lat]);
         if (!p) return null;
         const d = decay(s, nowMs, windowHours);
+        const ping = fresh.has(s.id) || highlighted.has(s.id);
         return (
           <g key={s.id} transform={`translate(${p[0]}, ${p[1]})`}>
             <circle
@@ -84,8 +91,13 @@ export function GlowLayer({
               fill={`url(#glow-${tintFor(s.species)})`}
               opacity={d.opacity}
             />
-            {fresh.has(s.id) && (
-              <circle className="glow__ping" r={r} fill="none" />
+            {ping && (
+              <circle
+                key={`${s.id}-${highlightSeq}-${fresh.has(s.id) ? 'n' : 'h'}`}
+                className="glow__ping"
+                r={r}
+                fill="none"
+              />
             )}
           </g>
         );

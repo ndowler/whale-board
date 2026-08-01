@@ -32,6 +32,7 @@ interface MarkerLayerProps {
   windowHours: WindowHours;
   selectedId: string | null;
   newIds: readonly string[];
+  highlightIds?: readonly string[];
   onSelect: (id: string | null) => void;
 }
 
@@ -47,9 +48,11 @@ export function MarkerLayer({
   windowHours,
   selectedId,
   newIds,
+  highlightIds = [],
   onSelect,
 }: MarkerLayerProps) {
   const fresh = new Set(newIds);
+  const highlighted = new Set(highlightIds);
   // Markers live inside the zoomed group, so left alone they'd balloon under
   // deep zoom. Full counter-scale keeps them a constant screen size — zooming
   // reveals more chart, not bigger art. Zoom-out (k<1) shrinks naturally.
@@ -86,10 +89,18 @@ export function MarkerLayer({
             className={cls}
             style={{ '--i': i } as CSSProperties}
             transform={`translate(${p[0]}, ${p[1]}) scale(${damp})`}
-            opacity={selected ? 1 : d.markerOpacity}
+            opacity={selected || highlighted.has(s.id) ? 1 : d.markerOpacity}
             role="button"
+            tabIndex={0}
             aria-label={SPECIES_LABEL[s.species]}
+            aria-pressed={selected}
             onClick={(e) => {
+              e.stopPropagation();
+              onSelect(selected ? null : s.id);
+            }}
+            onKeyDown={(e) => {
+              if (e.key !== 'Enter' && e.key !== ' ') return;
+              e.preventDefault();
               e.stopPropagation();
               onSelect(selected ? null : s.id);
             }}

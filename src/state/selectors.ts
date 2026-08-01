@@ -1,4 +1,4 @@
-import { CONFIG } from '../config';
+import { CONFIG, type WindowHours } from '../config';
 import type { Sighting, SpeciesId } from '../types';
 import { withinWindow } from '../data/normalize';
 import { collapseNearDupes } from '../data/dedupe';
@@ -19,6 +19,27 @@ export function visibleSightings(state: AppState): Sighting[] {
   return collapsed;
 }
 
+/** Visible (window-filtered, deduped) sightings of one species, newest first. */
+export function visibleOfSpecies(
+  state: AppState,
+  species: SpeciesId,
+): Sighting[] {
+  return visibleSightings(state).filter((s) => s.species === species);
+}
+
+/** Payload to fit the map to a species and ping every on-map icon of it. */
+export function speciesFocusAction(
+  state: AppState,
+  species: SpeciesId,
+): { type: 'FOCUS_SPECIES'; ids: string[]; points: [number, number][] } {
+  const matches = visibleOfSpecies(state, species);
+  return {
+    type: 'FOCUS_SPECIES',
+    ids: matches.map((s) => s.id),
+    points: matches.map((s) => [s.lng, s.lat]),
+  };
+}
+
 /** Local midnight for the day containing nowMs. */
 export function startOfLocalDay(nowMs: number): number {
   const d = new Date(nowMs);
@@ -28,7 +49,7 @@ export function startOfLocalDay(nowMs: number): number {
 
 export interface SpeciesToday {
   species: SpeciesId;
-  /** Collapsed sightings today (post-dedupe). */
+  /** Collapsed sightings in the active window (post-dedupe). */
   count: number;
   /** Sum of raw reports behind those sightings. */
   reportCount: number;
@@ -37,17 +58,38 @@ export interface SpeciesToday {
   latest: Sighting;
 }
 
+/** Drawer / collage title for the active freshness window. */
+export function windowTitle(hours: WindowHours): string {
+  switch (hours) {
+    case 24:
+      return 'Past 24 Hours';
+    case 72:
+      return 'Past 3 Days';
+    case 168:
+      return 'Past 7 Days';
+  }
+}
+
+/** Empty-state copy matching the active window. */
+export function windowEmptyLabel(hours: WindowHours): string {
+  switch (hours) {
+    case 24:
+      return 'Nothing in the past 24 hours';
+    case 72:
+      return 'Nothing in the past 3 days';
+    case 168:
+      return 'Nothing in the past 7 days';
+  }
+}
+
 /**
- * Species observed since local midnight, newest group first — the
- * AvianVisitors-style "seen today" tally. Builds on visibleSightings so
- * FR-8 dedupe applies; a calendar day is always a subset of the smallest
- * freshness window (24 h), so the window filter can never hide today.
+ * Species observed inside the active freshness window, newest group first.
+ * Matches the map: same visibleSightings set, grouped by species for the
+ * drawer tally and fullscreen collage.
  */
-export function seenToday(state: AppState): SpeciesToday[] {
-  const floor = startOfLocalDay(state.nowMs);
+export function seenInWindow(state: AppState): SpeciesToday[] {
   const groups = new Map<SpeciesId, SpeciesToday>();
   for (const s of visibleSightings(state)) {
-    if (s.epochMs < floor) continue;
     const g = groups.get(s.species);
     if (!g) {
       groups.set(s.species, {

@@ -75,6 +75,16 @@ export function Board() {
     return () => clearTimeout(t);
   }, [state.newIds, dispatch]);
 
+  // Species-focus sonar rings share the arrival window, then clear.
+  useEffect(() => {
+    if (state.highlightIds.length === 0) return;
+    const t = setTimeout(
+      () => dispatch({ type: 'CLEAR_HIGHLIGHT' }),
+      CONFIG.arrivalAnimMs,
+    );
+    return () => clearTimeout(t);
+  }, [state.highlightIds, dispatch]);
+
   return (
     <div className={`app${state.kiosk ? ' app--kiosk' : ''}`}>
       <SpeciesSprite />
@@ -97,6 +107,7 @@ export function Board() {
             onClick={() => dispatch({ type: 'SELECT', id: null })}
           >
             <MapView
+              focus={state.mapFocus}
               overlay={(frame) => (
                 <>
                   {selected && (
@@ -128,6 +139,8 @@ export function Board() {
                     nowMs={state.nowMs}
                     windowHours={state.windowHours}
                     newIds={state.newIds}
+                    highlightIds={state.highlightIds}
+                    highlightSeq={state.mapFocus?.seq ?? 0}
                   />
                   <MarkerLayer
                     sightings={visible}
@@ -136,6 +149,7 @@ export function Board() {
                     windowHours={state.windowHours}
                     selectedId={state.selectedId}
                     newIds={state.newIds}
+                    highlightIds={state.highlightIds}
                     onSelect={(id) => dispatch({ type: 'SELECT', id })}
                   />
                 </>
@@ -153,10 +167,10 @@ export function Board() {
             {visible.length === 0 && state.lastSuccessAt !== null && (
               <EmptyState windowHours={state.windowHours} />
             )}
+            <AttributionFooter />
           </div>
         )}
       </div>
-      <AttributionFooter />
     </div>
   );
 }

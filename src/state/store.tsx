@@ -17,6 +17,14 @@ export interface AppState {
   sightings: ReadonlyMap<string, Sighting>;
   /** Ids that arrived in the latest poll — wear the arrival treatment. */
   newIds: readonly string[];
+  /**
+   * Sightings briefly wearing the sonar ping (e.g. after tapping a
+   * seen-today species). Independent of newIds so poll arrivals and
+   * manual focus can overlap cleanly.
+   */
+  highlightIds: readonly string[];
+  /** Camera cue for MapView — bump seq to re-fit even to the same points. */
+  mapFocus: { seq: number; points: readonly [number, number][] } | null;
   lastSuccessAt: number | null;
   consecutiveFailures: number;
   /** Acoustic bridge: hydrophone nodes + recent whale detections. */
@@ -47,6 +55,14 @@ export type Action =
   | { type: 'SELECT_HYDRO'; id: string | null }
   | { type: 'SET_WINDOW'; hours: WindowHours }
   | { type: 'CLEAR_NEW' }
+  | {
+      type: 'FOCUS_SPECIES';
+      /** Visible sighting ids of this species — ping targets. */
+      ids: readonly string[];
+      /** [lng, lat] points for the map to fit. */
+      points: readonly [number, number][];
+    }
+  | { type: 'CLEAR_HIGHLIGHT' }
   | { type: 'SET_CHIME'; on: boolean }
   | { type: 'SET_KIOSK'; on: boolean }
   | { type: 'SET_VIEW'; view: BoardView };
@@ -68,6 +84,8 @@ export function initialState(nowMs: number): AppState {
   return {
     sightings: new Map(),
     newIds: [],
+    highlightIds: [],
+    mapFocus: null,
     lastSuccessAt: null,
     consecutiveFailures: 0,
     hydrophones: [],
@@ -137,6 +155,23 @@ export function reducer(state: AppState, action: Action): AppState {
       return { ...state, windowHours: action.hours };
     case 'CLEAR_NEW':
       return state.newIds.length === 0 ? state : { ...state, newIds: [] };
+    case 'FOCUS_SPECIES':
+      // Overview mode: clear the single-sighting popover so the fitted
+      // frame and sonar rings can read as a group.
+      return {
+        ...state,
+        selectedId: null,
+        selectedHydroId: null,
+        highlightIds: action.ids,
+        mapFocus: {
+          seq: (state.mapFocus?.seq ?? 0) + 1,
+          points: action.points,
+        },
+      };
+    case 'CLEAR_HIGHLIGHT':
+      return state.highlightIds.length === 0
+        ? state
+        : { ...state, highlightIds: [] };
     case 'SET_CHIME':
       return { ...state, chimeOn: action.on };
     case 'SET_KIOSK':
@@ -149,6 +184,7 @@ export function reducer(state: AppState, action: Action): AppState {
         boardView: action.view,
         selectedId: null,
         selectedHydroId: null,
+        highlightIds: [],
       };
   }
 }

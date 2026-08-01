@@ -18,8 +18,7 @@ vi.mock('./data/acartiaClient', () => ({
       },
       {
         ssemmi_id: 'SMOKE 2',
-        // Minutes old, not hours — keeps the "seen today" tally deterministic
-        // even when the suite runs just after local midnight.
+        // Minutes old — stays inside every freshness window.
         created: new Date(Date.now() - 20 * 60_000).toISOString(),
         type: 'Humpback',
         latitude: 48.249,
@@ -59,8 +58,9 @@ describe('App smoke', () => {
     });
     expect(markers.length).toBeGreaterThanOrEqual(1);
 
-    // The seen-today panel tallies both species (fixtures are minutes old).
-    expect(screen.getByText('Seen today')).toBeTruthy();
+    // The species drawer tallies both species (fixtures are minutes old).
+    // Default window is 72h → "Past 3 Days" (tab + header).
+    expect(screen.getAllByText('Past 3 Days').length).toBeGreaterThanOrEqual(1);
     expect(
       screen.getByTitle(/^Orca — Southern Resident —/),
     ).toBeTruthy();
@@ -68,15 +68,17 @@ describe('App smoke', () => {
 
     // `v` flips to the fullscreen collage; species + region copy render.
     fireEvent.keyDown(window, { key: 'v' });
-    expect(await screen.findByText('Seen Today')).toBeTruthy();
+    expect(await screen.findByRole('heading', { name: 'Past 3 Days' })).toBeTruthy();
     expect(screen.getByText('Orca — Southern Resident')).toBeTruthy();
     expect(screen.getAllByTitle(/Haro Strait/).length).toBeGreaterThan(0);
 
     // Escape returns to the map.
     fireEvent.keyDown(window, { key: 'Escape' });
-    expect(await screen.findByText('Seen today')).toBeTruthy();
+    expect(
+      (await screen.findAllByText('Past 3 Days')).length,
+    ).toBeGreaterThanOrEqual(1);
 
-    // Attribution + disclaimer are always on screen.
+    // Attribution + disclaimer sit on the map overlay.
     expect(screen.getByText(/Acartia Data Cooperative/)).toBeTruthy();
     expect(screen.getByText(/not a navigation or safety tool/)).toBeTruthy();
   });

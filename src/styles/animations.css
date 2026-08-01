@@ -95,6 +95,9 @@
   .popover {
     animation: none;
   }
+  .map__inner.is-animating {
+    transition: none;
+  }
   .glow__ping,
   .hydro__ring {
     display: none;

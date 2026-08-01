@@ -38,27 +38,45 @@ export function Popover({ sighting: s, frame, nowMs }: PopoverProps) {
       aria-label={`Sighting details: ${SPECIES_LABEL[s.species]}`}
       onClick={(e) => e.stopPropagation()}
     >
-      <div className="popover__species">{SPECIES_LABEL[s.species]}</div>
-      <div className="popover__meta">
-        {pods && <span>{pods}</span>}
-        {s.count !== null && (
-          <span>
-            {s.count} {s.count === 1 ? 'animal' : 'animals'}
-          </span>
-        )}
-        <span>{s.region ?? 'Salish Sea'}</span>
-        {s.reportCount > 1 && <span>{s.reportCount} reports</span>}
+      <div className="popover__head">
+        <div className="popover__title">
+          <span className="popover__species">{SPECIES_LABEL[s.species]}</span>
+          {pods && <span className="popover__id">{pods}</span>}
+        </div>
+        <time className="popover__age" title={clockLabel(s.epochMs)}>
+          {timeAgo(s.epochMs, nowMs)}
+        </time>
       </div>
-      {comment && <div className="popover__note">{comment}</div>}
+
+      <dl className="popover__facts">
+        {s.count !== null && (
+          <div className="popover__fact">
+            <dt>Count</dt>
+            <dd>
+              {s.count} {s.count === 1 ? 'animal' : 'animals'}
+            </dd>
+          </div>
+        )}
+        <div className="popover__fact">
+          <dt>Area</dt>
+          <dd>{s.region ?? 'Salish Sea'}</dd>
+        </div>
+        {s.reportCount > 1 && (
+          <div className="popover__fact">
+            <dt>Reports</dt>
+            <dd>{s.reportCount}</dd>
+          </div>
+        )}
+      </dl>
+
+      {comment && <p className="popover__note">{comment}</p>}
+
       <div className="popover__foot">
-        <span>
-          {timeAgo(s.epochMs, nowMs)} · {clockLabel(s.epochMs)}
-        </span>
+        <span>{clockLabel(s.epochMs)} · approx. position</span>
         <span className="popover__source">
           {s.sourceEntity || 'unknown source'} · via Acartia
         </span>
       </div>
-      <div className="popover__hint">position approximate</div>
     </div>
   );
 }

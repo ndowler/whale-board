@@ -110,5 +110,7 @@ export const CONFIG = {
 
   attribution:
     'Sightings data via the Acartia Data Cooperative — Orca Network via Conserve.io and partners · Acoustic detections via Orcasound & OrcaHello',
+  /** One-line credit for narrow viewports — keeps the map free of a multi-line bar. */
+  attributionCompact: 'Acartia / Orcasound · Non-commercial',
   disclaimer: 'Non-commercial · not a navigation or safety tool',
 };

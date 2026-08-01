@@ -1,0 +1,90 @@
+/* Narrow-viewport chrome: compact footer + statusbar roll-out. */
+
+@media (max-width: 640px) {
+  /* `viewport-fit=cover` lets the map paint edge to edge, so every piece of
+     floating chrome has to step around the notch / home indicator itself. */
+  .wordmark {
+    top: calc(0.65rem + env(safe-area-inset-top, 0px));
+    left: calc(1rem + env(safe-area-inset-left, 0px));
+    font-size: 0.92rem;
+    max-width: calc(100% - 4.5rem);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .map__zoom {
+    left: calc(0.75rem + env(safe-area-inset-left, 0px));
+    bottom: calc(8.75rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Collapsed by default: only the roll button. Expanded: pill rolls out
+     beneath it so the wordmark stays clear of the control cluster. */
+  .statusbar {
+    top: calc(0.75rem + env(safe-area-inset-top, 0px));
+    right: calc(0.75rem + env(safe-area-inset-right, 0px));
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.4rem;
+  }
+
+  .statusbar__roll {
+    display: flex;
+  }
+
+  .statusbar__controls {
+    max-width: 0;
+    max-height: 0;
+    padding: 0;
+    border-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transform: translateY(-0.35rem) scale(0.96);
+    transform-origin: top right;
+    transition:
+      opacity 0.2s ease,
+      transform 0.22s ease,
+      max-width 0.22s ease,
+      max-height 0.22s ease,
+      padding 0.22s ease,
+      border-width 0.22s ease;
+  }
+
+  .statusbar.is-rolled-out .statusbar__controls {
+    max-width: min(100vw - 1.5rem, 22rem);
+    max-height: 3.5rem;
+    padding: 0.25rem 0.45rem;
+    border-width: 1px;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+  }
+
+  .footer {
+    left: auto;
+    right: calc(0.5rem + env(safe-area-inset-right, 0px));
+    bottom: calc(0.4rem + env(safe-area-inset-bottom, 0px));
+    max-width: min(55%, 14rem);
+    padding: 0.25rem 0.55rem;
+    font-size: 0.62rem;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    gap: 0;
+    border: 1px solid var(--panel-edge);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--panel) 82%, transparent);
+  }
+
+  .footer__full {
+    display: none;
+  }
+
+  .footer__compact {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--ink-faint);
+  }
+}

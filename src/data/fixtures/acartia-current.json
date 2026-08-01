@@ -7,7 +7,7 @@
     "longitude": " -122.5410 ",
     "no_sighted": "6",
     "trusted": 1,
-    "data_source_comments": "[Orca Network] Biggs T46Bs southbound off Point Defiance",
+    "data_source_comments": "[Orca Network] Biggs T46Bs southbound off Point Defiance (older duplicate of this ssemmi_id — superseded by the 09:05 record)",
     "data_source_entity": "orcanetwork"
   },
   {
@@ -326,7 +326,7 @@
     "longitude": "-122.5502",
     "no_sighted": "6",
     "trusted": 2,
-    "data_source_comments": "[Orca Network] Duplicate ssemmi_id with newer stamp — later record wins",
+    "data_source_comments": "[Orca Network] Biggs T46Bs continuing south past Point Defiance",
     "data_source_entity": "orcanetwork"
   },
   {
