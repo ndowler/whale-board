@@ -73,6 +73,9 @@ npx wrangler pages deploy dist --project-name whale-board
 - Cache headers ship via `public/_headers` (immutable hashed assets, always
   revalidated shell). No `_redirects` needed — single route, no client router.
 
+Full step-by-step walkthrough, including the optional proxy, custom domains,
+and troubleshooting: [`docs/DEPLOY.md`](docs/DEPLOY.md).
+
 ## How it works
 
 ```
