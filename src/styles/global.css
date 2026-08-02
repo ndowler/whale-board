@@ -243,6 +243,60 @@ body {
   vector-effect: non-scaling-stroke;
 }
 
+/* ---- place labels ------------------------------------------------------ */
+
+/* Engraved-chart lettering: old-style serifs, wide tracking, warm ink. The
+   type is furniture — never in the way of a marker or a click. */
+.places {
+  pointer-events: none;
+  /* A pan that starts over a name must not drag-select it. */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.place__name {
+  font-family: var(--font-display);
+  fill: var(--ink);
+  /* Halo painted under the glyphs so a name stays legible crossing the
+     coastline, without a per-node blur filter. */
+  stroke: rgb(4 10 16 / 0.72);
+  stroke-width: 3.2;
+  stroke-linejoin: round;
+  paint-order: stroke;
+  text-transform: uppercase;
+}
+
+.place__dot {
+  fill: var(--ink);
+  stroke: rgb(4 10 16 / 0.6);
+  stroke-width: 1.2;
+  opacity: 0.8;
+}
+
+.place--city .place__name {
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  opacity: 0.78;
+}
+
+.place--region .place__name {
+  font-size: 15px;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.34em;
+  text-anchor: middle;
+  opacity: 0.62;
+}
+
+.map__inner--chart .place__name {
+  fill: #ecdfc2;
+}
+
+.map__inner--chart .place__dot {
+  fill: #ecdfc2;
+}
+
 .species-sprite {
   position: absolute;
   width: 0;

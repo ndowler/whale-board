@@ -434,7 +434,7 @@ export function MapView({ children, overlay, focus }: MapViewProps) {
             {chart && (
               <image
                 className="map__chart"
-                href={`${import.meta.env.BASE_URL}art/map-chart.webp`}
+                href={`${import.meta.env.BASE_URL}art/raw-chart.webp`}
                 x={chart.x}
                 y={chart.y}
                 width={chart.width}

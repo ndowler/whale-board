@@ -67,6 +67,12 @@ function build() {
   execFileSync(path.join(ROOT, 'node_modules', '.bin', 'mapshaper'), args, {
     stdio: 'inherit',
   });
+  // The source carries every inland lake as an interior ring; on a board
+  // about the Sound they read as noise. Strip them (and drop the matching
+  // shapes from the chart raster with scripts/patch-chart-lakes.mjs).
+  execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'strip-lakes.mjs')], {
+    stdio: 'inherit',
+  });
   const kb = Math.round(statSync(OUT).size / 1024);
   console.log(`wrote ${path.relative(ROOT, OUT)} (${kb} KB)`);
   if (kb > 350) {
