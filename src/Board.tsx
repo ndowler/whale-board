@@ -12,6 +12,7 @@ import { MapView } from './map/MapView';
 import { MarkerLayer } from './map/MarkerLayer';
 import { GlowLayer } from './map/GlowLayer';
 import { HydrophoneLayer } from './map/HydrophoneLayer';
+import { PlaceLabels } from './map/PlaceLabels';
 import { Popover } from './map/Popover';
 import { HydroPopover } from './map/HydroPopover';
 import { StatusBar } from './ui/StatusBar';
@@ -126,6 +127,7 @@ export function Board() {
             >
               {(frame) => (
                 <>
+                  <PlaceLabels frame={frame} />
                   <HydrophoneLayer
                     hydrophones={state.hydrophones}
                     statuses={hydroStatus}

@@ -9,6 +9,15 @@ tsconfig.tsbuildinfo
 workers/acartia-proxy/.dev.vars
 .wrangler/
 
+# lake-patched chart intermediate: 4 MB, rebuilt from raw-chart.png +
+# lakes.geo.json by scripts/patch-chart-lakes.mjs (the webp IS committed)
+art/map/chart-nolakes.png
+
+# 20 MB AI original behind public/art/raw-chart.webp. Kept out of public/
+# because Vite copies that tree verbatim into the build, and out of git
+# because 20 MB of PNG is not worth versioning — regenerate or re-drop it.
+art/map/raw-chart-v2.png
+
 # species art: 2K raw generations stay local; keyed assets ship from public/
 art/species/raw/
 art/species/collage-raw/
