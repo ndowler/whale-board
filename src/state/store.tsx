@@ -30,6 +30,11 @@ export interface AppState {
   /** Acoustic bridge: hydrophone nodes + recent whale detections. */
   hydrophones: readonly Hydrophone[];
   detections: readonly AcousticDetection[];
+  /**
+   * First fb-relay fetch has landed. Like the first poll, the initial
+   * reports batch is a refresh, not an arrival — only later ones animate.
+   */
+  reportsPrimed: boolean;
   windowHours: WindowHours;
   selectedId: string | null;
   selectedHydroId: string | null;
@@ -43,6 +48,7 @@ export interface AppState {
 export type Action =
   | { type: 'POLL_SUCCESS'; sightings: Sighting[]; at: number }
   | { type: 'BACKFILL_SUCCESS'; sightings: Sighting[]; at: number }
+  | { type: 'REPORTS_SUCCESS'; sightings: Sighting[]; at: number }
   | { type: 'POLL_ERROR'; at: number }
   | {
       type: 'ACOUSTIC_SUCCESS';
@@ -90,6 +96,7 @@ export function initialState(nowMs: number): AppState {
     consecutiveFailures: 0,
     hydrophones: [],
     detections: [],
+    reportsPrimed: false,
     windowHours: CONFIG.defaultWindowHours,
     selectedId: null,
     selectedHydroId: null,
@@ -127,6 +134,24 @@ export function reducer(state: AppState, action: Action): AppState {
       // or mask /current staleness.
       const { next } = mergeSightings(state.sightings, action.sightings, action.at);
       return { ...state, sightings: next };
+    }
+    case 'REPORTS_SUCCESS': {
+      // Community reports from the fb-relay Worker. A side feed, not the
+      // poll: lastSuccessAt/consecutiveFailures track Acartia health only.
+      // New reports append to newIds (never replace — a poll's in-flight
+      // arrival animation must survive) and get the full arrival treatment.
+      const { next, addedIds } = mergeSightings(
+        state.sightings,
+        action.sightings,
+        action.at,
+      );
+      const animate = state.reportsPrimed && addedIds.length > 0;
+      return {
+        ...state,
+        sightings: next,
+        reportsPrimed: true,
+        newIds: animate ? [...new Set([...state.newIds, ...addedIds])] : state.newIds,
+      };
     }
     case 'POLL_ERROR':
       // Last-good data is never cleared on failure.

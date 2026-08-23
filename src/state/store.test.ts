@@ -87,6 +87,36 @@ describe('reducer', () => {
     expect(s.newIds).toBe(before.newIds);
   });
 
+  it('REPORTS_SUCCESS primes silently, then animates without poll bookkeeping', () => {
+    let s = seeded();
+    const fb = (id: string) => ({ ...mk(id, 0), channel: 'facebook' as const });
+
+    // First relay batch is a refresh, not an arrival.
+    s = reducer(s, { type: 'REPORTS_SUCCESS', sightings: [fb('fb-1')], at: now + 30_000 });
+    expect(s.sightings.size).toBe(2);
+    expect(s.newIds).toEqual([]);
+    expect(s.reportsPrimed).toBe(true);
+
+    // Later relay batches flag genuinely new ids — appended, not replacing,
+    // so a poll's in-flight arrival animation survives.
+    s = reducer(s, {
+      type: 'POLL_SUCCESS',
+      sightings: [mk('A', 1), mk('B', 0)],
+      at: now + 60_000,
+    });
+    s = reducer(s, {
+      type: 'REPORTS_SUCCESS',
+      sightings: [fb('fb-1'), fb('fb-2')],
+      at: now + 90_000,
+    });
+    expect(s.newIds).toEqual(['B', 'fb-2']);
+    expect(s.sightings.get('fb-2')?.channel).toBe('facebook');
+
+    // Relay traffic never touches Acartia poll health.
+    expect(s.lastSuccessAt).toBe(now + 60_000);
+    expect(s.consecutiveFailures).toBe(0);
+  });
+
   it('window changes and selection round-trip', () => {
     let s = seeded();
     s = reducer(s, { type: 'SET_WINDOW', hours: 24 });

@@ -3,6 +3,7 @@ import { CONFIG } from '../config';
 import type { Action } from '../state/store';
 import { fetchBackfill, fetchSightings } from './acartiaClient';
 import { fetchAcoustic } from './orcasoundClient';
+import { fetchReports } from './reportsClient';
 import { normalizeBatch } from './normalize';
 
 /**
@@ -148,6 +149,48 @@ export function useAcousticLoop(dispatch: Dispatch<Action>) {
         });
       } catch {
         // silent — last-good hydrophone state simply ages out
+      } finally {
+        clearTimeout(killer);
+        if (!disposed) {
+          clearTimeout(timer);
+          timer = setTimeout(attempt, CONFIG.pollIntervalMs);
+        }
+      }
+    };
+
+    void attempt();
+    return () => {
+      disposed = true;
+      clearTimeout(timer);
+      ctrl?.abort();
+    };
+  }, [dispatch]);
+}
+
+/**
+ * Community-relay side feed (fb-relay Worker): reports hand-relayed from
+ * Facebook group posts. Same discipline as the acoustic loop — chained
+ * setTimeout, silent retries on the next interval, no error state — because
+ * the board is fully functional on Acartia alone and the relay is additive.
+ */
+export function useReportsLoop(dispatch: Dispatch<Action>) {
+  useEffect(() => {
+    if (!CONFIG.reports.enabled) return;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    let ctrl: AbortController | null = null;
+    let disposed = false;
+
+    const attempt = async () => {
+      ctrl = new AbortController();
+      const killer = setTimeout(() => ctrl?.abort(), CONFIG.fetchTimeoutMs);
+      try {
+        const sightings = await fetchReports(ctrl.signal, (m) =>
+          console.warn(`[whale-board] ${m}`),
+        );
+        if (disposed) return;
+        dispatch({ type: 'REPORTS_SUCCESS', sightings, at: Date.now() });
+      } catch {
+        // silent — last-good reports stay on the board and age out normally
       } finally {
         clearTimeout(killer);
         if (!disposed) {

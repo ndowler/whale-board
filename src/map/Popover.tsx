@@ -74,7 +74,9 @@ export function Popover({ sighting: s, frame, nowMs }: PopoverProps) {
       <div className="popover__foot">
         <span>{clockLabel(s.epochMs)} · approx. position</span>
         <span className="popover__source">
-          {s.sourceEntity || 'unknown source'} · via Acartia
+          {s.channel === 'facebook'
+            ? `${s.sourceEntity || 'Facebook group'} · community relay`
+            : `${s.sourceEntity || 'unknown source'} · via Acartia`}
         </span>
       </div>
     </div>

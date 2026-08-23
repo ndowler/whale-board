@@ -74,4 +74,10 @@ export interface Sighting {
   mergedIds: string[];
   /** 1 + mergedIds.length — the popover shows "N reports" when > 1. */
   reportCount: number;
+  /**
+   * Ingest channel; absent = Acartia. 'facebook' rows came through the
+   * fb-relay Worker (hand-relayed from Facebook group posts) and carry the
+   * group name in sourceEntity — the popover credits them accordingly.
+   */
+  channel?: 'facebook';
 }

@@ -5,6 +5,7 @@ import {
   usePollingLoop,
   useBackfill,
   useAcousticLoop,
+  useReportsLoop,
   useClock,
 } from './data/usePollingLoop';
 import { visibleSightings, hydroStatuses } from './state/selectors';
@@ -30,6 +31,7 @@ export function Board() {
   usePollingLoop(dispatch);
   useBackfill(dispatch);
   useAcousticLoop(dispatch);
+  useReportsLoop(dispatch);
   useClock(dispatch);
   const { toggle: toggleKiosk } = useKiosk(state.kiosk, dispatch);
 

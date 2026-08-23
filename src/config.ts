@@ -19,6 +19,13 @@ const pollMs =
     ? pollOverrideS * 1000
     : 3 * 60_000;
 
+const dataMode = (import.meta.env.VITE_DATA_MODE ??
+  (import.meta.env.DEV ? 'fixture' : 'live')) as 'live' | 'fixture';
+
+const reportsUrl = (import.meta.env.VITE_REPORTS_URL ?? '') as string;
+/** Fixture mode always serves the committed sample so dev exercises the path. */
+const reportsEnabled = reportsUrl !== '' || dataMode === 'fixture';
+
 export const CONFIG = {
   apiUrl: 'https://acartia.io/api/v1/sightings/current',
 
@@ -43,8 +50,15 @@ export const CONFIG = {
    * 'fixture' — serve the committed fixture (dev default; the dev sandbox
    *             cannot reach acartia.io). Override with VITE_DATA_MODE.
    */
-  dataMode: (import.meta.env.VITE_DATA_MODE ??
-    (import.meta.env.DEV ? 'fixture' : 'live')) as 'live' | 'fixture',
+  dataMode,
+
+  /**
+   * Community relay (workers/fb-relay): whale reports hand-relayed from
+   * Facebook group posts. Facebook offers no group-content API, so a human
+   * relays via the Worker's phone form; the board polls its /reports feed
+   * alongside Acartia. '' disables in live mode.
+   */
+  reports: { url: reportsUrl, enabled: reportsEnabled },
 
   pollIntervalMs: pollMs,
   fetchTimeoutMs: 15_000,
@@ -109,7 +123,8 @@ export const CONFIG = {
   },
 
   attribution:
-    'Sightings data via the Acartia Data Cooperative — Orca Network via Conserve.io and partners · Acoustic detections via Orcasound & OrcaHello',
+    'Sightings data via the Acartia Data Cooperative — Orca Network via Conserve.io and partners · Acoustic detections via Orcasound & OrcaHello' +
+    (reportsEnabled ? ' · Community reports relayed from Facebook groups' : ''),
   /** One-line credit for narrow viewports — keeps the map free of a multi-line bar. */
   attributionCompact: 'Acartia / Orcasound · Non-commercial',
   disclaimer: 'Non-commercial · not a navigation or safety tool',

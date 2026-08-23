@@ -43,9 +43,10 @@ export async function fetchBackfill(signal: AbortSignal): Promise<unknown> {
 
 /**
  * Shift a captured fixture so its newest record is ~`newestAgeMs` old,
- * keeping the dev board alive regardless of the calendar.
+ * keeping the dev board alive regardless of the calendar. Shared with the
+ * reports client, whose fixture rides the same raw shape.
  */
-function shiftToRecent(
+export function shiftToRecent(
   records: RawSighting[],
   newestAgeMs = 20 * 60_000,
 ): RawSighting[] {

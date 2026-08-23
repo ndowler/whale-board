@@ -80,6 +80,31 @@ Full step-by-step walkthrough — Workers Builds, CLI, and Pages, plus the
 optional proxy, custom domains, and troubleshooting:
 [`docs/DEPLOY.md`](docs/DEPLOY.md).
 
+## Reporting from Facebook groups
+
+Facebook groups (Orca Network, Puget Sound Orcas, …) are where many Salish
+Sea sightings surface first — but Facebook shut down third-party read access
+to group content (Groups API, April 2024), so posts can't be ingested
+automatically without ToS-violating scraping. The board's answer is a
+**community relay** (`workers/fb-relay`): a tiny token-gated Cloudflare
+Worker that serves a phone-friendly entry form. See a post in a group, open
+the form, tap species + place + time, submit — the board picks it up on its
+next poll and renders it like any other sighting, credited to the group
+("Orca Network · community relay" in the popover) with the relay named in
+the attribution footer.
+
+Relayed reports ride the exact same pipeline as Acartia records (species
+table, pod/T-number parsing, region lookup, freshness decay), and the
+near-dupe collapse merges a relayed report with the same sighting arriving
+later through Acartia — Orca Network group traffic usually does, with a
+delay — so nothing doubles up. Reports expire after the board's 7-day
+retention window.
+
+Setup lives in [`workers/fb-relay/README.md`](workers/fb-relay/README.md);
+the board enables the feed when built with
+`VITE_REPORTS_URL=https://fb-relay.<account>.workers.dev/reports`. In dev
+(fixture mode) a committed sample exercises the path automatically.
+
 ## How it works
 
 ```
@@ -111,6 +136,10 @@ acartia /current ──poll──▶ normalize ──merge──▶ in-memory st
   blanket CC license). This project displays it **non-commercially with
   persistent attribution**; contact Acartia / Orca Network before any public
   or commercial use.
+- **Community relay**: reports hand-relayed from Facebook group posts carry
+  the group's name on the marker and in the footer. Relay the essentials,
+  not whole posts, and respect each group's sharing rules — same
+  non-commercial, personal-use spirit as the rest of the board.
 - **Coastline**: © OpenStreetMap contributors (ODbL), via the
   [geo-maps](https://github.com/simonepri/geo-maps) project (MIT).
 - **Illustrations**: original to this repository.

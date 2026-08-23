@@ -1,0 +1,24 @@
+[
+  {
+    "ssemmi_id": "fb-fixture-1",
+    "created": "2026-07-13 09:20:00",
+    "type": "Bigg's",
+    "latitude": "47.4067",
+    "longitude": "-122.53",
+    "no_sighted": "4",
+    "trusted": 1,
+    "data_source_comments": "[Facebook: Puget Sound Orcas] T65As northbound in Colvos Passage, close to the Vashon side",
+    "data_source_entity": "Puget Sound Orcas"
+  },
+  {
+    "ssemmi_id": "fb-fixture-2",
+    "created": "2026-07-13 06:45:00",
+    "type": "Humpback whale",
+    "latitude": "47.912",
+    "longitude": "-122.52",
+    "no_sighted": null,
+    "trusted": 1,
+    "data_source_comments": "[Facebook: Orca Network] Humpback lunge feeding off Point No Point, slowly headed south",
+    "data_source_entity": "Orca Network"
+  }
+]
