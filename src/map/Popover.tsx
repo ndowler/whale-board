@@ -27,7 +27,7 @@ export function Popover({ sighting: s, track = null, frame, nowMs }: PopoverProp
   const sx = tx + p[0] * k;
   const sy = ty + p[1] * k;
 
-  const flipY = sy < 190;
+  const flipY = sy < (track ? 330 : 190);
   const x = Math.min(Math.max(sx, 140), frame.width - 140);
 
   const pods = track && track.pods.length ? track.pods.join(' + ') : podLine(s);
