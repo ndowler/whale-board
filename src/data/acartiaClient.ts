@@ -29,7 +29,9 @@ export async function fetchSightings(signal: AbortSignal): Promise<unknown> {
  */
 export async function fetchBackfill(signal: AbortSignal): Promise<unknown> {
   if (CONFIG.dataMode === 'fixture') {
-    const { default: fixture } = await import('./fixtures/acartia-full.json');
+    const { default: fixture } = wantsTracksScenario()
+      ? await import('./fixtures/acartia-tracks.json')
+      : await import('./fixtures/acartia-full.json');
     if (signal.aborted) throw new DOMException('aborted', 'AbortError');
     return shiftToRecent(fixture as RawSighting[]);
   }
@@ -80,8 +82,14 @@ const DEMO_COMMENTS = [
   '[demo] breaching repeatedly',
 ];
 
+/** `?scenario=tracks` (fixture mode): a Central Sound day of repeat J/K/Biggs reports. */
+const wantsTracksScenario = () =>
+  new URLSearchParams(location.search).get('scenario') === 'tracks';
+
 async function fetchFixture(signal: AbortSignal): Promise<unknown> {
-  const { default: fixture } = await import('./fixtures/acartia-current.json');
+  const { default: fixture } = wantsTracksScenario()
+    ? await import('./fixtures/acartia-tracks.json')
+    : await import('./fixtures/acartia-current.json');
   // Simulated latency keeps loading states honest in dev.
   await new Promise((r) => setTimeout(r, 300));
   if (signal.aborted) throw new DOMException('aborted', 'AbortError');

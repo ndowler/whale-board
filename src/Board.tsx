@@ -7,9 +7,10 @@ import {
   useAcousticLoop,
   useClock,
 } from './data/usePollingLoop';
-import { visibleSightings, hydroStatuses } from './state/selectors';
+import { visibleSightings, visibleTracks, hydroStatuses } from './state/selectors';
 import { MapView } from './map/MapView';
 import { MarkerLayer } from './map/MarkerLayer';
+import { TrackLayer } from './map/TrackLayer';
 import { GlowLayer } from './map/GlowLayer';
 import { HydrophoneLayer } from './map/HydrophoneLayer';
 import { PlaceLabels } from './map/PlaceLabels';
@@ -36,6 +37,11 @@ export function Board() {
   const visible = visibleSightings(state);
   // Look up in the collapsed view, not the raw store — the rendered winner
   // carries the merged pods/reportCount, and an absorbed id simply closes.
+  const { tracks, singles } = visibleTracks(state);
+  const markerSightings = [...tracks.map((t) => t.head), ...singles];
+  const selectedTrack = state.selectedId
+    ? (tracks.find((t) => t.id === state.selectedId) ?? null)
+    : null;
   const selected = state.selectedId
     ? (visible.find((s) => s.id === state.selectedId) ?? null)
     : null;
@@ -112,7 +118,12 @@ export function Board() {
               overlay={(frame) => (
                 <>
                   {selected && (
-                    <Popover sighting={selected} frame={frame} nowMs={state.nowMs} />
+                    <Popover
+                      sighting={selected}
+                      track={selectedTrack}
+                      frame={frame}
+                      nowMs={state.nowMs}
+                    />
                   )}
                   {selectedHydro && (
                     <HydroPopover
@@ -135,8 +146,16 @@ export function Board() {
                     selectedId={state.selectedHydroId}
                     onSelect={(id) => dispatch({ type: 'SELECT_HYDRO', id })}
                   />
+                  <TrackLayer
+                    tracks={tracks}
+                    frame={frame}
+                    nowMs={state.nowMs}
+                    windowHours={state.windowHours}
+                    selectedId={state.selectedId}
+                    onSelect={(id) => dispatch({ type: 'SELECT', id })}
+                  />
                   <GlowLayer
-                    sightings={visible}
+                    sightings={markerSightings}
                     frame={frame}
                     nowMs={state.nowMs}
                     windowHours={state.windowHours}
@@ -145,7 +164,8 @@ export function Board() {
                     highlightSeq={state.mapFocus?.seq ?? 0}
                   />
                   <MarkerLayer
-                    sightings={visible}
+                    sightings={markerSightings}
+                    tracks={tracks}
                     frame={frame}
                     nowMs={state.nowMs}
                     windowHours={state.windowHours}

@@ -1172,3 +1172,36 @@ body.cursor-hidden .app--kiosk:hover .statusbar__controls {
 .footer__compact {
   display: none;
 }
+
+/* ---- group tracks ------------------------------------------------------ */
+
+.track {
+  color: #e8b872;
+  fill: none;
+  cursor: pointer;
+}
+.track--orca_srkw { color: #f2ead6; }
+.track--orca_biggs { color: #9fc4dc; }
+.track__hit {
+  fill: none;
+  stroke: transparent;
+  stroke-linecap: round;
+  pointer-events: stroke;
+}
+.track__line,
+.track__chevron {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+  transition: opacity 1.5s ease;
+}
+.track__dot {
+  fill: #07121c;
+  stroke: currentColor;
+  stroke-width: 3;
+  pointer-events: none;
+}
+.track--selected .track__line { filter: drop-shadow(0 0 4px currentColor); }
+.marker__face { transition: transform 0.6s ease; }
