@@ -17,7 +17,7 @@ A pure React SPA; state lives in memory and rehydrates from a fresh poll.
 npm install
 npm run dev        # fixture mode: committed sample data, timestamps kept fresh
 npm run build      # production build (dist/) — live mode, polls acartia.io
-npm test           # 81 unit + smoke tests
+npm test           # unit + smoke tests
 ```
 
 - **Live mode** (production builds) fetches
@@ -37,7 +37,35 @@ npm test           # 81 unit + smoke tests
 | Param | Effect |
 | --- | --- |
 | `?demo=1` | (fixture mode) injects a synthetic fresh sighting on each later poll — previews the arrival animation and chime |
+| `?scenario=tracks` | (fixture mode) serve a Central Sound day of repeat J/K/Biggs reports to preview group tracks |
 | `?poll=30` | poll every 30 seconds instead of 3 minutes (min 5s) |
+
+### Group tracks
+
+Repeat reports of the *same identified group* are drawn as one movement track
+instead of a pile of sprites: a smoothed path fading old → new, dots at earlier
+report positions, chevrons showing direction, and a single sprite at the newest
+position facing the way they travelled. Tapping the path or the sprite opens a
+group summary (pods, sightings/reports, first/last seen, stated heading,
+distance). Logic is pure and unit-tested in `src/data/tracks.ts`.
+
+Linking is deliberately conservative — a missed link just leaves two plain
+markers, a wrong one draws a false migration:
+
+1. same base species (orca ecotypes share a base) and no conflicting ecotype;
+2. identical, non-empty set of explicit IDs (pods `J`/`K`/`L`/`T46B` plus
+   catalog IDs). Ecotype alone or an ID-less report never links; "J and K
+   pods" is its own identity and is never chained into a "J" track;
+3. plausible motion from the track's last point: gap <= 12 h and
+   distance <= 1.5 km + 25 km/h x gap, otherwise a new track starts;
+4. a track needs >= 2 points.
+
+Heading comes from the path (last hop >= 0.4 km); a heading stated in comments
+("northbound", "NB", "headed west", "traveling southeast") is shown in the
+popover and used when the path alone gives no direction. Sightings that don't
+link stay individual markers, nudged apart (`src/map/declutter.ts`) when they
+would overlap. Preview with `?scenario=tracks` in dev (fixture
+`acartia-tracks.json`). Before/after: `docs/screenshots/`.
 
 ### Kiosk / ambient mode
 

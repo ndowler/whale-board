@@ -2,6 +2,7 @@ import { CONFIG, type WindowHours } from '../config';
 import type { Sighting, SpeciesId } from '../types';
 import { withinWindow } from '../data/normalize';
 import { collapseNearDupes } from '../data/dedupe';
+import { buildTracks, type TrackSet } from '../data/tracks';
 import type { AppState } from './store';
 
 /**
@@ -17,6 +18,15 @@ export function visibleSightings(state: AppState): Sighting[] {
   const collapsed = collapseNearDupes(out);
   collapsed.sort((a, b) => b.epochMs - a.epochMs);
   return collapsed;
+}
+
+/**
+ * Visible sightings split into confidently-linked group tracks and the
+ * remaining singles. Track heads are members of visibleSightings, so
+ * selection by sighting id keeps working for both.
+ */
+export function visibleTracks(state: AppState): TrackSet {
+  return buildTracks(visibleSightings(state));
 }
 
 /** Visible (window-filtered, deduped) sightings of one species, newest first. */
