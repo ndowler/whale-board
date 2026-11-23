@@ -14,6 +14,8 @@ export interface DeclutterOptions {
   /** Points a sprite must not cover (sampled track lines), plus a margin. */
   obstacles?: { x: number; y: number }[];
   margin?: number;
+  /** Preferred-against spots (e.g. land). Tried to avoid, relaxed if nothing else fits. */
+  avoid?: (x: number, y: number) => boolean;
 }
 
 /**
@@ -26,7 +28,7 @@ export function declutter(
   anchors: Anchor[],
   opts: DeclutterOptions,
 ): Map<string, [number, number]> {
-  const { halfW, halfH, obstacles = [], margin = 6 } = opts;
+  const { halfW, halfH, obstacles = [], margin = 6, avoid } = opts;
   const placed: { x: number; y: number }[] = [];
   const out = new Map<string, [number, number]>();
   const spriteClear = (x: number, y: number) =>
@@ -46,26 +48,29 @@ export function declutter(
     }
     let done = false;
     const step = halfH;
-    for (let ring = 1; ring <= 14 && !done; ring++) {
-      const steps = 8 * ring;
-      let best: [number, number] | null = null;
-      let bestD = Infinity;
-      for (let i = 0; i < steps; i++) {
-        const ang = (i / steps) * Math.PI * 2;
-        // Wider than tall: sprites are wide and the Sound is a N–S column.
-        const x = a.x + Math.cos(ang) * step * ring * 1.6;
-        const y = a.y + Math.sin(ang) * step * ring;
-        const d = Math.hypot(x - a.x, y - a.y);
-        if (d < bestD && free(x, y)) {
-          bestD = d;
-          best = [x, y];
+    for (const strict of avoid ? [true, false] : [false]) {
+      for (let ring = 1; ring <= (strict ? 4 : 14) && !done; ring++) {
+        const steps = 8 * ring;
+        let best: [number, number] | null = null;
+        let bestD = Infinity;
+        for (let i = 0; i < steps; i++) {
+          const ang = (i / steps) * Math.PI * 2;
+          // Wider than tall: sprites are wide and the Sound is a N–S column.
+          const x = a.x + Math.cos(ang) * step * ring * 1.6;
+          const y = a.y + Math.sin(ang) * step * ring;
+          const d = Math.hypot(x - a.x, y - a.y);
+          if (d < bestD && free(x, y) && !(strict && avoid!(x, y))) {
+            bestD = d;
+            best = [x, y];
+          }
+        }
+        if (best) {
+          placed.push({ x: best[0], y: best[1] });
+          out.set(a.id, [best[0] - a.x, best[1] - a.y]);
+          done = true;
         }
       }
-      if (best) {
-        placed.push({ x: best[0], y: best[1] });
-        out.set(a.id, [best[0] - a.x, best[1] - a.y]);
-        done = true;
-      }
+      if (done) break;
     }
     if (!done) placed.push({ x: a.x, y: a.y });
   }
