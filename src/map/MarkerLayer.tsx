@@ -6,7 +6,7 @@ import { decay } from '../state/selectors';
 import { SPECIES_LABEL } from '../data/species';
 import { markerHref } from '../assets/species/SpeciesSprite';
 import type { Track } from '../data/tracks';
-import { declutter } from './declutter';
+import { layoutMarkers } from './layout';
 import { plateArtUrl, usePlates } from '../assets/species/art';
 
 /** Plate-art marker body; falls back to the silhouette if the PNG fails. */
@@ -78,15 +78,10 @@ export function MarkerLayer({
   // so eastward travel mirrors it; tilt is clamped so nothing goes upside-down).
   const facing = new Map<string, { flip: boolean; tilt: number }>();
   for (const t of tracks) if (t.bearing !== null) facing.set(t.id, facingFor(t.bearing));
-  const headIds = new Set(tracks.map((t) => t.id));
 
-  // Unrelated sightings at nearly the same spot would stack into a pile of
-  // sprites; nudge the later ones apart (track heads keep their true spot).
-  const spots = sightings.flatMap((s) => {
-    const p = frame.projection([s.lng, s.lat]);
-    return p ? [{ id: s.id, x: p[0], y: p[1], fixed: headIds.has(s.id) }] : [];
-  });
-  const offsets = declutter(spots, 120 * damp);
+  // Unrelated sightings must not pile up or sit on track lines; nudge them
+  // clear (track heads keep their true spot).
+  const offsets = layoutMarkers(sightings, tracks, frame.projection, damp);
 
   return (
     <g className="markers">
