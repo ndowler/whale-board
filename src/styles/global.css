@@ -795,14 +795,14 @@ body {
   position: absolute;
   right: -1px;
   bottom: -1px;
-  min-width: 1.05rem;
+  min-width: 3rem;
   text-align: center;
-  font-size: 0.62rem;
+  font-size: 1rem;
   color: var(--accent-warm);
   background: var(--panel);
-  border: 1px solid var(--panel-edge);
+  border: 1px solid var(--accent-warm);
   border-radius: 999px;
-  padding: 0 0.22rem;
+  padding: 0 1.1rem;
 }
 
 .today-panel__empty {
