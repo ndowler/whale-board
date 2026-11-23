@@ -1,4 +1,5 @@
 import type { Track } from '../data/tracks';
+import { trackGeometry } from '../data/trackGeometry';
 import type { WindowHours } from '../config';
 import type { MapFrame } from './MapView';
 
@@ -13,12 +14,22 @@ interface TrackLayerProps {
 
 type Pt = [number, number];
 
-/** Catmull-Rom → cubic bezier control points for the segment p1→p2. */
-function segmentPath(p0: Pt, p1: Pt, p2: Pt, p3: Pt): string {
-  const t = 0.5 / 3;
-  const c1: Pt = [p1[0] + (p2[0] - p0[0]) * t, p1[1] + (p2[1] - p0[1]) * t];
-  const c2: Pt = [p2[0] - (p3[0] - p1[0]) * t, p2[1] - (p3[1] - p1[1]) * t];
-  return `M${p1[0]},${p1[1]} C${c1[0]},${c1[1]} ${c2[0]},${c2[1]} ${p2[0]},${p2[1]}`;
+const polyD = (pts: Pt[]) => 'M' + pts.map((p) => `${p[0]},${p[1]}`).join(' L');
+
+/** Point + heading at the middle of a polyline (by vertex count; dense so fine). */
+function midOf(pts: Pt[]): { x: number; y: number; ang: number; len: number } {
+  const m = Math.floor(pts.length / 2);
+  const a = pts[Math.max(0, m - 1)];
+  const b = pts[Math.min(pts.length - 1, m + 1)];
+  let len = 0;
+  for (let i = 1; i < pts.length; i++)
+    len += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
+  return {
+    x: pts[m][0],
+    y: pts[m][1],
+    ang: (Math.atan2(b[1] - a[1], b[0] - a[0]) * 180) / Math.PI,
+    len,
+  };
 }
 
 /**
@@ -40,12 +51,16 @@ export function TrackLayer({
   return (
     <g className="tracks">
       {tracks.map((t) => {
-        const pts = t.points
-          .map((s) => frame.projection([s.lng, s.lat]) as Pt | null)
+        const geo = trackGeometry(t);
+        const hops = geo.hops.map((h) =>
+          h.map((q) => frame.projection(q) as Pt | null).filter((p): p is Pt => p !== null),
+        );
+        const dots = geo.nodes
+          .map((q) => frame.projection(q) as Pt | null)
           .filter((p): p is Pt => p !== null);
-        if (pts.length < 2) return null;
+        if (hops.length < 1 || hops.some((h) => h.length < 2)) return null;
         const selected = t.id === selectedId;
-        const n = pts.length - 1;
+        const n = hops.length;
         const age = Math.min(1, Math.max(0, (nowMs - t.lastMs) / windowMs));
         const base = 1 - 0.55 * age;
         const sw = (selected ? 7 : 5) * damp;
@@ -53,15 +68,11 @@ export function TrackLayer({
           e.stopPropagation();
           onSelect(selected ? null : t.id);
         };
-        const segs = pts.slice(1).map((p, i) => {
-          const a = pts[i];
-          return {
-            a,
-            b: p,
-            d: segmentPath(pts[Math.max(0, i - 1)], a, p, pts[Math.min(n, i + 2)]),
-            op: base * (0.28 + 0.72 * ((i + 1) / n)),
-          };
-        });
+        const segs = hops.map((h, i) => ({
+          d: polyD(h),
+          mid: midOf(h),
+          op: base * (0.28 + 0.72 * ((i + 1) / n)),
+        }));
         return (
           <g
             key={t.id}
@@ -85,7 +96,7 @@ export function TrackLayer({
                 opacity={s.op}
               />
             ))}
-            {pts.slice(0, -1).map((p, i) => (
+            {dots.slice(0, -1).map((p, i) => (
               <circle
                 key={`d${i}`}
                 className="track__dot"
@@ -96,11 +107,10 @@ export function TrackLayer({
               />
             ))}
             {segs.map((s, i) => {
-              const len = Math.hypot(s.b[0] - s.a[0], s.b[1] - s.a[1]);
-              if (len < 70 * damp) return null;
-              const mx = (s.a[0] + s.b[0]) / 2;
-              const my = (s.a[1] + s.b[1]) / 2;
-              const ang = (Math.atan2(s.b[1] - s.a[1], s.b[0] - s.a[0]) * 180) / Math.PI;
+              if (s.mid.len < 70 * damp) return null;
+              const mx = s.mid.x;
+              const my = s.mid.y;
+              const ang = s.mid.ang;
               const c = 13 * damp;
               return (
                 <path
