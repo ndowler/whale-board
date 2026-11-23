@@ -6,7 +6,7 @@ import { decay } from '../state/selectors';
 import { SPECIES_LABEL } from '../data/species';
 import { markerHref } from '../assets/species/SpeciesSprite';
 import type { Track } from '../data/tracks';
-import { layoutMarkers } from './layout';
+import { layoutMarkers, spriteScaleFor } from './layout';
 import { plateArtUrl, usePlates } from '../assets/species/art';
 
 /** Plate-art marker body; falls back to the silhouette if the PNG fails. */
@@ -73,7 +73,7 @@ export function MarkerLayer({
   // Markers live inside the zoomed group, so left alone they'd balloon under
   // deep zoom. Full counter-scale keeps them a constant screen size — zooming
   // reveals more chart, not bigger art. Zoom-out (k<1) shrinks naturally.
-  const damp = 1 / Math.max(1, frame.transform.k);
+  const damp = (1 / Math.max(1, frame.transform.k)) * spriteScaleFor(frame.width);
   // Track heads face their direction of travel (art faces left by default,
   // so eastward travel mirrors it; tilt is clamped so nothing goes upside-down).
   const facing = new Map<string, { flip: boolean; tilt: number }>();
@@ -81,7 +81,7 @@ export function MarkerLayer({
 
   // Unrelated sightings must not pile up or sit on track lines; nudge them
   // clear (track heads keep their true spot).
-  const offsets = layoutMarkers(sightings, tracks, frame.projection, damp);
+  const { offsets, merged, clusterSize } = layoutMarkers(sightings, tracks, frame.projection, damp);
 
   return (
     <g className="markers">
@@ -98,7 +98,9 @@ export function MarkerLayer({
         const p = frame.projection([s.lng, s.lat]);
         if (!p) return null;
         const d = decay(s, nowMs, windowHours);
+        if (merged.has(s.id)) return null;
         const off = offsets.get(s.id);
+        const cluster = clusterSize.get(s.id) ?? 0;
         const face = facing.get(s.id);
         const selected = s.id === selectedId;
         const cls = [
@@ -120,7 +122,7 @@ export function MarkerLayer({
             opacity={selected || highlighted.has(s.id) ? 1 : d.markerOpacity}
             role="button"
             tabIndex={0}
-            aria-label={SPECIES_LABEL[s.species]}
+            aria-label={cluster > 1 ? `${SPECIES_LABEL[s.species]} and ${cluster - 1} more nearby` : SPECIES_LABEL[s.species]}
             aria-pressed={selected}
             onClick={(e) => {
               e.stopPropagation();
@@ -154,6 +156,14 @@ export function MarkerLayer({
                   <MarkerArt species={s.species} />
                 </g>
               </g>
+              {cluster > 1 && (
+                <g className="marker__badge" transform="translate(66, -38)">
+                  <circle r={22} />
+                  <text textAnchor="middle" dy="0.35em">
+                    {cluster}
+                  </text>
+                </g>
+              )}
             </g>
           </g>
         );

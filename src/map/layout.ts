@@ -40,15 +40,38 @@ export function trackObstacles(tracks: Track[], projection: GeoProjection, spaci
  * yield to each other, to heads, and to every track line. `damp` is the
  * counter-zoom scale applied to sprites, so the footprint shrinks with it.
  */
-let memo: { key: string; proj: GeoProjection; out: Map<string, [number, number]> } | null = null;
+export interface Layout {
+  /** Sprite offsets from the true position, each within the nudge cap. */
+  offsets: Map<string, [number, number]>;
+  /** Singles folded into a neighbour: member id → host id. Not drawn. */
+  merged: Map<string, string>;
+  /** Host id → how many sightings it stands for (>= 2). */
+  clusterSize: Map<string, number>;
+}
 
+/** Sprites shrink on narrow screens so a phone isn't wall-to-wall whale. */
+export function spriteScaleFor(width: number): number {
+  return Math.min(1, Math.max(0.5, width / 800));
+}
+
+/** A sprite may drift at most ~1.25 sprite widths from where it was reported. */
+export const NUDGE_CAP_WIDTHS = 1.25;
+
+let memo: { key: string; proj: GeoProjection; out: Layout } | null = null;
+
+/**
+ * Sprite layout for the board: track heads hold their true position; singles
+ * yield to each other, to heads and to track lines — within a hard nudge cap,
+ * folding into a count badge when there's no room. `scale` is the full sprite
+ * scale on screen (counter-zoom damp x narrow-screen factor).
+ */
 export function layoutMarkers(
   sightings: Sighting[],
   tracks: Track[],
   projection: GeoProjection,
-  damp: number,
-): Map<string, [number, number]> {
-  const key = `${damp}|${sightings.map((s) => `${s.id}@${s.lat},${s.lng}`).join(';')}|${tracks.map((t) => t.id + t.points.length).join(',')}`;
+  scale: number,
+): Layout {
+  const key = `${scale}|${sightings.map((s) => `${s.id}@${s.lat},${s.lng}`).join(';')}|${tracks.map((t) => t.id + t.points.length).join(',')}`;
   if (memo && memo.proj === projection && memo.key === key) return memo.out;
   const heads = new Set(tracks.map((t) => t.id));
   const spots = sightings.flatMap((s) => {
@@ -57,19 +80,23 @@ export function layoutMarkers(
   });
   const onLand = (x: number, y: number) => {
     // Body centre and both ends of the sprite — a whale shouldn't sit on a headland.
-    for (const dx of [0, -SPRITE_HALF_W * damp * 0.7, SPRITE_HALF_W * damp * 0.7]) {
+    for (const dx of [0, -SPRITE_HALF_W * scale * 0.7, SPRITE_HALF_W * scale * 0.7]) {
       const g = projection.invert?.([x + dx, y]);
       if (g && isLand(g[0], g[1])) return true;
     }
     return false;
   };
-  const out = declutter(spots, {
+  const { offsets, merged } = declutter(spots, {
     avoid: onLand,
-    halfW: SPRITE_HALF_W * damp,
-    halfH: SPRITE_HALF_H * damp,
-    obstacles: trackObstacles(tracks, projection, 14 * damp),
-    margin: 6 * damp,
+    halfW: SPRITE_HALF_W * scale,
+    halfH: SPRITE_HALF_H * scale,
+    maxNudge: 2 * SPRITE_HALF_W * scale * NUDGE_CAP_WIDTHS,
+    obstacles: trackObstacles(tracks, projection, 14 * scale),
+    margin: 6 * scale,
   });
+  const clusterSize = new Map<string, number>();
+  for (const host of merged.values()) clusterSize.set(host, (clusterSize.get(host) ?? 1) + 1);
+  const out = { offsets, merged, clusterSize };
   memo = { key, proj: projection, out };
   return out;
 }
