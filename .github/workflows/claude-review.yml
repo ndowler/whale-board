@@ -1,0 +1,51 @@
+name: Claude PR Review
+
+# Auto-reviews every PR (Greptile-style): summary comment + inline comments on real issues.
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review, reopened]
+
+concurrency:
+  group: claude-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          track_progress: true
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ github.event.pull_request.number }}
+
+            You are a senior reviewer. Review this PR the way Greptile does: with full-codebase context.
+
+            1. Read the diff (`gh pr diff`) and PR description (`gh pr view`).
+            2. For every changed function/file, use Read/Grep/Glob on the checked-out repo to find callers,
+               related code, tests, and conventions. Judge the change against the rest of the codebase,
+               not the diff alone.
+            3. Post inline comments (mcp__github_inline_comment__create_inline_comment) ONLY for real problems:
+               bugs, logic errors, broken callers, security issues, data loss, race conditions,
+               missing error handling at trust boundaries, and clear violations of patterns used elsewhere
+               in the repo. Include a concrete fix or suggestion block. No style nits, no praise.
+            4. Finish with one summary comment containing:
+               - **Summary**: 2-4 sentences on what the PR does.
+               - **Files changed**: short table of file -> what changed.
+               - **Issues**: bullet list of what you flagged (or "None found").
+               - **Confidence**: X/5 that this is safe to merge, with one line of reasoning.
+
+            If the PR is trivial (docs, config bumps) keep the summary short and skip inline comments.
+          claude_args: |
+            --allowedTools "Read,Grep,Glob,mcp__github_inline_comment__create_inline_comment,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*)"
