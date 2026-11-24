@@ -29,9 +29,11 @@ export async function fetchSightings(signal: AbortSignal): Promise<unknown> {
  */
 export async function fetchBackfill(signal: AbortSignal): Promise<unknown> {
   if (CONFIG.dataMode === 'fixture') {
-    const { default: fixture } = wantsTracksScenario()
-      ? await import('./fixtures/acartia-tracks.json')
-      : await import('./fixtures/acartia-full.json');
+    const { default: fixture } = wantsLiveScenario()
+      ? await import('./fixtures/acartia-live-20261123.json')
+      : wantsTracksScenario()
+        ? await import('./fixtures/acartia-tracks.json')
+        : await import('./fixtures/acartia-full.json');
     if (signal.aborted) throw new DOMException('aborted', 'AbortError');
     return shiftToRecent(fixture as RawSighting[]);
   }
@@ -85,11 +87,16 @@ const DEMO_COMMENTS = [
 /** `?scenario=tracks` (fixture mode): a Central Sound day of repeat J/K/Biggs reports. */
 const wantsTracksScenario = () =>
   new URLSearchParams(location.search).get('scenario') === 'tracks';
+/** `?scenario=live` (fixture mode): a real 256-sighting capture from 2026-11-23. */
+const wantsLiveScenario = () =>
+  new URLSearchParams(location.search).get('scenario') === 'live';
 
 async function fetchFixture(signal: AbortSignal): Promise<unknown> {
-  const { default: fixture } = wantsTracksScenario()
-    ? await import('./fixtures/acartia-tracks.json')
-    : await import('./fixtures/acartia-current.json');
+  const { default: fixture } = wantsLiveScenario()
+    ? await import('./fixtures/acartia-live-20261123.json')
+    : wantsTracksScenario()
+      ? await import('./fixtures/acartia-tracks.json')
+      : await import('./fixtures/acartia-current.json');
   // Simulated latency keeps loading states honest in dev.
   await new Promise((r) => setTimeout(r, 300));
   if (signal.aborted) throw new DOMException('aborted', 'AbortError');

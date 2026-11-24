@@ -37,6 +37,7 @@ npm test           # unit + smoke tests
 | Param | Effect |
 | --- | --- |
 | `?demo=1` | (fixture mode) injects a synthetic fresh sighting on each later poll — previews the arrival animation and chime |
+| `?scenario=live` | (fixture mode) a real 256-sighting capture from 2026-11-23 — the crowded-board regression case |
 | `?scenario=tracks` | (fixture mode) serve a Central Sound day of repeat J/K/Biggs reports to preview group tracks |
 | `?poll=30` | poll every 30 seconds instead of 3 minutes (min 5s) |
 
@@ -64,7 +65,9 @@ Heading comes from the path (last hop >= 0.4 km); a heading stated in comments
 ("northbound", "NB", "headed west", "traveling southeast") is shown in the
 popover and used when the path alone gives no direction. Sightings that don't
 link stay individual markers, nudged apart (`src/map/declutter.ts`) when they
-would overlap. Preview with `?scenario=tracks` in dev (fixture
+would overlap — never more than ~1.25 sprite widths from the reported position,
+never from water onto land; when there's no room, crowded singles fold into one
+sprite with a count badge. Sprites shrink on narrow screens. Preview with `?scenario=tracks` in dev (fixture
 `acartia-tracks.json`). Before/after: `docs/screenshots/`.
 
 ### Kiosk / ambient mode
