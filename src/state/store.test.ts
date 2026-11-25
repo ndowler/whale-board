@@ -127,6 +127,21 @@ describe('reducer', () => {
     expect(s.highlightIds).toEqual([]);
     expect(s.mapFocus?.seq).toBe(1); // camera cue stays; only rings clear
   });
+
+  it('FOCUS_SIGHTING selects the sighting, pings it, and bumps mapFocus', () => {
+    let s = seeded();
+    s = reducer(s, { type: 'SELECT_HYDRO', id: 'H1' });
+    s = reducer(s, {
+      type: 'FOCUS_SIGHTING',
+      id: 'A',
+      points: [[-122.45, 47.6]],
+    });
+    expect(s.selectedId).toBe('A');
+    expect(s.selectedHydroId).toBeNull();
+    expect(s.highlightIds).toEqual(['A']);
+    expect(s.mapFocus?.seq).toBe(1);
+    expect(s.mapFocus?.points).toEqual([[-122.45, 47.6]]);
+  });
 });
 
 describe('selectors', () => {

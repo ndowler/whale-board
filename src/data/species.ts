@@ -102,3 +102,20 @@ export const SPECIES_LABEL: Record<SpeciesId, string> = {
   unspecified: 'Whale (species not reported)',
   unknown_cetacean: 'Unknown Cetacean',
 };
+
+/** Compact labels for tight chrome (drawer chips, feed rows). */
+export const SPECIES_SHORT_LABEL: Record<SpeciesId, string> = {
+  orca: 'Orca',
+  orca_srkw: 'Southern Resident',
+  orca_biggs: "Bigg's Orca",
+  humpback: 'Humpback',
+  gray_whale: 'Gray Whale',
+  blue_whale: 'Blue Whale',
+  fin_whale: 'Fin Whale',
+  minke: 'Minke',
+  harbor_porpoise: 'Harbor Porpoise',
+  dalls_porpoise: "Dall's Porpoise",
+  pacific_white_sided_dolphin: 'White-sided Dolphin',
+  unspecified: 'Unspecified',
+  unknown_cetacean: 'Unknown',
+};

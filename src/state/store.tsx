@@ -62,6 +62,13 @@ export type Action =
       /** [lng, lat] points for the map to fit. */
       points: readonly [number, number][];
     }
+  | {
+      type: 'FOCUS_SIGHTING';
+      /** Sighting (or track head) id to select and ping. */
+      id: string;
+      /** [lng, lat] points for the map to fit. */
+      points: readonly [number, number][];
+    }
   | { type: 'CLEAR_HIGHLIGHT' }
   | { type: 'SET_CHIME'; on: boolean }
   | { type: 'SET_KIOSK'; on: boolean }
@@ -163,6 +170,17 @@ export function reducer(state: AppState, action: Action): AppState {
         selectedId: null,
         selectedHydroId: null,
         highlightIds: action.ids,
+        mapFocus: {
+          seq: (state.mapFocus?.seq ?? 0) + 1,
+          points: action.points,
+        },
+      };
+    case 'FOCUS_SIGHTING':
+      return {
+        ...state,
+        selectedId: action.id,
+        selectedHydroId: null,
+        highlightIds: [action.id],
         mapFocus: {
           seq: (state.mapFocus?.seq ?? 0) + 1,
           points: action.points,

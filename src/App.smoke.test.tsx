@@ -28,6 +28,18 @@ vi.mock('./data/acartiaClient', () => ({
         data_source_comments: '',
         data_source_entity: 'orcanetwork',
       },
+      {
+        ssemmi_id: 'SMOKE 3',
+        // Second humpback far enough away not to dedupe — verifies tab shows total sightings (3), not species count (2).
+        created: new Date(Date.now() - 10 * 60_000).toISOString(),
+        type: 'Humpback',
+        latitude: 47.62,
+        longitude: -122.46,
+        no_sighted: 2,
+        trusted: 2,
+        data_source_comments: '',
+        data_source_entity: 'orcanetwork',
+      },
     ]),
   ),
 }));
@@ -59,12 +71,30 @@ describe('App smoke', () => {
     expect(markers.length).toBeGreaterThanOrEqual(1);
 
     // The species drawer tallies both species (fixtures are minutes old).
-    // Default window is 72h → "Past 3 Days" (tab + header).
+    // Default window is 72h → "Past 3 Days" (header), tab shows actual sighting count.
     expect(screen.getAllByText('Past 3 Days').length).toBeGreaterThanOrEqual(1);
     expect(
-      screen.getByTitle(/^Orca — Southern Resident —/),
+      screen.getByRole('button', { name: /3\s*Sightings/i }),
     ).toBeTruthy();
-    expect(screen.getByTitle(/^Humpback Whale —/)).toBeTruthy();
+    const srkwChip = screen.getByTitle(/^Orca — Southern Resident —/);
+    expect(srkwChip.textContent).toContain('Southern Resident');
+    const humpChip = screen.getByTitle(/^Humpback Whale —/);
+    expect(humpChip.textContent).toContain('Humpback');
+
+    // Feed shows recent sightings with pod + area, and filters on chip click.
+    expect(screen.getByText(/· J$/)).toBeTruthy();
+    expect(screen.getAllByText(/Haro Strait/).length).toBeGreaterThanOrEqual(1);
+    fireEvent.click(humpChip);
+    expect(screen.queryByText(/· J$/)).toBeNull();
+    // Clicking the active chip clears the filter.
+    fireEvent.click(humpChip);
+    expect(screen.getByText(/· J$/)).toBeTruthy();
+
+    // Clicking a feed row selects the sighting and opens its popover.
+    fireEvent.click(screen.getByText(/· J$/).closest('button')!);
+    expect(
+      screen.getByRole('dialog', { name: /Sighting details: Orca — Southern Resident/ }),
+    ).toBeTruthy();
 
     // `v` flips to the fullscreen collage; species + region copy render.
     fireEvent.keyDown(window, { key: 'v' });

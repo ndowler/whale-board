@@ -57,6 +57,19 @@ export function spriteScaleFor(width: number): number {
 /** A sprite may drift at most ~1.25 sprite widths from where it was reported. */
 export const NUDGE_CAP_WIDTHS = 1.25;
 
+/** Density bump for a cluster of `count` sightings. count 1 is a no-op. */
+export function clusterGlow(
+  baseR: number,
+  opacity: number,
+  count: number,
+): { r: number; opacity: number } {
+  const density = Math.log2(count);
+  return {
+    r: baseR * (1 + Math.min(0.45, density * 0.12)),
+    opacity: Math.min(1, opacity * (1 + density * 0.18)),
+  };
+}
+
 let memo: { key: string; proj: GeoProjection; out: Layout } | null = null;
 
 /**
@@ -71,7 +84,10 @@ export function layoutMarkers(
   projection: GeoProjection,
   scale: number,
 ): Layout {
-  const key = `${scale}|${sightings.map((s) => `${s.id}@${s.lat},${s.lng}`).join(';')}|${tracks.map((t) => t.id + t.points.length).join(',')}`;
+  // ~15% buckets. log(1) is 0 so scale 1 stays exact; a pinch inside the
+  // bucket reuses the last declutter instead of ray-casting the coastline.
+  const qScale = Math.pow(1.15, Math.round(Math.log(scale) / Math.log(1.15)));
+  const key = `${qScale}|${sightings.map((s) => `${s.id}@${s.lat},${s.lng}`).join(';')}|${tracks.map((t) => t.id + t.points.length).join(',')}`;
   if (memo && memo.proj === projection && memo.key === key) return memo.out;
   const heads = new Set(tracks.map((t) => t.id));
   const spots = sightings.flatMap((s) => {
@@ -80,7 +96,7 @@ export function layoutMarkers(
   });
   const onLand = (x: number, y: number) => {
     // Body centre and both ends of the sprite — a whale shouldn't sit on a headland.
-    for (const dx of [0, -SPRITE_HALF_W * scale * 0.7, SPRITE_HALF_W * scale * 0.7]) {
+    for (const dx of [0, -SPRITE_HALF_W * qScale * 0.7, SPRITE_HALF_W * qScale * 0.7]) {
       const g = projection.invert?.([x + dx, y]);
       if (g && isLand(g[0], g[1])) return true;
     }
@@ -88,11 +104,11 @@ export function layoutMarkers(
   };
   const { offsets, merged } = declutter(spots, {
     avoid: onLand,
-    halfW: SPRITE_HALF_W * scale,
-    halfH: SPRITE_HALF_H * scale,
-    maxNudge: 2 * SPRITE_HALF_W * scale * NUDGE_CAP_WIDTHS,
-    obstacles: trackObstacles(tracks, projection, 14 * scale),
-    margin: 6 * scale,
+    halfW: SPRITE_HALF_W * qScale,
+    halfH: SPRITE_HALF_H * qScale,
+    maxNudge: 2 * SPRITE_HALF_W * qScale * NUDGE_CAP_WIDTHS,
+    obstacles: trackObstacles(tracks, projection, 14 * qScale),
+    margin: 6 * qScale,
   });
   const clusterSize = new Map<string, number>();
   for (const host of merged.values()) clusterSize.set(host, (clusterSize.get(host) ?? 1) + 1);

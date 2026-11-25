@@ -1,13 +1,17 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import type { Sighting, SpeciesId } from '../types';
 import type { WindowHours } from '../config';
 import { CONFIG } from '../config';
+import type { Track } from '../data/tracks';
 import type { MapFrame } from './MapView';
 import { kmToPx } from './projection';
 import { decay } from '../state/selectors';
+import { clusterGlow, layoutMarkers, spriteScaleFor } from './layout';
 
 interface GlowLayerProps {
   sightings: Sighting[];
+  /** Same tracks MarkerLayer lays out, so folded singles share one halo. */
+  tracks?: Track[];
   frame: MapFrame;
   nowMs: number;
   windowHours: WindowHours;
@@ -38,8 +42,9 @@ function tintFor(species: SpeciesId): GlowTint {
   return 'neutral';
 }
 
-export function GlowLayer({
+export const GlowLayer = memo(function GlowLayer({
   sightings,
+  tracks = [],
   frame,
   nowMs,
   windowHours,
@@ -51,8 +56,13 @@ export function GlowLayer({
     () => Math.max(8, kmToPx(frame.projection, CONFIG.glowRadiusKm)),
     [frame.projection],
   );
+  const damp = (1 / Math.max(1, frame.transform.k)) * spriteScaleFor(frame.width);
+  const { merged, clusterSize } = layoutMarkers(sightings, tracks, frame.projection, damp);
   const fresh = new Set(newIds);
-  const highlighted = new Set(highlightIds);
+  // A folded member's arrival/focus ping rides on the host that draws it.
+  const pingOn = new Set<string>();
+  for (const id of newIds) pingOn.add(merged.get(id) ?? id);
+  for (const id of highlightIds) pingOn.add(merged.get(id) ?? id);
 
   return (
     <g className="glows">
@@ -79,23 +89,25 @@ export function GlowLayer({
         </radialGradient>
       </defs>
       {sightings.map((s) => {
+        if (merged.has(s.id)) return null;
         const p = frame.projection([s.lng, s.lat]);
         if (!p) return null;
         const d = decay(s, nowMs, windowHours);
-        const ping = fresh.has(s.id) || highlighted.has(s.id);
+        const halo = clusterGlow(r, d.opacity, clusterSize.get(s.id) ?? 1);
+        const ping = pingOn.has(s.id);
         return (
           <g key={s.id} transform={`translate(${p[0]}, ${p[1]})`}>
             <circle
               className="glow"
-              r={r}
+              r={halo.r}
               fill={`url(#glow-${tintFor(s.species)})`}
-              opacity={d.opacity}
+              opacity={halo.opacity}
             />
             {ping && (
               <circle
                 key={`${s.id}-${highlightSeq}-${fresh.has(s.id) ? 'n' : 'h'}`}
                 className="glow__ping"
-                r={r}
+                r={halo.r}
                 fill="none"
               />
             )}
@@ -104,4 +116,4 @@ export function GlowLayer({
       })}
     </g>
   );
-}
+});

@@ -41,6 +41,13 @@ describe('layoutMarkers (?scenario=tracks fixture)', () => {
       }
     });
   }
+
+  it('reuses layout within a pinch bucket and recomputes across distant zoom', () => {
+    const near = layoutMarkers(all, tracks, projection, 1.05);
+    expect(layoutMarkers(all, tracks, projection, 1)).toBe(near);
+    expect(layoutMarkers(all, tracks, projection, 0.97)).toBe(near);
+    expect(layoutMarkers(all, tracks, projection, 2)).not.toBe(near);
+  });
 });
 
 /**
@@ -66,10 +73,12 @@ describe('layoutMarkers (live capture 2026-11-23)', () => {
           const marks = [...tracks.map((t) => t.head), ...singles];
           const projection = makeProjection(vp.w, vp.h);
           const scale = (1 / k) * spriteScaleFor(vp.w);
+          // Layout solves on ~15% zoom buckets; judge the footprint it actually used.
+          const qScale = Math.pow(1.15, Math.round(Math.log(scale) / Math.log(1.15)));
           const { offsets, merged, clusterSize } = layoutMarkers(marks, tracks, projection, scale);
 
           // 1. hard displacement cap
-          const cap = 2 * SPRITE_HALF_W * scale * NUDGE_CAP_WIDTHS + 1e-6;
+          const cap = 2 * SPRITE_HALF_W * qScale * NUDGE_CAP_WIDTHS + 1e-6;
           for (const [id, [dx, dy]] of offsets)
             expect(Math.hypot(dx, dy), `${id} moved too far`).toBeLessThanOrEqual(cap);
 
@@ -84,7 +93,7 @@ describe('layoutMarkers (live capture 2026-11-23)', () => {
           // 3. nothing pushed from water onto land
           const onLand = (x: number, y: number) =>
             [0, -0.7, 0.7].some((f) => {
-              const g = projection.invert!([x + f * SPRITE_HALF_W * scale, y]);
+              const g = projection.invert!([x + f * SPRITE_HALF_W * qScale, y]);
               return !!g && isLand(g[0], g[1]);
             });
           for (const s of rendered) {

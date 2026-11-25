@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import type { Hydrophone } from '../types';
 import type { HydroStatus } from '../state/selectors';
 import type { MapFrame } from './MapView';
@@ -17,7 +18,7 @@ interface HydrophoneLayerProps {
  * it "hot" — expanding sonar rings, the heard-orca counterpart of a
  * sighting's arrival ping.
  */
-export function HydrophoneLayer({
+export const HydrophoneLayer = memo(function HydrophoneLayer({
   hydrophones,
   statuses,
   frame,
@@ -76,4 +77,4 @@ export function HydrophoneLayer({
       })}
     </g>
   );
-}
+});

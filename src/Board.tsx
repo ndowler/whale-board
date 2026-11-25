@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { CONFIG } from './config';
 import { useAppDispatch, useAppState } from './state/store';
 import {
@@ -34,18 +34,29 @@ export function Board() {
   useClock(dispatch);
   const { toggle: toggleKiosk } = useKiosk(state.kiosk, dispatch);
 
-  const visible = visibleSightings(state);
+  const visible = useMemo(() => visibleSightings(state), [state]);
   // Look up in the collapsed view, not the raw store — the rendered winner
   // carries the merged pods/reportCount, and an absorbed id simply closes.
-  const { tracks, singles } = visibleTracks(state);
-  const markerSightings = [...tracks.map((t) => t.head), ...singles];
+  const { tracks, singles } = useMemo(() => visibleTracks(state), [state]);
+  const markerSightings = useMemo(
+    () => [...tracks.map((t) => t.head), ...singles],
+    [tracks, singles],
+  );
   const selectedTrack = state.selectedId
     ? (tracks.find((t) => t.id === state.selectedId) ?? null)
     : null;
   const selected = state.selectedId
     ? (visible.find((s) => s.id === state.selectedId) ?? null)
     : null;
-  const hydroStatus = hydroStatuses(state);
+  const hydroStatus = useMemo(() => hydroStatuses(state), [state]);
+  const selectSighting = useCallback(
+    (id: string | null) => dispatch({ type: 'SELECT', id }),
+    [dispatch],
+  );
+  const selectHydro = useCallback(
+    (id: string | null) => dispatch({ type: 'SELECT_HYDRO', id }),
+    [dispatch],
+  );
   const selectedHydro = state.selectedHydroId
     ? (state.hydrophones.find((h) => h.id === state.selectedHydroId) ?? null)
     : null;
@@ -144,7 +155,7 @@ export function Board() {
                     statuses={hydroStatus}
                     frame={frame}
                     selectedId={state.selectedHydroId}
-                    onSelect={(id) => dispatch({ type: 'SELECT_HYDRO', id })}
+                    onSelect={selectHydro}
                   />
                   <TrackLayer
                     tracks={tracks}
@@ -152,10 +163,11 @@ export function Board() {
                     nowMs={state.nowMs}
                     windowHours={state.windowHours}
                     selectedId={state.selectedId}
-                    onSelect={(id) => dispatch({ type: 'SELECT', id })}
+                    onSelect={selectSighting}
                   />
                   <GlowLayer
                     sightings={markerSightings}
+                    tracks={tracks}
                     frame={frame}
                     nowMs={state.nowMs}
                     windowHours={state.windowHours}
@@ -172,7 +184,7 @@ export function Board() {
                     selectedId={state.selectedId}
                     newIds={state.newIds}
                     highlightIds={state.highlightIds}
-                    onSelect={(id) => dispatch({ type: 'SELECT', id })}
+                    onSelect={selectSighting}
                   />
                 </>
               )}

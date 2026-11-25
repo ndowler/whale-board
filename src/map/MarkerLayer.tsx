@@ -1,4 +1,4 @@
-import { useState, type CSSProperties } from 'react';
+import { memo, useState, type CSSProperties } from 'react';
 import type { Sighting, SpeciesId } from '../types';
 import type { WindowHours } from '../config';
 import type { MapFrame } from './MapView';
@@ -57,7 +57,7 @@ interface MarkerLayerProps {
  * over time (compositor-friendly); time-decay is computed from the store
  * clock each render and CSS transitions glide between ticks.
  */
-export function MarkerLayer({
+export const MarkerLayer = memo(function MarkerLayer({
   sightings,
   tracks = [],
   frame,
@@ -170,4 +170,4 @@ export function MarkerLayer({
       })}
     </g>
   );
-}
+});
