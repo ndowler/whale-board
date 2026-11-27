@@ -1,3 +1,4 @@
+import { memo, useMemo } from 'react';
 import type { Track } from '../data/tracks';
 import { trackGeometry } from '../data/trackGeometry';
 import type { WindowHours } from '../config';
@@ -38,7 +39,7 @@ function midOf(pts: Pt[]): { x: number; y: number; ang: number; len: number } {
  * pointing the way they went. The sprite itself is drawn by MarkerLayer at
  * the head. Stroke widths counter-scale with zoom like the markers do.
  */
-export function TrackLayer({
+export const TrackLayer = memo(function TrackLayer({
   tracks,
   frame,
   nowMs,
@@ -48,9 +49,11 @@ export function TrackLayer({
 }: TrackLayerProps) {
   const damp = 1 / Math.max(1, frame.transform.k);
   const windowMs = windowHours * 3_600_000;
-  return (
-    <g className="tracks">
-      {tracks.map((t) => {
+  // Path strings and midpoints depend only on the track and the projection.
+  // Zoom, the clock, and selection just restyle stroke width and opacity.
+  const projected = useMemo(
+    () =>
+      tracks.map((t) => {
         const geo = trackGeometry(t);
         const hops = geo.hops.map((h) =>
           h.map((q) => frame.projection(q) as Pt | null).filter((p): p is Pt => p !== null),
@@ -58,21 +61,29 @@ export function TrackLayer({
         const dots = geo.nodes
           .map((q) => frame.projection(q) as Pt | null)
           .filter((p): p is Pt => p !== null);
-        if (hops.length < 1 || hops.some((h) => h.length < 2)) return null;
+        const drawable = hops.length >= 1 && hops.every((h) => h.length >= 2);
+        return {
+          track: t,
+          dots,
+          segs: drawable ? hops.map((h) => ({ d: polyD(h), mid: midOf(h) })) : null,
+        };
+      }),
+    [tracks, frame.projection],
+  );
+  return (
+    <g className="tracks">
+      {projected.map(({ track: t, segs, dots }) => {
+        if (!segs) return null;
         const selected = t.id === selectedId;
-        const n = hops.length;
+        const n = segs.length;
         const age = Math.min(1, Math.max(0, (nowMs - t.lastMs) / windowMs));
         const base = 1 - 0.55 * age;
         const sw = (selected ? 7 : 5) * damp;
+        const opAt = (i: number) => base * (0.28 + 0.72 * ((i + 1) / n));
         const select = (e: { stopPropagation(): void }) => {
           e.stopPropagation();
           onSelect(selected ? null : t.id);
         };
-        const segs = hops.map((h, i) => ({
-          d: polyD(h),
-          mid: midOf(h),
-          op: base * (0.28 + 0.72 * ((i + 1) / n)),
-        }));
         return (
           <g
             key={t.id}
@@ -93,7 +104,7 @@ export function TrackLayer({
                 d={s.d}
                 className="track__line"
                 strokeWidth={sw}
-                opacity={s.op}
+                opacity={opAt(i)}
               />
             ))}
             {dots.slice(0, -1).map((p, i) => (
@@ -118,7 +129,7 @@ export function TrackLayer({
                   className="track__chevron"
                   d={`M${-c * 0.6},${-c} L${c * 0.6},0 L${-c * 0.6},${c}`}
                   strokeWidth={4 * damp}
-                  opacity={Math.min(1, s.op + 0.15)}
+                  opacity={Math.min(1, opAt(i) + 0.15)}
                   transform={`translate(${mx},${my}) rotate(${ang})`}
                 />
               );
@@ -128,4 +139,4 @@ export function TrackLayer({
       })}
     </g>
   );
-}
+});

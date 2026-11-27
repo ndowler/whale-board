@@ -1,5 +1,6 @@
 import {
   useCallback,
+  useEffect,
   useLayoutEffect,
   useMemo,
   useRef,
@@ -122,7 +123,9 @@ export function MapView({ children, overlay, focus }: MapViewProps) {
   const [size, setSize] = useState<{ width: number; height: number } | null>(null);
   const [transform, setTransform] = useState<Transform>(IDENTITY);
   const [animating, setAnimating] = useState(false);
+  const [interacting, setInteracting] = useState(false);
   const pointers = useRef(new Map<number, Point>());
+  const idleTimer = useRef<number | null>(null);
   const pan = useRef<{ x: number; y: number; dragging: boolean } | null>(null);
   const pinch = useRef<{
     dist: number;
@@ -133,6 +136,30 @@ export function MapView({ children, overlay, focus }: MapViewProps) {
   const focusSeqRef = useRef(0);
 
   transformRef.current = transform;
+
+  // Pan/pinch/wheel. Cleared ~160ms after the gesture so CSS motion can resume.
+  const engage = useCallback(() => {
+    if (idleTimer.current != null) {
+      window.clearTimeout(idleTimer.current);
+      idleTimer.current = null;
+    }
+    setInteracting(true);
+  }, []);
+
+  const armIdle = useCallback(() => {
+    if (idleTimer.current != null) window.clearTimeout(idleTimer.current);
+    idleTimer.current = window.setTimeout(() => {
+      idleTimer.current = null;
+      setInteracting(false);
+    }, 160);
+  }, []);
+
+  useEffect(
+    () => () => {
+      if (idleTimer.current != null) window.clearTimeout(idleTimer.current);
+    },
+    [],
+  );
 
   // Cursor position relative to the SVG's top-left, so zoom anchors on the
   // pointer and pan deltas are in the same pixel space as the projection.
@@ -175,12 +202,14 @@ export function MapView({ children, overlay, focus }: MapViewProps) {
     if (!el) return;
     const handler = (e: WheelEvent) => {
       e.preventDefault();
+      engage();
       const { x, y } = localPoint(e.clientX, e.clientY);
       zoomAt(e.deltaY, x, y);
+      armIdle();
     };
     el.addEventListener('wheel', handler, { passive: false });
     return () => el.removeEventListener('wheel', handler);
-  }, [localPoint, zoomAt, size]);
+  }, [localPoint, zoomAt, size, engage, armIdle]);
 
   const onPointerDown = useCallback(
     (e: ReactPointerEvent<SVGSVGElement>) => {
@@ -191,6 +220,7 @@ export function MapView({ children, overlay, focus }: MapViewProps) {
       if (pointers.current.size >= 2) {
         // Capture both fingers so the gesture survives leaving the SVG bounds.
         e.currentTarget.setPointerCapture(e.pointerId);
+        engage();
         beginPinch();
         return;
       }
@@ -200,7 +230,7 @@ export function MapView({ children, overlay, focus }: MapViewProps) {
       pinch.current = null;
       pan.current = { x: e.clientX, y: e.clientY, dragging: false };
     },
-    [beginPinch, localPoint],
+    [beginPinch, localPoint, engage],
   );
 
   const onPointerMove = useCallback(
@@ -210,6 +240,7 @@ export function MapView({ children, overlay, focus }: MapViewProps) {
 
       const pinchState = pinch.current;
       if (pinchState && pointers.current.size >= 2) {
+        engage();
         const pts = [...pointers.current.values()];
         const d = Math.max(1, dist(pts[0], pts[1]));
         const mid = midpoint(pts[0], pts[1]);
@@ -231,12 +262,13 @@ export function MapView({ children, overlay, focus }: MapViewProps) {
       if (!p.dragging) {
         p.dragging = true;
         e.currentTarget.setPointerCapture(e.pointerId);
+        engage();
       }
       p.x = e.clientX;
       p.y = e.clientY;
       setTransform((t) => ({ ...t, x: t.x + dx, y: t.y + dy }));
     },
-    [localPoint],
+    [localPoint, engage],
   );
 
   const endPointer = useCallback(
@@ -265,8 +297,9 @@ export function MapView({ children, overlay, focus }: MapViewProps) {
       }
 
       pan.current = null;
+      armIdle();
     },
-    [beginPinch],
+    [beginPinch, armIdle],
   );
 
   const resetZoom = useCallback(() => {
@@ -351,10 +384,9 @@ export function MapView({ children, overlay, focus }: MapViewProps) {
     return () => ro.disconnect();
   }, []);
 
-  // Children render inside the scaled <g> and project into the group's own
-  // coordinate space, but their frame still carries the live transform so
-  // size-in-screen-pixels ornaments (markers, hydrophones) can counter-scale
-  // under zoom. The HTML overlay uses it to track markers from outside the SVG.
+  // SVG layers project in the group's own space and only counter-scale with k.
+  // Pan (x, y) stays on the <g> and the HTML overlay, so a one-finger pan
+  // does not rebuild the layers.
   const base = useMemo(() => {
     if (!size) return null;
     return { projection: makeProjection(size.width, size.height), ...size };
@@ -363,6 +395,11 @@ export function MapView({ children, overlay, focus }: MapViewProps) {
   const frame = useMemo<MapFrame | null>(
     () => (base ? { ...base, transform } : null),
     [base, transform],
+  );
+
+  const svgFrame = useMemo<MapFrame | null>(
+    () => (base ? { ...base, transform: { k: transform.k, x: 0, y: 0 } } : null),
+    [base, transform.k],
   );
 
   const path = useMemo(() => (base ? makePath(base.projection) : null), [base]);
@@ -378,14 +415,16 @@ export function MapView({ children, overlay, focus }: MapViewProps) {
 
   // The raster's texture pixels turn to mush under deep zoom — ease it back
   // and let the crisp vector coastline/contours/graticule carry the view.
-  const chartOpacity = Math.max(0.45, Math.min(1, 1 - (transform.k - 1.6) * 0.12));
+  // Steps of 0.05 so a pinch doesn't retint the chart on every float.
+  const chartOpacity =
+    Math.round(Math.max(0.45, Math.min(1, 1 - (transform.k - 1.6) * 0.12)) * 20) / 20;
   const atMinZoom = transform.k <= MIN_ZOOM;
   const atMaxZoom = transform.k >= MAX_ZOOM;
 
   return (
     <div
       ref={containerRef}
-      className="map"
+      className={interacting ? 'map is-interacting' : 'map'}
       tabIndex={0}
       role="region"
       aria-label="Interactive map of the Salish Sea with recent whale sightings. Pinch, scroll, or use the zoom controls to explore."
@@ -445,7 +484,7 @@ export function MapView({ children, overlay, focus }: MapViewProps) {
             )}
             {graticule && <path className="map__graticule" d={graticule} />}
             <LandLayer path={path} />
-            {children?.(frame)}
+            {svgFrame && children?.(svgFrame)}
           </g>
           <rect
             className="map__vignette"
@@ -494,7 +533,7 @@ export function MapView({ children, overlay, focus }: MapViewProps) {
           ⊙
         </button>
       </div>
-      {frame && overlay?.({ ...frame, transform })}
+      {frame && overlay?.(frame)}
     </div>
   );
 }

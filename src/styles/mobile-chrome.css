@@ -28,6 +28,10 @@
     gap: 0.4rem;
   }
 
+  .today-panel {
+    top: calc(3.75rem + env(safe-area-inset-top, 0px));
+  }
+
   .statusbar__roll {
     display: flex;
   }

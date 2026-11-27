@@ -22,3 +22,6 @@ art/map/raw-chart-v2.png
 art/species/raw/
 art/species/collage-raw/
 art/decor/raw/
+
+.env
+data/
